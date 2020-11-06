@@ -2,4 +2,4 @@
 
 todos los codigos shiny
 
-![Alt](cheatsheet.pdf){width=100% height=400}
+![Alt](\cheatsheet.pdf){width=100% height=400}
