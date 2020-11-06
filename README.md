@@ -1,6 +1,4 @@
 # castro_shiny
 todos los codigos shiny
 
-\begin{center} <br>
-\includegraphics[width=8in]{cheatsheet.pdf} <br>
-\end{center}
+![Alt](./file.pdf){width=100% height=400}
