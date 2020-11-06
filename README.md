@@ -1,5 +1,6 @@
 # castro_shiny
 todos los codigos shiny
 
-![](cheatsheet.pdf)
-![Image Title](cheatsheet.pdf){width=75%}
+\begin{center} <br>
+\includegraphics[width=8in]{cheatsheet.pdf} <br>
+\end{center}
