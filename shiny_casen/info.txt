@@ -1,0 +1,5 @@
+Tablas de contingencia en R
+
+https://www.datacamp.com/community/tutorials/contingency-tables-r
+
+

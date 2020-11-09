@@ -1,0 +1,73 @@
+---
+title: "promedios_agregados"
+author: "DI"
+date: "09-11-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(writexl)
+library(plyr)
+
+oldw <- getOption("warn")
+options(warn = -1)
+```
+
+## Tablas de contingencia en R
+
+```{r}
+datos_df_1000  <- read_xlsx("casen_2017_mil.xlsx")
+```
+
+
+
+```{r cars}
+
+table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)")
+prop.table(table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)"))
+```
+Tabla de contingencia entre pobreza y sexo:
+
+```{r}
+table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
+```
+
+
+
+
+
+
+
+
+
+```{r pressure, echo=FALSE}
+
+```
+
+
