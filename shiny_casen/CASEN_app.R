@@ -37,7 +37,7 @@ options(warn = -1)
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
 # prueba victor 004
-
+# https://www.datacamp.com/community/tutorials/contingency-tables-r
 
 
 dataset <- read.csv('Casen_no_humano.csv')
