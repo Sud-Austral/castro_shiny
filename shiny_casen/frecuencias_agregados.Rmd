@@ -49,7 +49,7 @@ options(warn = -1)
 # Los datos
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
+datos_df_1000  <- read_xlsx("casen_2017_mil.xlsx")
 ```
 
 ### Cantidades totales y porcentajes de pobres y no pobres:
@@ -188,6 +188,7 @@ Una vez que descubrimos algunas asociaciones entre las variables, es hora de med
 Lambda(datos_df_1000$"Sexo",datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", direction='row')
 
 ```
+
 
 
 
