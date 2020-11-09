@@ -139,8 +139,7 @@ server <- function(input, output, session) {
         
         tabPanel("Despliegue de la tabla",
                  fluidRow(column(3, includeMarkdown("info_2006_tabla.md")),
-                          column(12,  tableOutput("contents12"),
-                                 dataTableOutput('table')))),
+                          column(12,  dataTableOutput('table')))),
         
         tabPanel("Frecuencias por preguntas", fluidRow(
           column(12, includeMarkdown("info_2006_frec.md")),
@@ -198,9 +197,12 @@ server <- function(input, output, session) {
         tabPanel("Introducción",
                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
         
+
+        
+        
         tabPanel("Despliegue de la tabla",
-                 fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                          column(3,  tableOutput("contents12")))),
+                 fluidRow(column(3, includeMarkdown("about_pobporin_vei.txt")),
+                          column(12,dataTableOutput("table2009ymt")))),
         
         tabPanel("Frecuencias por preguntas", fluidRow(
           column(12, includeMarkdown("about_educacion.md.txt")),
