@@ -37,6 +37,7 @@ library(plyr)
 library(kableExtra)
 library(knitr)
 library(DescTools)
+library(roperators)
 
 # https://www.datacamp.com/community/tutorials/contingency-tables-r
 
@@ -46,150 +47,43 @@ options(warn = -1)
 ```
 
 
-# Los datos
+# Promedios
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
-```
+casen_2006  <- read_xlsx("casen_2006_mil.xlsx")
 
-### Cantidades totales y porcentajes de pobres y no pobres:
-
-```{r echo = FALSE}
-
-table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)")
-prop.table(table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)"))
-```
-### Tabla de contingencia entre pobreza y sexo:
-
-```{r echo = FALSE}
-table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
-```
-
-### Valores marginales de la tabla de contingencia:
-
-```{r echo = FALSE}
-table1 <- table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
-
-rowSums(table1)
-colSums(table1)
-```
-### Porcentajes de la tabla de contingencia
-
-```{r echo = FALSE}
-
-prop.table(table1)
-prop.table(table1)*100
-
+head(casen_2006, 10)
 
 ```
-Ésta es una distribución de probabilidad conjunta, a partir de la cual podemos ver que alrededor del 7.8% de la población son hombres pobres.
 
-Podemos ver que por cada 4 personas no pobres, existe una pobre.
-
-# Pruebas estadísticas de independencia
-
-## Prueba de chi-cuadrado
-
-La pregunta más común que surge de las tablas de contingencia es si las variables de fila y columna son independientes. La forma más básica de responderla es realizar una prueba de chi-cuadrado. Comprobemos si el sexo y la condición de pobreza son independientes:
-
-```{r pressure, echo=FALSE}
-chisq.test(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
-```
-
-
-La aproximación Chi-cuadrado puede ser una advertencia incorrecta. Esto se debe a que el estadístico chi-cuadrado sigue la distribución de chi-cuadrado solo aproximadamente. Cuantas más observaciones tengamos, mejor será la aproximación. La función chisq.test arroja la advertencia anterior siempre que uno de los recuentos esperados sea inferior a 5.
-
-## Prueba exacta de Fisher
-
-La prueba exacta de Fisher es una alternativa a la prueba de chi-cuadrado que se utiliza principalmente cuando una aproximación de chi-cuadrado no es satisfactoria. 
-
-```{r echo = FALSE}
-fisher.test(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
-```
-
-
-
-# Tablas de contingencia generalizadas
-
-
-```{r echo = FALSE}
-df0 <- table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
-
-df0 
-```
-
-
-
-
-
-
-Version compacta:
-
-```{r echo = FALSE}
-dt1 <- ftable(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
-dt1
-```
 
 ```{r}
-dt2 <- ftable(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
+casen_2006$"Ingreso autónomo...13"
+```
+
+deben salir solo ceros:
+
+
+```{r}
+vec <- chr(casen_2006$"Ingreso autónomo...13") # make it a character vector first
+vec %na<-% 0
+vec
+```
+
+
+
+```{r}
+vec = as.double(vec)  
+vec
 ```
 
 
 
 
 ```{r}
-# names(tabla_3)[1]<-paste("premium")
-# names(tabla_3)[2]<-paste("change")
-# names(tabla_3)[3]<-paste("newprice") 
-```
+aggregate(vec, list(casen_2006$"Identificación del hogar"), mean)
 
-
-
-```{r echo = FALSE}
-u <- kable(df0, caption = "Tabla de contingencia para la Casen 2017 sobre tres variables: sexo, estado civil y situación de pobreza.", font_size = 16, col.names = c("Situación socioeconómica","Sexo","Estado civil","Frecuencia")) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),
-                full_width = T,
-                font_size = 12,
-                position = "left") 
-u
-```
-
-
-## El estadístico Cochran–Mantel–Haenszel
-
-La prueba de Cochran-Mantel-Haenszel (CMH) se utiliza en el análisis de datos categóricos estratificados o emparejados. Permite a un investigador probar la asociación entre un predictor o tratamiento binario y un resultado binario, como el estado de caso o control, mientras se tiene en cuenta la estratificación. 
-
-A diferencia de la prueba de McNemar que solo puede manejar pares, la prueba CMH maneja tamaños de estratos arbitrarios. Lleva el nombre de William G. Cochran, Nathan Mantel y William Haenszel. 
-
-Las extensiones de esta prueba a una respuesta categórica y / oa varios grupos se denominan comúnmente estadísticas de Cochran-Mantel-Haenszel. 
-
-A menudo se utiliza en estudios observacionales en los que no se puede controlar la asignación aleatoria de sujetos a diferentes tratamientos, pero se pueden medir las covariables de confusión.
-
-El Test de Cochran-Mantel-Haenszel es un contraste de hipótesis para contrastar la igualdad de Odds ratio entre k tablas de contingencia 2×2. Es una forma de evaluar la posible influencia que pueda tener, sobre la relación entre esas variables cualitativas dicotómicas, una tercera variable también cualitativa con k valores posibles.
-
-Es un Test usado para comprobar la posible confusión que puede generar una tercera variable en la relación entre dos variables.
-
-
-```{r echo = FALSE}
-cmh <- mantelhaen.test(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)",  datos_df_1000$"Estado civil", datos_df_1000$"Sexo")
-cmh
-```
-
-# Medidas de asociación
-
-Una vez que descubrimos algunas asociaciones entre las variables, es hora de medir su fuerza. Hay una plétora de varios tipos de medidas posibles. Muchos de ellos se describen aquí. Ahora me centraré en dos de los más utilizados.
-
-## La V de Cramer
-
-
-
-## El lambda de Goodman and Kruskal 
-```{r}
-Lambda(datos_df_1000$"Sexo",datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", direction='row')
 
 ```
-
-
-
 
 
