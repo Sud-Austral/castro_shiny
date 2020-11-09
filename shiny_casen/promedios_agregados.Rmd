@@ -1,5 +1,5 @@
 ---
-title: "promedios_agregados"
+title: "Tablas de contingencia generalizadas para la Casen 2017 en un subset de 1000 registros."
 author: "DI"
 date: "09-11-2020"
 output: html_document
@@ -34,40 +34,117 @@ library(viridis)
 library(viridisLite)
 library(writexl)
 library(plyr)
+library(kableExtra)
+library(knitr)
+
+# https://www.datacamp.com/community/tutorials/contingency-tables-r
+
 
 oldw <- getOption("warn")
 options(warn = -1)
 ```
 
-## Tablas de contingencia en R
 
-```{r}
+# Los datos
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 datos_df_1000  <- read_xlsx("casen_2017_mil.xlsx")
 ```
 
+### Cantidades totales y porcentajes de pobres y no pobres:
 
-
-```{r cars}
+```{r echo = FALSE}
 
 table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)")
 prop.table(table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)"))
 ```
-Tabla de contingencia entre pobreza y sexo:
+### Tabla de contingencia entre pobreza y sexo:
 
-```{r}
+```{r echo = FALSE}
 table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
 ```
 
+### Valores marginales de la tabla de contingencia:
 
+```{r echo = FALSE}
+table1 <- table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
 
+rowSums(table1)
+colSums(table1)
+```
+### Porcentajes de la tabla de contingencia
 
+```{r echo = FALSE}
 
+prop.table(table1)
+prop.table(table1)*100
 
-
-
-
-```{r pressure, echo=FALSE}
 
 ```
+Ésta es una distribución de probabilidad conjunta, a partir de la cual podemos ver que alrededor del 7.8% de la población son hombres pobres.
 
+Podemos ver que por cada 4 personas no pobres, existe una pobre.
+
+# Pruebas estadísticas de independencia
+
+## Prueba de chi-cuadrado
+
+La pregunta más común que surge de las tablas de contingencia es si las variables de fila y columna son independientes. La forma más básica de responderla es realizar una prueba de chi-cuadrado. Comprobemos si el sexo y la condición de pobreza son independientes:
+
+```{r pressure, echo=FALSE}
+chisq.test(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
+```
+
+
+La aproximación Chi-cuadrado puede ser una advertencia incorrecta. Esto se debe a que el estadístico chi-cuadrado sigue la distribución de chi-cuadrado solo aproximadamente. Cuantas más observaciones tengamos, mejor será la aproximación. La función chisq.test arroja la advertencia anterior siempre que uno de los recuentos esperados sea inferior a 5.
+
+## Prueba exacta de Fisher
+
+La prueba exacta de Fisher es una alternativa a la prueba de chi-cuadrado que se utiliza principalmente cuando una aproximación de chi-cuadrado no es satisfactoria. 
+
+```{r echo = FALSE}
+fisher.test(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo")
+```
+
+
+
+# Tablas de contingencia generalizadas
+
+
+```{r echo = FALSE}
+df0 <- table(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
+
+df0 
+```
+
+Version compacta:
+
+```{r echo = FALSE}
+dt1 <- ftable(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
+dt1
+```
+
+```{r}
+dt2 <- ftable(datos_df_1000$"Situación de pobreza multidimensional (4 dimensiones)", datos_df_1000$"Sexo", datos_df_1000$"Estado civil")
+```
+
+
+
+
+```{r}
+# names(tabla_3)[1]<-paste("premium")
+# names(tabla_3)[2]<-paste("change")
+# names(tabla_3)[3]<-paste("newprice") 
+```
+
+
+
+```{r echo = FALSE}
+u <- kable(df0, caption = "Tabla de contingencia para la Casen 2017 sobre tres variables: sexo, estado civil y situación de pobreza.", font_size = 16, col.names = c("Situación socioeconómica","Sexo","Estado civil","Frecuencia")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = T,
+                font_size = 12,
+                position = "left") 
+u
+```
 
