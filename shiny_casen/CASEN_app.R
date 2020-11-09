@@ -35,7 +35,11 @@ oldw <- getOption("warn")
 options(warn = -1)
 
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
-# prueba christian
+
+# prueba victor 003
+
+
+
 dataset <- read.csv('Casen_no_humano.csv')
 
 
