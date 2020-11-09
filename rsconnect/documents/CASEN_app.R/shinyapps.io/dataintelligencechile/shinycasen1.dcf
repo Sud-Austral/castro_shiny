@@ -1,0 +1,12 @@
+name: shinycasen1
+title: shinycasen1
+username:
+account: dataintelligencechile
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3131556
+bundleId: 3802300
+url: https://dataintelligencechile.shinyapps.io/shinycasen1/
+when: 1604090525.51458
+asMultiple: FALSE
+asStatic: FALSE

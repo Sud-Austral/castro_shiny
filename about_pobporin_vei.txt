@@ -1,0 +1,4 @@
+Coresponde a la columna 767 que representa la situacion de pobreza por ingresos y que tiene 3 categorias:
+Pobres extremos
+Pobres no extremos y
+No pobres
