@@ -254,9 +254,11 @@ server <- function(input, output, session) {
         br(),
         tabPanel("Introducción",
                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
+        
+        
         tabPanel("Despliegue de la tabla",
-                 fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                          column(3,  tableOutput("contents12")))),
+                 fluidRow(column(3, includeMarkdown("about_pobporin_vei.txt")),
+                          column(12,dataTableOutput("table2009mn")))),
         
         tabPanel("Frecuencias por preguntas", fluidRow(
           column(12, includeMarkdown("about_educacion.md.txt")),
@@ -276,7 +278,29 @@ server <- function(input, output, session) {
                      column(12, plotOutput("cyb_2009_mn"))
                    ))
                    
-        )
+        ),
+        
+        tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
+                 
+                 sidebarLayout(
+                   
+                   sidebarPanel(
+                     
+                     selectInput("dataset", "Escoja una base de datos:",
+                                 choices = c("casen 2009", "plot")),
+                     
+                     downloadButton("Casen_2009_mn", "Descargar"),
+                     br(),
+                     downloadButton("Plot_Casen_2009_mn", "Descargar el plot")
+                   ),
+                   
+                   
+                   
+                   mainPanel()
+                   
+                   
+                 ))
+        
       )
     }
     
@@ -288,9 +312,11 @@ server <- function(input, output, session) {
         br(),
         tabPanel("Introducción",
                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
+        
         tabPanel("Despliegue de la tabla",
-                 fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                          column(3,  tableOutput("contents12")))),
+                 fluidRow(column(3, includeMarkdown("about_pobporin_vei.txt")),
+                          column(12,dataTableOutput("table2011mn")))),
+        
         tabPanel("Frecuencias por preguntas", fluidRow(
           column(12, includeMarkdown("about_educacion.md.txt")),
           selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
@@ -309,7 +335,29 @@ server <- function(input, output, session) {
                      column(12, plotOutput("cyb_2011"))
                    ))
                    
-        )
+        ),
+        
+        tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
+                 
+                 sidebarLayout(
+                   
+                   sidebarPanel(
+                     
+                     selectInput("dataset", "Escoja una base de datos:",
+                                 choices = c("casen 2011", "plot")),
+                     
+                     downloadButton("Casen_2011_ymt", "Descargar"),
+                     br(),
+                     downloadButton("Plot_Casen_2011_ymt", "Descargar el plot")
+                   ),
+                   
+                   mainPanel()
+                   
+                   
+                 ))
+        
+        
+        
       )
     }
     
@@ -319,9 +367,11 @@ server <- function(input, output, session) {
         br(),
         tabPanel("Introducción",
                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
+        
         tabPanel("Despliegue de la tabla",
-                 fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                          column(3,  tableOutput("contents12")))),
+                 fluidRow(column(3, includeMarkdown("about_pobporin_vei.txt")),
+                          column(12,dataTableOutput("table20ymt")))),
+        
         tabPanel("Frecuencias por preguntas", fluidRow(
           column(12, includeMarkdown("about_educacion.md.txt")),
           selectInput("ptabla20111", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
@@ -338,7 +388,27 @@ server <- function(input, output, session) {
                      column(12, includeMarkdown("info_2006_cyb.md")),
                      selectInput("ptabla_cyb_2011_ymt", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
                      column(12, plotOutput("cyb_2011_ymt"))
-                   ))
+                   )),
+                   
+                   
+                   tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
+                            
+                            sidebarLayout(
+                              
+                              sidebarPanel(
+                                
+                                selectInput("dataset", "Escoja una base de datos:",
+                                            choices = c("casen 2011", "plot")),
+                                
+                                downloadButton("Casen_2011_mn", "Descargar"),
+                                br(),
+                                downloadButton("Plot_Casen_2011_mn", "Descargar el plot")
+                              ),
+                              
+                              mainPanel()
+                              
+                              
+                            ))
                    
         )
       )
@@ -1221,7 +1291,8 @@ server <- function(input, output, session) {
   
   #########################################################################################################################################
   #########################################################################################################################################
-  #########################################################################################################################################
+  
+  ######################################################## 2006 ##############################################################################
   
   
   
@@ -1240,7 +1311,7 @@ server <- function(input, output, session) {
     }
   )
   
-  ################################################################################################################################3
+  ######################################################### 2009 ymt ##################################################################3
   
   
   
@@ -1258,6 +1329,67 @@ server <- function(input, output, session) {
       write.table(mydata_educacion_2000(), file)
     }
   )
+  
+  
+  ######################################################### 2009 mn ##################################################################3
+  
+  
+  
+  output$Plot_Casen_2009_mn <- downloadHandler(
+    filename = function(){paste("input$plot3",'.png',sep='')},
+    content = function(file){
+      ggsave(file,plot=ggplot(mydata_educacion_3000(), aes(mydata_educacion_3000()$"Ingreso Del Trabajo")) + geom_density())})
+  
+  
+  output$Casen_2009_mn <- downloadHandler(
+    filename = function() {
+      "la_data.csv"
+    },
+    content = function(file) {
+      write.table(mydata_educacion_3000(), file)
+    }
+  )
+  
+  ######################################################### 2011 ymt ##################################################################3
+  
+  
+  
+  output$Plot_Casen_2011_ymt <- downloadHandler(
+    filename = function(){paste("input$plot3",'.png',sep='')},
+    content = function(file){
+      ggsave(file,plot=ggplot(mydata_educacion_5000(), aes(mydata_educacion_5000()$"Ingreso Del Trabajo")) + geom_density())})
+  
+  
+  output$Casen_2011_ymt <- downloadHandler(
+    filename = function() {
+      "la_data.csv"
+    },
+    content = function(file) {
+      write.table(mydata_educacion_5000(), file)
+    }
+  )
+  
+  
+  ######################################################### 2011 mn ##################################################################3
+  
+  
+  
+  output$Plot_Casen_2011_mn <- downloadHandler(
+    filename = function(){paste("input$plot3",'.png',sep='')},
+    content = function(file){
+      ggsave(file,plot=ggplot(mydata_educacion_4000(), aes(mydata_educacion_4000()$"Ingreso Del Trabajo")) + geom_density())})
+  
+  
+  output$Casen_2011_mn <- downloadHandler(
+    filename = function() {
+      "la_data.csv"
+    },
+    content = function(file) {
+      write.table(mydata_educacion_4000(), file)
+    }
+  )
+  
+  
   
   
   
