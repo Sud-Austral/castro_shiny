@@ -70,7 +70,9 @@ datos_df_casen_2011_mil_ymt_preg <- colnames(datos_df_casen_2011_mil_ymt )
 ###############################################################################
 
 casen_2013 <- read_xlsx("casen_2013_mil.xlsx")
-casen_2013 <- casen_2013[, 1:600]
+casen_2013 <- casen_2013[, 1:18]
+
+
 casen_2013_headers <- colnames(casen_2013)
 
 ###############################################################################
@@ -421,11 +423,7 @@ server <- function(input, output, session) {
         tabPanel("Variables de identificación",
                  fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
         
-        navbarMenu("pruebas",
-                   
-                   "----",
-                   "",
-                   tabPanel(" ")),
+
         
         navbarMenu("Factores de expansión",
                    tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
@@ -511,19 +509,7 @@ server <- function(input, output, session) {
         
         
         
-        
-        navbarMenu("Ingresos corregidos",
-                   tabPanel("Introducción",
-                            fluidRow(column(9, includeMarkdown("about_intro_cc.txt"))
-                            )),
-                   "----",
-                   "",
-                   
-                   tabPanel("Variables",
-                            fluidRow(column(9, includeMarkdown("about_variables_cc.txt")),
-                                     column(3,  tableOutput("contents8")))),
-                   
-                   tabPanel(" ")),
+
         
         navbarMenu("Variables e indicadores de pobreza",
                    tabPanel("Introducción",
@@ -577,10 +563,32 @@ server <- function(input, output, session) {
         
         navbarMenu("Estadísticas",
                    #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
-                   tabPanel("Tabla educacion", tableOutput("contents_educacion")),
+
+                              tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
+                              "----",
+                              "",
+                              tabPanel("Primer módulo", fluidRow(
+                                column(12, includeMarkdown("about_educacion.md.txt")),
+                                selectInput("ptabla2013", "prueba tabla:", c(casen_2013_headers)),
+                                column(12, dataTableOutput("prueba_tabla"))
+                              )),
+                              
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
                    tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
                    "----",
                    "",
+                   
+                   
+                   
+                   
+                   
                    tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
                    tabPanel("  ")),
         
@@ -589,12 +597,15 @@ server <- function(input, output, session) {
                    
                    
                    
-                   selectInput("ptabla2013_primerav", "ingrese primera variable:", c()),
-                   selectInput("ptabla2013_segundav", "ingrese segunda variable:", c()),
+             
                    
-                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c13")))),
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,       selectInput("ptabla2013_primerav", "ingrese primera variable:", c()),
+                                                                            selectInput("ptabla2013_segundav", "ingrese segunda variable:", c()),
+                                                                            verbatimTextOutput("tabla_d_c13")))),
                    
-                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi13"))))
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3,       selectInput("ptabla2013_primerav", "ingrese primera variable:", c()),
+                                                                         selectInput("ptabla2013_segundav", "ingrese segunda variable:", c()),
+                                                                         verbatimTextOutput("tabla_chi13"))))
         ) 
       )
     }
@@ -825,6 +836,9 @@ server <- function(input, output, session) {
                      selectInput("ptabla2017", "prueba tabla:", c(datos_df_casen_2017_mil_preg)),
                      column(12, dataTableOutput("prueba_tabla"))
                    )),
+                   
+                   
+                   
                    tabPanel("Segundo módulo (E): Educacion ",
                             fluidRow(column(6, includeMarkdown("about_educacion.md.txt")),
                                      selectInput("ptabla2017edu", "prueba tabla:", c(datos_df_casen_2017_mil_pregedu)),
@@ -990,33 +1004,33 @@ server <- function(input, output, session) {
   ############################# division modular Casen original 2013 ###########################
   ##########################################################################
 
-casen_2016_original_reg_residentes <- reactive({
+casen_2013_original_reg_residentes <- reactive({
     data <- casen_2013[, 1:18]
     return(data)
   })
   
-  casen_2016_original_educacion <- reactive({
+  casen_2013_original_educacion <- reactive({
     data <- casen_2013[, 19:75]
     return(data)
   })
-  casen_2016_original_trabajo <- reactive({
+  casen_2013_original_trabajo <- reactive({
     data <- casen_2013[, 76:118]
     return(data)
   })
-  casen_2016_original_ingresos <- reactive({
+  casen_2013_original_ingresos <- reactive({
     data <- casen_2013[, 119:145]
     return(data)
   })
   
-  casen_2016_original_salud <- reactive({
+  casen_2013_original_salud <- reactive({
     data <- casen_2013[, 146:232]
     return(data)
   })
-  casen_2016_original_residentes <- reactive({
+  casen_2013_original_residentes <- reactive({
     data <- casen_2013[, 233:287]
     return(data)
   })
-  casen_2016_original_vivienda <- reactive({
+  casen_2013_original_vivienda <- reactive({
     data <- casen_2013[, 288:372]
     return(data)
   })
@@ -1056,7 +1070,7 @@ casen_2016_original_reg_residentes <- reactive({
   ######################################################################################
   ######################################################################################
   
-  output$table2013 <- renderDataTable(casen_2016_original_reg_residentes())
+  output$table2013 <- renderDataTable(casen_2013_original_reg_residentes())
   
   ######################################################################################
   ######################################################################################
@@ -1271,7 +1285,7 @@ casen_2016_original_reg_residentes <- reactive({
   })
   
   
-  ########################################################################## 2013  ##########################################################################  
+  ########################################################################## 2013  chi ##########################################################################  
   
   
   output$tabla_d_c15<-renderPrint({
@@ -1505,7 +1519,7 @@ casen_2016_original_reg_residentes <- reactive({
     
     else if(input$variable_anio == 2013)
     {
-      preguntaseternas2013<- table2013()
+      preguntaseternas2013<- casen_2013_original_reg_residentes()
       preguntaseternas_sub2013 <- preguntaseternas2013[,input$ptabla2013]
       w2006 = table(preguntaseternas_sub2013)
       t = as.data.frame(w2006)
@@ -1535,18 +1549,7 @@ casen_2016_original_reg_residentes <- reactive({
     } 
   })
   ################################################################################################################################3
-  output$prueba_tablaedu <- renderDataTable({
-    
-    
-    if(input$variable_anio == 2017)
-    {
-      preguntaseternas2017<- mydata_educacion()
-      preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2017edu]
-      w2007 = table(preguntaseternas_sub2017)
-      t = as.data.frame(w2007)
-      
-    } 
-  })
+ 
 }
 
 options(warn = oldw)
