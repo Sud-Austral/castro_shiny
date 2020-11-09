@@ -417,8 +417,7 @@ server <- function(input, output, session) {
     
     else if (user == 2013){
       navbarPage(
-        
-        
+
         br(),
         
         tabPanel("Introducción",
@@ -466,11 +465,16 @@ server <- function(input, output, session) {
                    tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
                    "----",
                    "",
-                   tabPanel("Primer módulo", fluidRow(
-                     column(12, includeMarkdown("about_educacion.md.txt")),
-                     selectInput("ptabla2013", "prueba tabla:", c(datos_df_casen_2013_mil_preg)),
-                     column(12, dataTableOutput("prueba_tabla"))
+                   
+                   
+                   tabPanel("Primer módulo", 
+                            fluidRow(column(12, includeMarkdown("about_educacion.md.txt")),
+                            selectInput("ptabla2013", "prueba tabla:", c(datos_df_casen_2013_mil_preg)),
+                            column(12, dataTableOutput("casen_2016_original_reg_residentes"))
                    )),
+                   
+                   
+                   
                    tabPanel("Segundo módulo (E): Educacion ",
                             fluidRow(column(6, includeMarkdown("about_educacion.md.txt")),
                                      column(3,  tableOutput("contents2")))),
@@ -972,11 +976,42 @@ server <- function(input, output, session) {
     return(datos_dfe)
   })
   
-  mydata_educacion_6000 <- reactive({
-    datos_dfe <- datos_df_casen_2013_mil[, 1:600]
-    datos_dfe 
-    return(datos_dfe)
+  
+  ############################# division modular Casen original 2013 ###########################
+  ##########################################################################
+  
+casen_2016_original_reg_residentes <- reactive({
+    data <- datos_df_casen_2013_mil[, 1:18]
+    return(data)
   })
+  
+  casen_2016_original_educacion <- reactive({
+    data <- datos_df_casen_2013_mil[, 19:75]
+    return(data)
+  })
+  casen_2016_original_trabajo <- reactive({
+    data <- datos_df_casen_2013_mil[, 76:118]
+    return(data)
+  })
+  casen_2016_original_ingresos <- reactive({
+    data <- datos_df_casen_2013_mil[, 119:145]
+    return(data)
+  })
+  
+  casen_2016_original_salud <- reactive({
+    data <- datos_df_casen_2013_mil[, 146:232]
+    return(data)
+  })
+  casen_2016_original_residentes <- reactive({
+    data <- datos_df_casen_2013_mil[, 233:287]
+    return(data)
+  })
+  casen_2016_original_vivienda <- reactive({
+    data <- datos_df_casen_2013_mil[, 288:372]
+    return(data)
+  })
+  
+  ##########################################################################
   
   mydata_educacion_7000 <- reactive({
     datos_dfe <- datos_df_casen_2015_mil[, 1:776]
@@ -1005,7 +1040,11 @@ server <- function(input, output, session) {
   output$table2009mn <- renderDataTable(mydata_educacion_3000())
   output$table2011mn <- renderDataTable(mydata_educacion_4000())
   output$table20ymt <- renderDataTable(mydata_educacion_5000())
-  output$table2013 <- renderDataTable(mydata_educacion_6000())
+  
+  
+  output$table2013 <- renderDataTable(casen_2016_original_reg_residentes())
+  
+  
   output$table2015 <- renderDataTable(mydata_educacion_7000())
   output$table2017 <- renderDataTable(mydata_educacion_8000())
   
@@ -1393,7 +1432,7 @@ server <- function(input, output, session) {
   
   
   
-  ################################################################################################################################3
+  ##################################################  tablas de contingencia ##############################################################################3
   output$prueba_tabla <- renderDataTable({
     
     if(input$variable_anio == 2006)
@@ -1437,13 +1476,25 @@ server <- function(input, output, session) {
       w2005 = table(preguntaseternas_sub20111)
       t = as.data.frame(w2005)
     } 
+    
+    
+    
+    ######   2013    ####################
+    ######   2013    ####################
+    ######   2013    ####################
+    
     else if(input$variable_anio == 2013)
     {
-      preguntaseternas2013<- mydata_educacion_6000()
+      preguntaseternas2013<- table2013()
       preguntaseternas_sub2013 <- preguntaseternas2013[,input$ptabla2013]
       w2006 = table(preguntaseternas_sub2013)
       t = as.data.frame(w2006)
     } 
+    
+    
+    
+    
+    
     else if(input$variable_anio == 2015)
     {
       preguntaseternas2015<- mydata_educacion_7000()
