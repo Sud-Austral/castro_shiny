@@ -1,9 +1,6 @@
 # Casen
 # Victor Enamorado - Christian Castro
 # 30 de Octubre del 2020
-
-# dato prueba Victor
-
 library(ggplot2)
 library(ggpubr)
 library(markdown)
@@ -26,9 +23,12 @@ library(epiDisplay)
 library(haven)
 library(epiDisplay)
 library("readxl")
+
 library(hrbrthemes)
 library(viridis)
 library(viridisLite)
+
+
 library(writexl)
 
 oldw <- getOption("warn")
@@ -79,8 +79,13 @@ datos_df_casen_2015_mil <- datos_df_casen_2015_mil[, 1:776]
 datos_df_casen_2015_mil_preg <- colnames(datos_df_casen_2015_mil)
 
 datos_df_casen_2017_mil <- read_xlsx("casen_2017_mil.xlsx")
-datos_df_casen_2017_mil  <- datos_df_casen_2017_mil[, 1:808]
+datos_df_casen_2017_mil <- datos_df_casen_2017_mil[, 1:808]
 datos_df_casen_2017_mil_preg <- colnames(datos_df_casen_2017_mil)
+
+datos_df_casen_2017_miledu <- read_xlsx("casen_2017_mil.xlsx")
+datos_df_casen_2017_miledu <- datos_df_casen_2017_miledu[, 43:102]
+datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
+
 
 
 ui <- fluidPage(theme = shinytheme("cerulean"),
@@ -480,7 +485,20 @@ server <- function(input, output, session) {
                    "----",
                    "",
                    tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
-                   tabPanel("  ")) 
+                   tabPanel("  ")),
+        
+        navbarMenu("Tablas de contingencia",
+                   #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                   
+                   
+                   
+                   selectInput("ptabla2013_primerav", "ingrese primera variable:", c()),
+                   selectInput("ptabla2013_segundav", "ingrese segunda variable:", c()),
+                   
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c13")))),
+                   
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi13"))))
+        ) 
       )
     }
     
@@ -637,7 +655,20 @@ server <- function(input, output, session) {
                    "----",
                    "",
                    tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
-                   tabPanel("  ")) 
+                   tabPanel("  ")),
+        
+        navbarMenu("Tablas de contingencia",
+                   #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                   
+                   
+                   
+                   selectInput("ptabla2015_primerav", "ingrese primera variable:", c()),
+                   selectInput("ptabla2015_segundav", "ingrese segunda variable:", c()),
+                   
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c15")))),
+                   
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi15"))))
+        ) 
       )
     }
     
@@ -699,7 +730,8 @@ server <- function(input, output, session) {
                    )),
                    tabPanel("Segundo módulo (E): Educacion ",
                             fluidRow(column(6, includeMarkdown("about_educacion.md.txt")),
-                                     column(3,  tableOutput("contents2")))),
+                                     selectInput("ptabla2017edu", "prueba tabla:", c(datos_df_casen_2017_mil_pregedu)),
+                                     column(3,  tableOutput("prueba_tablaedu")))),
                    
                    tabPanel("Tercer módulo (O): Trabajo ",
                             fluidRow(column(6, includeMarkdown("about_trabajo.txt")),
@@ -799,14 +831,15 @@ server <- function(input, output, session) {
         navbarMenu("Tablas de contingencia",
                    #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                    
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,
+                                                                            selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                            selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                            verbatimTextOutput("tabla_d_c")))),
                    
-                   
-                   selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                   selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
-                   
-                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c")))),
-                   
-                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi"))))
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
+                                                                         selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                         selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                         verbatimTextOutput("tabla_chi"))))
         ) 
       )
     }
@@ -818,7 +851,7 @@ server <- function(input, output, session) {
   
   
   mydata_educacion_exp <- reactive({
-    datos_dfe <- dataset
+    datos_dfe <- dataset[, 1:32]
     
     return(datos_dfe)
   })
@@ -870,6 +903,12 @@ server <- function(input, output, session) {
   
   mydata_educacion_8000 <- reactive({
     datos_dfe <- datos_df_casen_2017_mil[, 1:808]
+    datos_dfe 
+    return(datos_dfe)
+  })
+  
+  mydata_educacion <- reactive({
+    datos_dfe <- datos_df_casen_2017_miledu[, 43:102]
     datos_dfe 
     return(datos_dfe)
   })
@@ -1008,7 +1047,7 @@ server <- function(input, output, session) {
   })
   
   
- 
+  
   
   ########################################################################## 2011 mn  ######################################################################
   
@@ -1092,6 +1131,56 @@ server <- function(input, output, session) {
   })
   
   
+  ########################################################################## 2013  ##########################################################################  
+  
+  
+  output$tabla_d_c15<-renderPrint({
+    a <- input$ptabla2015_primerav
+    b <- input$ptabla2015_segundav
+    preguntaseternas2001_ab <- mydata_educacion_6000()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+    cross_tab15 = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    return(cross_tab15)
+  })
+  
+  output$tabla_chi15<-renderPrint({
+    a <- input$ptabla2015_primerav
+    b <- input$ptabla2015_segundav
+    preguntaseternas2001_ab <- mydata_educacion_6000()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+    cross_tab15 = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    chicuadrado15 <- chisq.test(cross_tab15)
+    return(chicuadrado15)
+  })
+  
+  
+  ########################################################################## 2015  ##########################################################################  
+  
+  
+  output$tabla_d_c13<-renderPrint({
+    a <- input$ptabla2013_primerav
+    b <- input$ptabla2013_segundav
+    preguntaseternas2001_ab <- mydata_educacion_7000()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+    cross_tab13 = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    return(cross_tab13)
+  })
+  
+  output$tabla_chi13<-renderPrint({
+    a <- input$ptabla2013_primerav
+    b <- input$ptabla2013_segundav
+    preguntaseternas2001_ab <- mydata_educacion_7000()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+    cross_tab13 = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    chicuadrado13 <- chisq.test(cross_tab13)
+    return(chicuadrado13)
+  })
+  
+  
   ########################################################################## 2017  ##########################################################################  
   
   
@@ -1118,8 +1207,10 @@ server <- function(input, output, session) {
   
   
   #########################################################################################################################################
+  #########################################################################################################################################
+  #########################################################################################################################################
   
-   
+  
   
   output$downloadPlot <- downloadHandler(
     filename = function(){paste("input$plot3",'.png',sep='')},
@@ -1127,37 +1218,37 @@ server <- function(input, output, session) {
       ggsave(file,plot=ggplot(mydata_educacion_1000(), aes(mydata_educacion_1000()$"Ingreso Del Trabajo")) + geom_density())})
   
   
-   output$downloadData <- downloadHandler(
-     filename = function() {
-       "la_data.csv"
-     },
-     content = function(file) {
-       write.table(mydata_educacion_1000(), file)
-     }
-   )
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      "la_data.csv"
+    },
+    content = function(file) {
+      write.table(mydata_educacion_1000(), file)
+    }
+  )
   
-   ################################################################################################################################3
-   
-   
-   
-   output$downloadPlot2009 <- downloadHandler(
-     filename = function(){paste("input$plot3",'.png',sep='')},
-     content = function(file){
-       ggsave(file,plot=ggplot(mydata_educacion_2000(), aes(mydata_educacion_2000()$"Ingreso Del Trabajo")) + geom_density())})
-   
-   
-   output$downloadData2009 <- downloadHandler(
-     filename = function() {
-       "la_data.csv"
-     },
-     content = function(file) {
-       write.table(mydata_educacion_2000(), file)
-     }
-   )
-   
-   
-   
-   ################################################################################################################################3
+  ################################################################################################################################3
+  
+  
+  
+  output$downloadPlot2009 <- downloadHandler(
+    filename = function(){paste("input$plot3",'.png',sep='')},
+    content = function(file){
+      ggsave(file,plot=ggplot(mydata_educacion_2000(), aes(mydata_educacion_2000()$"Ingreso Del Trabajo")) + geom_density())})
+  
+  
+  output$downloadData2009 <- downloadHandler(
+    filename = function() {
+      "la_data.csv"
+    },
+    content = function(file) {
+      write.table(mydata_educacion_2000(), file)
+    }
+  )
+  
+  
+  
+  ################################################################################################################################3
   output$prueba_tabla <- renderDataTable({
     
     if(input$variable_anio == 2006)
@@ -1221,6 +1312,23 @@ server <- function(input, output, session) {
       preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2017]
       w2007 = table(preguntaseternas_sub2017)
       t = as.data.frame(w2007)
+      
+      
+      
+      
+    } 
+  })
+  ################################################################################################################################3
+  output$prueba_tablaedu <- renderDataTable({
+    
+    
+    if(input$variable_anio == 2017)
+    {
+      preguntaseternas2017<- mydata_educacion()
+      preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2017edu]
+      w2007 = table(preguntaseternas_sub2017)
+      t = as.data.frame(w2007)
+      
     } 
   })
 }
