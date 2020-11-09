@@ -1,13 +1,8 @@
 
-
-# ggg
-
-# hhh
-
-
 # Casen
 # Victor Enamorado - Christian Castro
 # 30 de Octubre del 2020
+
 library(ggplot2)
 library(ggpubr)
 library(markdown)
@@ -30,12 +25,9 @@ library(epiDisplay)
 library(haven)
 library(epiDisplay)
 library("readxl")
-
 library(hrbrthemes)
 library(viridis)
 library(viridisLite)
-
-
 library(writexl)
 
 oldw <- getOption("warn")
@@ -48,15 +40,8 @@ options(warn = -1)
 
 
 dataset <- read.csv('Casen_no_humano.csv')
-
-
 #dataset = read_sav("Casen_no_humano.csv")
 datos_df_exp <- colnames(dataset)
-
-
-
-
-
 
 datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
 # datos_df_1000 <- cbind(casen2017_1, casen2017_2)
@@ -79,15 +64,24 @@ datos_df_casen_2011_mil_ymt <- read_xlsx("casen_2011_mil_ymt.xlsx")
 datos_df_casen_2011_mil_ymt  <- datos_df_casen_2011_mil_ymt [, 1:24]
 datos_df_casen_2011_mil_ymt_preg <- colnames(datos_df_casen_2011_mil_ymt )
 
-###################
 
-datos_df_casen_2013_mil <- read_xlsx("casen_2013_mil.xlsx")
-datos_df_casen_2013_mil <- datos_df_casen_2013_mil[, 1:600]
-datos_df_casen_2013_mil_preg <- colnames(datos_df_casen_2013_mil)
+###############################################################################
+######################   trabajo de hoy 9 de Noviembre ########################
+###############################################################################
 
-datos_df_casen_2015_mil <- read_xlsx("casen_2015_mil.xlsx")
-datos_df_casen_2015_mil <- datos_df_casen_2015_mil[, 1:776]
-datos_df_casen_2015_mil_preg <- colnames(datos_df_casen_2015_mil)
+casen_2013 <- read_xlsx("casen_2013_mil.xlsx")
+casen_2013 <- casen_2013[, 1:600]
+casen_2013_headers <- colnames(casen_2013)
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+
+
+casen_2015 <- read_xlsx("casen_2015_mil.xlsx")
+casen_2015 <- casen_2015[, 1:776]
+casen_2015_headers <- colnames(casen_2015)
 
 datos_df_casen_2017_mil <- read_xlsx("casen_2017_mil.xlsx")
 datos_df_casen_2017_mil <- datos_df_casen_2017_mil[, 1:808]
@@ -413,6 +407,7 @@ server <- function(input, output, session) {
         )
       )
     }
+
     
     
     else if (user == 2013){
@@ -461,6 +456,10 @@ server <- function(input, output, session) {
                    
                    tabPanel(" ")),
         
+        ###############################################################################
+        ###############################################################################
+        ###############################################################################
+        
         navbarMenu("Módulos",
                    tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
                    "----",
@@ -469,8 +468,8 @@ server <- function(input, output, session) {
                    
                    tabPanel("Primer módulo", 
                             fluidRow(column(12, includeMarkdown("about_educacion.md.txt")),
-                            selectInput("ptabla2013", "prueba tabla:", c(datos_df_casen_2013_mil_preg)),
-                            column(12, dataTableOutput("casen_2016_original_reg_residentes"))
+                           # selectInput("ptabla2013", "prueba tabla:", c(casen_2013_headers)),
+                            column(12, dataTableOutput("table2013"))
                    )),
                    
                    
@@ -501,6 +500,17 @@ server <- function(input, output, session) {
                                      column(3,  tableOutput("contents7")))),
                    
                    tabPanel(" ")),
+        
+        
+        
+        
+        
+        ###############################################################################
+        ###############################################################################
+        ###############################################################################
+        
+        
+        
         
         navbarMenu("Ingresos corregidos",
                    tabPanel("Introducción",
@@ -642,7 +652,7 @@ server <- function(input, output, session) {
                    "",
                    tabPanel("Primer módulo", fluidRow(
                      column(12, includeMarkdown("about_educacion.md.txt")),
-                     selectInput("ptabla2013", "prueba tabla:", c(datos_df_casen_2013_mil_preg)),
+                     selectInput("ptabla2013", "prueba tabla:", c(casen_2013_headers)),
                      column(12, dataTableOutput("prueba_tabla"))
                    )),
                    tabPanel("Segundo módulo (E): Educacion ",
@@ -979,42 +989,42 @@ server <- function(input, output, session) {
   
   ############################# division modular Casen original 2013 ###########################
   ##########################################################################
-  
+
 casen_2016_original_reg_residentes <- reactive({
-    data <- datos_df_casen_2013_mil[, 1:18]
+    data <- casen_2013[, 1:18]
     return(data)
   })
   
   casen_2016_original_educacion <- reactive({
-    data <- datos_df_casen_2013_mil[, 19:75]
+    data <- casen_2013[, 19:75]
     return(data)
   })
   casen_2016_original_trabajo <- reactive({
-    data <- datos_df_casen_2013_mil[, 76:118]
+    data <- casen_2013[, 76:118]
     return(data)
   })
   casen_2016_original_ingresos <- reactive({
-    data <- datos_df_casen_2013_mil[, 119:145]
+    data <- casen_2013[, 119:145]
     return(data)
   })
   
   casen_2016_original_salud <- reactive({
-    data <- datos_df_casen_2013_mil[, 146:232]
+    data <- casen_2013[, 146:232]
     return(data)
   })
   casen_2016_original_residentes <- reactive({
-    data <- datos_df_casen_2013_mil[, 233:287]
+    data <- casen_2013[, 233:287]
     return(data)
   })
   casen_2016_original_vivienda <- reactive({
-    data <- datos_df_casen_2013_mil[, 288:372]
+    data <- casen_2013[, 288:372]
     return(data)
   })
   
   ##########################################################################
   
   mydata_educacion_7000 <- reactive({
-    datos_dfe <- datos_df_casen_2015_mil[, 1:776]
+    datos_dfe <- casen_2015[, 1:776]
     datos_dfe 
     return(datos_dfe)
   })
@@ -1042,7 +1052,15 @@ casen_2016_original_reg_residentes <- reactive({
   output$table20ymt <- renderDataTable(mydata_educacion_5000())
   
   
+  ######################################################################################
+  ######################################################################################
+  ######################################################################################
+  
   output$table2013 <- renderDataTable(casen_2016_original_reg_residentes())
+  
+  ######################################################################################
+  ######################################################################################
+  ######################################################################################
   
   
   output$table2015 <- renderDataTable(mydata_educacion_7000())
@@ -1433,6 +1451,8 @@ casen_2016_original_reg_residentes <- reactive({
   
   
   ##################################################  tablas de contingencia ##############################################################################3
+  
+  
   output$prueba_tabla <- renderDataTable({
     
     if(input$variable_anio == 2006)
