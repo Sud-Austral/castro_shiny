@@ -38,10 +38,14 @@ options(warn = -1)
 # prueba victor 004
 # https://www.datacamp.com/community/tutorials/contingency-tables-r
 
+dataset <- read.csv('Casen_no_humano.csv')
 
-dataset_2017 <- read.csv('Casen_no_humano.csv')
+
 #dataset = read_sav("Casen_no_humano.csv")
-datos_df_exp <- colnames(dataset_2017)
+datos_df_exp <- colnames(dataset)
+# dataset_2017 <- read.csv('Casen_no_humano.csv')
+# #dataset = read_sav("Casen_no_humano.csv")
+# datos_df_exp <- colnames(dataset_2017)
 
 datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
 # datos_df_1000 <- cbind(casen2017_1, casen2017_2)
@@ -616,31 +620,16 @@ server <- function(input, output, session) {
         
         
         navbarMenu("Tablas de contingencia",
-                   #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
-                   
-                   
-                   # output$tabla_d_c13<-renderPrint({
-                   #   a <- input$ptabla2013_primerav
-                   #   b <- input$ptabla2013_segundav
-                   
-                   #  mydata_educacion_7000() tiene datos
-                   
-                   #   preguntaseternas2001_ab <- mydata_educacion_7000()
-                   #   preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
-                   #   preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
-                   #   cross_tab13 = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-                   #   return(cross_tab13)
-                   # })
-                   
 
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,
+                                                                            selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                            selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                            verbatimTextOutput("tabla_d_c")))),
                    
-                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,       selectInput("ptabla2013_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                                                                            selectInput("ptabla2013_segundav", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                            verbatimTextOutput("tabla_d_c_2013")))),
-                   
-                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3,       selectInput("ptabla2013_primerav", "ingrese primera variable:", c()),
-                                                                         selectInput("ptabla2013_segundav", "ingrese segunda variable:", c()),
-                                                                         verbatimTextOutput("tabla_chi13"))))
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
+                                                                         selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                         selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                         verbatimTextOutput("tabla_chi"))))
         ) 
       )
     }
@@ -810,7 +799,7 @@ server <- function(input, output, session) {
                    
                    tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c_2015")))),
                    
-                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi15"))))
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi_2015"))))
         ) 
       )
     }
@@ -1004,8 +993,8 @@ server <- function(input, output, session) {
                                                                             verbatimTextOutput("tabla_d_c_2017")))),
                    
                    tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
-                                                                         selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                                                                         selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                         selectInput("ptabla2017_primerav_chi", "ingrese primera variable:", c(datos_df_exp)),
+                                                                         selectInput("ptabla2017_segundav_chi", "ingrese segunda variable:", c(datos_df_exp)),
                                                                          verbatimTextOutput("tabla_chi_2017"))
                                                                   ))
         ) ,
@@ -1029,15 +1018,14 @@ server <- function(input, output, session) {
     
   })
   
-  
+
   mydata_educacion_exp <- reactive({
-    datos_dfe <- dataset[, 1:32]
+    datos_dfe <- dataset_2017[, 1:32]
     
     return(datos_dfe)
   })
   
-  
-  
+
   mydata_educacion_1000 <- reactive({
     datos_dfe <- datos_df_1000[, 1:32]
     datos_dfe
@@ -1167,8 +1155,33 @@ casen_2013_original_reg_residentes <- reactive({
   
   output$table2017 <- renderDataTable(mydata_educacion_8000())
   
+  ############################
+  output$tabla_d_c<-renderPrint({
+    a <- input$ptabla2017_primerav
+    b <- input$ptabla2017_segundav
+    preguntaseternas2001_ab <- mydata_educacion_exp()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b]
+    cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    return(cross_tab)
+  })
   
+  output$tabla_chi<-renderPrint({
+    a <- input$ptabla2017_primerav
+    b <- input$ptabla2017_segundav
+    preguntaseternas2001_ab <- mydata_educacion_exp()
+    preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b]
+    cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    chicuadrado <- chisq.test(cross_tab)
+    return(chicuadrado)
+  })
+##############################
   ########################################################################## 2006  ##########################################################################  
+  
+  
+  
+  
   
   
   
@@ -1414,10 +1427,11 @@ casen_2013_original_reg_residentes <- reactive({
 
   
   output$tabla_d_c_2013 <- renderPrint({
+    
     a <- input$ptabla2013_primerav
     b <- input$ptabla2013_segundav
 
-    variable_ab <-  mydata_casen_2017()
+    variable_ab <-  mydata_educacion_exp()
     
     variable_a <- variable_ab[,a]
     variable_b <- variable_ab[,b] 
