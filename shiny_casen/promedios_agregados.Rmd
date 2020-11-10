@@ -1,7 +1,7 @@
 ---
-title: "Tablas de contingencia generalizadas para la Casen 2017 en un subset de 1000 registros."
+title: "Promedios sobre la Casen 2006 del Ingreso autónomo...13 sobre los grupos formados por los hogares."
 author: "DI"
-date: "09-11-2020"
+date: "10-11-2020"
 output: html_document
 ---
 
@@ -49,40 +49,94 @@ options(warn = -1)
 
 # Promedios
 
+La Casen considera hogares a las unidades sociales que, dentro de una vivienda comparten el presupuesto y el lugar de consumo de una alimentación diaria.
+
+Los hogares vienen entonces caracterizados por un numero identificatorio
+al que pertenece cada una de las personas entrevistadas. En un caso extremo, un hogar lo puede constituir un único sujeto.
+
+Despleguemos entonces, la unidad social **Hogar** y el atributo sobre el cual queremos calcular el promedio, en este caso, el **Ingreso Autónomo**.
+
+Los resultados esperados para el hogar 1 es 190.000, para el 3 160.000 y para el 8 140.000.
+
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 casen_2006  <- read_xlsx("casen_2006_mil.xlsx")
 
-head(casen_2006, 10)
+# head(casen_2006, 10)
+
+```
+
+Verifiquemos los resultados esperados con los obtenidos con nuestra aplicación:
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+casen_2006_sub  <- casen_2006[,c(2,13)]
+# head(casen_2006_sub, 30)
+
+
+
+
+colnames(casen_2006_sub)[2] <- "Ingreso Autónomo"
+# head(casen_2006_sub, 30)
+
+
+
 
 ```
 
 
-```{r}
-casen_2006$"Ingreso autónomo...13"
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+casen_2006_sub30 <- casen_2006_sub[1:30,]
 ```
 
-deben salir solo ceros:
 
 
-```{r}
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+knitr::kable(casen_2006_sub30, align = "c") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+
+
+```
+
+
+
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# casen_2006$"Ingreso autónomo...13"
+```
+
+
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+# deben salir solo ceros:
 vec <- chr(casen_2006$"Ingreso autónomo...13") # make it a character vector first
 vec %na<-% 0
-vec
+
 ```
 
 
 
-```{r}
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 vec = as.double(vec)  
-vec
+
 ```
 
 
 
 
-```{r}
-aggregate(vec, list(casen_2006$"Identificación del hogar"), mean)
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 
+
+
+promedios <- aggregate(vec, list(casen_2006$"Identificación del hogar"), mean)
+
+promedios_10 <- promedios[1:10,]
+
+knitr::kable(promedios_10, align = "c") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
 
 ```
 

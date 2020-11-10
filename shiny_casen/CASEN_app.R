@@ -48,6 +48,13 @@ datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
 datos_df_educacion <- datos_df_1000[, 1:32]
 datos_df_educacion_preg <- colnames(datos_df_educacion)
 
+
+data_2006_filtros_terr <- datos_df_1000[, 1:2]
+data_2006_filtros_terr_ddl <- colnames(data_2006_filtros_terr)
+data_2006_filtros_cat <- datos_df_1000[, 9:32]
+data_2006_filtros_cat_ddl <- colnames(data_2006_filtros_cat)
+
+
 datos_df_2000 <- read_xlsx("casen_2009_mil_ymt.xlsx")
 datos_df_2009_ymt <- datos_df_2000[, 1:5]
 datos_df_2009_ymt_preg <- colnames(datos_df_2009_ymt)
@@ -142,20 +149,43 @@ server <- function(input, output, session) {
           selectInput("ptabla", "prueba tabla:", c(datos_df_educacion_preg)),
           column(12, dataTableOutput("prueba_tabla"))
         )),
-        navbarMenu("Estadísticas y gráficas",
+        
+        
+        navbarMenu("Estadísticas y gráficas por atributo",
                    tabPanel("Promedios", fluidRow(
                      column(12, includeMarkdown("info_2006_prom.md")),
                      selectInput("ptabla_promedios", "prueba tabla:", c(datos_df_educacion_preg)),
                      column(12, verbatimTextOutput("promedios"))
                    )),
-                   
-                   tabPanel("Diagrama de caja y bigotes", fluidRow(
+                   tabPanel("Diagramas de caja y bigotes", fluidRow(
                      column(12, includeMarkdown("info_2006_cyb.md")),
                      selectInput("ptabla_cyb", "prueba tabla:", c(datos_df_educacion_preg)),
                      column(12, plotOutput("cyb"))
-                   ))
-                   
-        ),
+                   ))),
+        
+        
+        ##########################################################################################
+        ######################################### 2006 ###########################################
+        ##########################################################################################
+        
+        navbarMenu("Filtros",
+                   tabPanel("a nivel social", fluidRow(
+                     column(12, includeMarkdown("info_2006_prom.md")),
+                     selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_filtros_terr_ddl)),
+                     selectInput("categoria_filtro", "Seleccione atributo:", c(data_2006_filtros_cat_ddl)),
+                     column(12, verbatimTextOutput("promedios_filtros"))
+                   )),
+                   tabPanel("por personas, núcleos u hogares", fluidRow(
+                     column(12, includeMarkdown("info_2006_cyb.md")),
+                     selectInput("ptabla_cyb", "Seleccione unidad social a considerar:", c(datos_df_educacion_preg)),
+                     column(12, plotOutput("cyb2"))
+                   ))),
+        
+
+          
+        
+        
+        
         tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
                  
                  sidebarLayout(
@@ -792,11 +822,7 @@ server <- function(input, output, session) {
         tabPanel("Variables de identificación",
                  fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
         
-        navbarMenu("pruebas",
-                   
-                   "----",
-                   "",
-                   tabPanel(" ")),
+
         
         navbarMenu("Factores de expansión",
                    tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
@@ -867,18 +893,7 @@ server <- function(input, output, session) {
                    
                    tabPanel(" ")),
         
-        navbarMenu("Ingresos corregidos",
-                   tabPanel("Introducción",
-                            fluidRow(column(9, includeMarkdown("about_intro_cc.txt"))
-                            )),
-                   "----",
-                   "",
-                   
-                   tabPanel("Variables",
-                            fluidRow(column(9, includeMarkdown("about_variables_cc.txt")),
-                                     column(3,  tableOutput("contents8")))),
-                   
-                   tabPanel(" ")),
+
         
         navbarMenu("Variables e indicadores de pobreza",
                    tabPanel("Introducción",
@@ -930,6 +945,35 @@ server <- function(input, output, session) {
                    
                    tabPanel(" ")),
         
+        
+        navbarMenu("Indicadores Casen de elaboración propia con R",
+                   tabPanel("Introducción",
+                            fluidRow(column(9, includeMarkdown("about_intro_mds.txt")))),
+                   "----",
+                   "",
+                   
+                   tabPanel("Variables",
+                            tabsetPanel(
+                              tabPanel("numper", fluidRow(column(9, includeMarkdown("var_numper.txt")))),
+                              tabPanel("asiste",  fluidRow(column(9, includeMarkdown("var_asiste.txt")))),
+                              tabPanel("esc", fluidRow(column(9, includeMarkdown("var_esc.txt")))),
+                              tabPanel("educ", fluidRow(column(9, includeMarkdown("var_educ.txt")))),
+                              tabPanel("depen", fluidRow(column(9, includeMarkdown("var_depen.txt")))),
+                              tabPanel("activ", fluidRow(column(9, includeMarkdown("var_activ.txt")))),
+                              tabPanel("indmat", fluidRow(column(9, includeMarkdown("var_indmat.txt")))),
+                              tabPanel("indsan", fluidRow(column(9, includeMarkdown("var_indsan.txt")))),
+                              tabPanel("calglobviv", fluidRow(column(9, includeMarkdown("var_calglobviv.txt")))),
+                              tabPanel("iae", fluidRow(column(9, includeMarkdown("var_iae.txt")))),
+                              tabPanel("iai", fluidRow(column(9, includeMarkdown("var_iai.txt")))),
+                              tabPanel("hacinamiento", fluidRow(column(9, includeMarkdown("var_hacinamiento.txt"))))
+                              
+                            )),
+                   
+                   tabPanel(" ")),
+        
+        
+        
+        
         navbarMenu("Estadísticas",
                    #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                    tabPanel("Tabla educacion", tableOutput("contents_educacion")),
@@ -939,9 +983,16 @@ server <- function(input, output, session) {
                    tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
                    tabPanel("  ")),
         
-        navbarMenu("Tablas de contingencia",
+        navbarMenu("Filtros",
                    #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
-                   
+                   tabPanel("Por unidad territorial", tableOutput("contents_educacion44")),
+                   tabPanel("Por unidad social", tableOutput("contents_trabajo44")),
+                   "----",
+                   "",
+                   tabPanel("  ")),
+        
+        
+        navbarMenu("Tablas de contingencia",
                    tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,
                                                                             selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                             selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
@@ -950,7 +1001,20 @@ server <- function(input, output, session) {
                    tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
                                                                          selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                          selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                         verbatimTextOutput("tabla_chi"))))
+                                                                         verbatimTextOutput("tabla_chi"))
+                                                                  ))
+        ) ,
+        navbarMenu("Tablas de contingencia > 2x2",
+                   tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,
+                                                                            selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                            selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                            verbatimTextOutput("tabla_d_c")))),
+                   
+                   tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
+                                                                         selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                         selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                         verbatimTextOutput("tabla_chi"))
+                   ))
         ) 
       )
     }
@@ -1114,14 +1178,49 @@ casen_2013_original_reg_residentes <- reactive({
   
   
   
+  ############################################################
+  ############################################################
+  ############################################################
+  
   output$promedios<-renderPrint({
     a <- input$ptabla_promedios
     preguntaseternas2001_chi <- mydata_educacion_1000()
     preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
     b <- summary(preguntaseternas_sub2001_a)
     return(b)
-    
   })
+  
+  ############################################################
+  ############################################################
+  ############################################################
+  
+  
+  # promedios_filtros toma los inputs de nivel y categoria y genera el promedio
+  
+  output$promedios_filtros<-renderPrint({
+    
+    a <- input$nivel_filtro
+    b <- input$categoria_filtro
+    
+    # se rescata la tabla del 2006 y se seleccionan dos columnas:
+    
+    base_del_2006 <- mydata_educacion_1000()
+    
+    base_del_2006_terr <- base_del_2006[,a]
+    base_del_2006_cat <- base_del_2006[,b]
+    
+    vec <- chr(base_del_2006_cat) 
+    vec %na<-% 0
+    vec = as.double(vec)  
+    
+    c <- aggregate(vec, list(base_del_2006_terr), mean)
+    
+
+  })
+  
+  
+  
+  
   
   ########################################################################## 2009 ymt  ######################################################################
   
