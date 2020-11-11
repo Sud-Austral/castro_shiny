@@ -147,7 +147,7 @@ server <- function(input, output, session) {
                            tabPanel("Promedios", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
                                selectInput("ptabla_promedios", "prueba tabla:", c(datos_df_educacion_preg)),
-                               column(12, renderPrint("promedios"))
+                               column(12, verbatimTextOutput("promedios"))
                            )),
                            
                            tabPanel("Diagrama de caja y bigotes", fluidRow(
@@ -155,11 +155,8 @@ server <- function(input, output, session) {
                                selectInput("ptabla_cyb", "prueba tabla:", c(datos_df_educacion_preg)),
                                column(12, plotOutput("cyb"))
                            ))
-                           
                 ),
-                
-                
-                
+
                 navbarMenu("Filtros",
                            tabPanel("a nivel social", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
@@ -167,11 +164,6 @@ server <- function(input, output, session) {
                                selectInput("categoria_filtro", "Seleccione atributo:", c(data_2006_filtros_cat_ddl)),
                                column(12, tableOutput("promedios_filtros"))
                            ))),
-                
-                
-                
-                
-                
                 
                 tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
                          
@@ -193,8 +185,6 @@ server <- function(input, output, session) {
                              
                              
                          ))
-                
-                
             )
             
         }
@@ -212,7 +202,7 @@ server <- function(input, output, session) {
                 
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(3,  tableOutput("contents12")))),
+                                  column(12,  dataTableOutput("table2009ymt")))),
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
@@ -266,7 +256,7 @@ server <- function(input, output, session) {
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(3,  tableOutput("contents12")))),
+                                  column(12,  dataTableOutput("table2009mn")))),
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
@@ -276,7 +266,7 @@ server <- function(input, output, session) {
                 navbarMenu("Estadísticas y gráficas",
                            tabPanel("Promedios", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
-                               selectInput("ptabla_2009_mn", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
+                               selectInput("ptabla_promedios_2009_mn", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
                                column(12, verbatimTextOutput("promedios_2009_mn"))
                            )),
                            
@@ -300,7 +290,7 @@ server <- function(input, output, session) {
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(3,  tableOutput("contents12")))),
+                                  column(12,  dataTableOutput("table2011mn")))),
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
                     selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
@@ -331,7 +321,7 @@ server <- function(input, output, session) {
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(3,  tableOutput("contents12")))),
+                                  column(12,  dataTableOutput("table20ymt")))),
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
                     selectInput("ptabla20111", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
@@ -1021,8 +1011,7 @@ server <- function(input, output, session) {
             
             
             
-            geom_boxplot() +
-            
+            geom_boxplot() + scale_fill_manual(values=c("olivedrab2"))+
             theme(
                 legend.position="none",
                 plot.title = element_text(size=11)
