@@ -44,8 +44,10 @@ dataset <- read.csv('Casen_no_humano.csv')
 datos_df_exp <- colnames(dataset)
 
 
-
-
+data_2017 <- read_xlsx("casen_2017_mil.xlsx")
+# data_2017_modulo_I <- data_2017[, 1:3]
+data_2017_modulo_I <- data_2017
+data_2017_modulo_I_colnames <- colnames(data_2017_modulo_I)
 
 
 datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
@@ -135,8 +137,7 @@ server <- function(input, output, session) {
                 
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(3, includeMarkdown("info_2006_tabla.md")),
-                                  column(12,  tableOutput("contents12"),
-                                         dataTableOutput('table')))),
+                                  column(12,  tableOutput("contents12"), dataTableOutput('table')))),
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("info_2006_frec.md")),
@@ -367,11 +368,7 @@ server <- function(input, output, session) {
                 tabPanel("Variables de identificación",
                          fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
                 
-                navbarMenu("pruebas",
-                           
-                           "----",
-                           "",
-                           tabPanel(" ")),
+
                 
                 navbarMenu("Factores de expansión",
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
@@ -437,20 +434,7 @@ server <- function(input, output, session) {
                                              column(3,  tableOutput("contents7")))),
                            
                            tabPanel(" ")),
-                
-                navbarMenu("Ingresos corregidos",
-                           tabPanel("Introducción",
-                                    fluidRow(column(9, includeMarkdown("about_intro_cc.txt"))
-                                    )),
-                           "----",
-                           "",
-                           
-                           tabPanel("Variables",
-                                    fluidRow(column(9, includeMarkdown("about_variables_cc.txt")),
-                                             column(3,  tableOutput("contents8")))),
-                           
-                           tabPanel(" ")),
-                
+
                 navbarMenu("Variables e indicadores de pobreza",
                            tabPanel("Introducción",
                                     fluidRow(column(9, includeMarkdown("about_veip.md")))),
@@ -537,11 +521,7 @@ server <- function(input, output, session) {
                 tabPanel("Variables de identificación",
                          fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
                 
-                navbarMenu("pruebas",
-                           
-                           "----",
-                           "",
-                           tabPanel(" ")),
+
                 
                 navbarMenu("Factores de expansión",
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
@@ -608,19 +588,7 @@ server <- function(input, output, session) {
                            
                            tabPanel(" ")),
                 
-                navbarMenu("Ingresos corregidos",
-                           tabPanel("Introducción",
-                                    fluidRow(column(9, includeMarkdown("about_intro_cc.txt"))
-                                    )),
-                           "----",
-                           "",
-                           
-                           tabPanel("Variables",
-                                    fluidRow(column(9, includeMarkdown("about_variables_cc.txt")),
-                                             column(3,  tableOutput("contents8")))),
-                           
-                           tabPanel(" ")),
-                
+        
                 navbarMenu("Variables e indicadores de pobreza",
                            tabPanel("Introducción",
                                     fluidRow(column(9, includeMarkdown("about_veip.md")))),
@@ -706,12 +674,7 @@ server <- function(input, output, session) {
                 
                 tabPanel("Variables de identificación",
                          fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
-                
-                navbarMenu("pruebas",
-                           
-                           "----",
-                           "",
-                           tabPanel(" ")),
+
                 
                 navbarMenu("Factores de expansión",
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
@@ -746,10 +709,9 @@ server <- function(input, output, session) {
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
                            "----",
                            "",
-                           tabPanel("Primer módulo", fluidRow(
+                           tabPanel("Primer módulo: Registro Residentes", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               selectInput("ptabla2017", "prueba tabla:", c(datos_df_casen_2017_mil_preg)),
-                               column(12, dataTableOutput("prueba_tabla"))
+                               column(12, dataTableOutput("table2017_I"))
                            )),
                            tabPanel("Segundo módulo (E): Educacion ",
                                     fluidRow(column(6, includeMarkdown("about_educacion.md.txt")),
@@ -779,7 +741,7 @@ server <- function(input, output, session) {
                            
                            tabPanel(" ")),
                 
-                navbarMenu("Ingresos corregidos",
+                navbarMenu("Cálculos propios de los Indicadores Casen",
                            tabPanel("Introducción",
                                     fluidRow(column(9, includeMarkdown("about_intro_cc.txt"))
                                     )),
@@ -844,7 +806,30 @@ server <- function(input, output, session) {
                 
                 navbarMenu("Estadísticas",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
-                           tabPanel("Tabla educacion", tableOutput("contents_educacion")),
+
+                           tabPanel("Frecuencias por módulo I: Registro de residentes.", fluidRow(
+                               column(12, includeMarkdown("info_2006_frec.md")),
+                               
+                               # debe cargarse el ddl con las cabeceras del rango I:
+                               selectInput("ptabla", "Seleccione pregunta:", c(data_2017_modulo_I_colnames)),
+                               column(12, dataTableOutput("prueba_tabla"))
+                           )),  
+                           
+                           tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
+                               column(12, includeMarkdown("info_2006_frec.md")),
+                               selectInput("ptabla2", "Seleccione pregunta:", c(data_2017_modulo_I_colnames)),
+                               column(12, dataTableOutput("prueba_tabla2"))
+                           )),   
+                           
+                           
+
+                           tabPanel("Frecuencias por módulo III: Registro de residentes.", tableOutput("modulo_III_2017")),
+                           tabPanel("Frecuencias por módulo IV: Registro de residentes.", tableOutput("modulo_IV_2017")),
+                           tabPanel("Frecuencias por módulo V: Registro de residentes.", tableOutput("modulo_V_2017")),
+                           tabPanel("Frecuencias por módulo VI: Registro de residentes.", tableOutput("modulo_VI_2017")),
+                           tabPanel("Frecuencias por módulo VII: Registro de residentes.", tableOutput("modulo_VII_2017")),
+                           tabPanel("Frecuencias por módulo VIII: Registro de residentes.", tableOutput("modulo_VIII_2017")),
+                        
                            tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
                            "----",
                            "",
@@ -979,9 +964,14 @@ server <- function(input, output, session) {
     })
     
     mydata_educacion_8000 <- reactive({
-        datos_dfe <- datos_df_casen_2017_mil[, 1:808]
-        datos_dfe 
+       # datos_dfe <- datos_df_casen_2017_mil[, 1:16]
+        datos_dfe <- datos_df_casen_2017_mil
         return(datos_dfe)
+    })
+    
+    table2017_I <- reactive({
+        data <- datos_df_casen_2017_mil[, 1:16]
+        return(data)
     })
     
     mydata_educacion <- reactive({
@@ -995,6 +985,7 @@ server <- function(input, output, session) {
     ############
     
     output$table <- renderDataTable(mydata_educacion_1000())
+    
     output$table2009ymt <- renderDataTable(mydata_educacion_2000())
     output$table2009mn <- renderDataTable(mydata_educacion_3000())
     output$table2011mn <- renderDataTable(mydata_educacion_4000())
@@ -1004,6 +995,7 @@ server <- function(input, output, session) {
     output$table2017 <- renderDataTable(mydata_educacion_8000())
     
     
+    output$table2017_I <- renderDataTable(table2017_I())
     ########################################################################## 2006  ##########################################################################  
     
     
@@ -1352,9 +1344,6 @@ server <- function(input, output, session) {
             preguntaseternas_sub2001 <- preguntaseternas2001[,input$ptabla]
             w2001 = table(preguntaseternas_sub2001)
             t = as.data.frame(w2001)
-            
-            
-            
         } 
         
         else if(input$variable_anio == 20090)
@@ -1404,9 +1393,9 @@ server <- function(input, output, session) {
         else if(input$variable_anio == 2017)
         {
             preguntaseternas2017<- mydata_educacion_8000()
-            preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2017]
-            w2007 = table(preguntaseternas_sub2017)
-            t = as.data.frame(w2007)
+            preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla]
+            w2017 = table(preguntaseternas_sub2017)
+            t = as.data.frame(w2017)
             
             
             
