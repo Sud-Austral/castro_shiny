@@ -5,6 +5,23 @@ date: "11-11-2020"
 output: html_document
 ---
 
+Una vez resuelto el requerimiento técnico de generalizar Tablas de Contigencia (TTCC), seguimos con la necesidad de plantear preguntas generadoras de TTCC con sentido e interés.
+
+Haremos ejercicios sobre un subset de la tabla Casen 2017 que toma todos los registros de las comunas de Iquique, Alto Hospicio, Pozo Almonte, Huara y Pica.
+
+Como ejemplo haremos un ejercicio de investigación sobre la pregunta:
+
+v38b. ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública?
+
+Haremos intervenir cuatro variables categóricas:
+*pobreza
+*sexo
+*estado civil
+*etnia
+*comuna
+
+Podemos preveer que los hombres pobres y pertenecientes alguna etnia tenderan a responder más positivamente esta pregunta. Y más que testigos serían participantes.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -116,55 +133,87 @@ mtcars = apply_labels(mtcars,
 
 # dataset <- read.csv('Casen_no_humano.csv')
 
-dataset <- read_excel("casen2017_1.xlsx")
+dataset <- read_excel("casen_2017_6_comunas.xlsx")
 ```
 
 
-```{r}
-# dataset
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+nrow(dataset)
 ```
 
-```{r}
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 # colnames(dataset)
 ```
 
 
 
 
-```{r}
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 # dataset$Sexo
 ```
-```{r}
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 # dataset$"Estado civil"
 ```
 
-```{r}
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 # dataset$"Situación de pobreza multidimensional (4 dimensiones)"
 ```
+
+## Verifiquemos una tendencia: Sexo versus estado civil
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 tabla_cro <- cro(dataset$Sexo, dataset$"Estado civil")
 tabla_cro
-tabla_cro_df <- data.frame(tabla_cro)
-tabla_cro_df
-
-
-
+# tabla_cro_df <- data.frame(tabla_cro)
+# tabla_cro_df
 
 ```
+## Las viudas son menos pobres que los hombres.
 
+```{r echo = FALSE}
+df0 <- table(dataset$"Situación de pobreza multidimensional (4 dimensiones)", dataset$"Sexo", dataset$"Estado civil")
+
+df0 
+```
+
+# Tablas de contingencia relacionadas al ser testigo del consumo de drogas o alcohol.
+
+## ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública?
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(),dataset$Sexo, dataset$"Estado civil"))
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"v38b. ¿Ha presenciado?: Personas consumiendo drogas o alcohol en la vía pública"  %nest% dataset$Sexo %nest% dataset$"Estado civil"))
 tabla_cro_cpct
-tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
-tabla_cro_cpct_df
+# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
+# tabla_cro_cpct_df
 #dataset$"pobreza_multi_4d"
 ```
 
 
+## ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública? por comuna
 
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna %nest% dataset$"v38b. ¿Ha presenciado?: Personas consumiendo drogas o alcohol en la vía pública"  %nest% dataset$Sexo %nest% dataset$"Estado civil"))
+tabla_cro_cpct
+# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
+# tabla_cro_cpct_df
+#dataset$"pobreza_multi_4d"
+```
 
+## ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública? por comuna y por pertenencia una comunidad indigena.
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"r3. Pueblos indígenas, ¿pertenece usted o es descendiente de alguno de ellos?"  %nest%  dataset$"v38b. ¿Ha presenciado?: Personas consumiendo drogas o alcohol en la vía pública"))
+tabla_cro_cpct
+# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
+# tabla_cro_cpct_df
+#dataset$"pobreza_multi_4d"
+```
+
+Las personas de la etnia Aimara, considerando la totalidad de las 5 comunas que nunca han visto estos hechos y no son pobres, representan el el 61,4%, mientras que los pobres que nunca han visto ésto sólo el 38,6%, lo que indica cierta correlación entre presencia del consumo de alcohol y drogas y pobreza en las comunidades indigenas del Norte de Chile. 
+
+Ocurre lo mismo para la tendencia para la etnia Mapuche.
+
+Se corrobora nuestra hipotesis original.
 
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
