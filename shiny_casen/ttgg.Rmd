@@ -108,19 +108,31 @@ mtcars = apply_labels(mtcars,
 ```
 
 
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 
 # datasetCasen2017 = read.spss("Casen 2017.sav", to.data.frame=TRUE)
+# write.xlsx(datasetCasen2017,'Casen2017.xlsx')
 # write.csv(datasetCasen2017,'Casen2017.csv')
 
 # dataset <- read.csv('Casen_no_humano.csv')
+
+dataset <- read_excel("casen2017_1.xlsx")
 ```
 
 
 ```{r}
 # dataset <- read.csv(file = 'Casen2017.csv')
-dataset <- read.csv(file = 'Casen2017_dos_comunas.csv')
+datasett <- read.csv('Casen2017_dos_comunas.csv')
+#dataset <- data.frame(datasett)
+colnames(datasett)
+typeof(colnames(datasett))
 ```
+
+
+```{r}
+colnames(dataset)
+```
+
 
 ```{r}
 # colnames(dataset)
@@ -165,6 +177,9 @@ Una simple tabulación cruzada, similar a la función base R 'table'
 
 ```
 
+```{r}
+dataset$pobreza_multi_4d
+```
 
 Esta tabla nos entrega porcentajes con tablas puestas una al lado de la otra. En este caso primero los sexos y luego los estados civiles
 
