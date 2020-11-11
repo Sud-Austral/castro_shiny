@@ -48,6 +48,12 @@ data_2017 <- read_xlsx("casen_2017_mil.xlsx")
 # data_2017_modulo_I <- data_2017[, 1:3]
 data_2017_modulo_I <- data_2017
 data_2017_modulo_I_colnames <- colnames(data_2017_modulo_I)
+data_2017_modulo_II <- data_2017[,43:102]
+data_2017_modulo_II_colnames <- colnames(data_2017_modulo_II)
+data_2017_modulo_III <- data_2017[,103:151]
+data_2017_modulo_III_colnames <- colnames(data_2017_modulo_III)
+data_2017_modulo_IV <- data_2017[,152:304]
+data_2017_modulo_IV_colnames <- colnames(data_2017_modulo_IV)
 
 
 datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
@@ -703,31 +709,63 @@ server <- function(input, output, session) {
                                column(12, includeMarkdown("about_educacion.md.txt")),
                                column(12, dataTableOutput("table2017_I"))
                            )),
-                           tabPanel("Segundo módulo (E): Educacion ",
-                                    fluidRow(column(6, includeMarkdown("about_educacion.md.txt")),
-                                             selectInput("ptabla2017edu", "prueba tabla:", c(datos_df_casen_2017_mil_pregedu)),
-                                             column(3,  tableOutput("prueba_tablaedu")))),
                            
-                           tabPanel("Tercer módulo (O): Trabajo ",
-                                    fluidRow(column(6, includeMarkdown("about_trabajo.txt")),
-                                             column(3,  tableOutput("contents3")))),
+                           tabPanel("Segundo módulo (E): Educacion", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Iedu"))
+                           )),
                            
-                           tabPanel("Cuarto módulo (Y): Ingresos ",
-                                    fluidRow(column(6, includeMarkdown("about_ingresos.txt")),
-                                             column(3,  tableOutput("contents4")))),
+                           tabPanel("Tercer módulo (O): Trabajo", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Itrab"))
+                           )),
                            
-                           tabPanel("Quinto módulo (S): Salud ",
-                                    fluidRow(column(6, includeMarkdown("about_salud.txt")),
-                                             column(3,  tableOutput("contents5")))),
+                           tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Iing"))
+                           )),
+                           
+                           tabPanel("Quinto módulo (S): Salud", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Isal"))
+                           )),
+                           
+                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Iid"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("table2017_Iviv"))
+                           )),
                            
                            
-                           tabPanel("Sexto módulo (R): Identidades, redes y participación ",
-                                    fluidRow(column(6, includeMarkdown("about_identidades.txt")),
-                                             column(3,  tableOutput("contents6")))),
                            
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno ",
-                                    fluidRow(column(6, includeMarkdown("about_vivienda.txt")),
-                                             column(3,  tableOutput("contents7")))),
+                           # tabPanel("Segundo módulo (E): Educacion ",
+                           #          fluidRow(column(12, includeMarkdown("about_educacion.md.txt")),
+                           #                   column(12,  dataTableOutput("prueba_tablaedu")))),
+                           # 
+                           # tabPanel("Tercer módulo (O): Trabajo ",
+                           #          fluidRow(column(6, includeMarkdown("about_trabajo.txt")),
+                           #                   column(3,  tableOutput("contents3")))),
+                           # 
+                           # tabPanel("Cuarto módulo (Y): Ingresos ",
+                           #          fluidRow(column(6, includeMarkdown("about_ingresos.txt")),
+                           #                   column(3,  tableOutput("contents4")))),
+                           # 
+                           # tabPanel("Quinto módulo (S): Salud ",
+                           #          fluidRow(column(6, includeMarkdown("about_salud.txt")),
+                           #                   column(3,  tableOutput("contents5")))),
+                           # 
+                           # 
+                           # tabPanel("Sexto módulo (R): Identidades, redes y participación ",
+                           #          fluidRow(column(6, includeMarkdown("about_identidades.txt")),
+                           #                   column(3,  tableOutput("contents6")))),
+                           # 
+                           # tabPanel("Séptimo módulo (V): Vivienda y Entorno ",
+                           #          fluidRow(column(6, includeMarkdown("about_vivienda.txt")),
+                           #                   column(3,  tableOutput("contents7")))),
                            
                            tabPanel(" ")),
                 
@@ -806,10 +844,22 @@ server <- function(input, output, session) {
                            )),  
                            
                            tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
-                               column(12, includeMarkdown("info_2006_frec.md")),
-                               selectInput("ptabla2", "Seleccione pregunta:", c(data_2017_modulo_I_colnames)),
-                               column(12, dataTableOutput("prueba_tabla2"))
-                           )),   
+                             column(12, includeMarkdown("info_2006_frec.md")),
+                             selectInput("ptabla2", "Seleccione pregunta:", c(data_2017_modulo_II_colnames)),
+                             column(12, dataTableOutput("prueba_tabla2"))
+                           )),
+                           
+                           tabPanel("Frecuencias por módulo III: Registro de residentes.", fluidRow(
+                             column(12, includeMarkdown("info_2006_frec.md")),
+                             selectInput("ptabla3", "Seleccione pregunta:", c(data_2017_modulo_III_colnames)),
+                             column(12, dataTableOutput("prueba_tabla3"))
+                           )),
+                           
+                           tabPanel("Frecuencias por módulo IV: Registro de residentes.", fluidRow(
+                             column(12, includeMarkdown("info_2006_frec.md")),
+                             selectInput("ptabla4", "Seleccione pregunta:", c(data_2017_modulo_IV_colnames)),
+                             column(12, dataTableOutput("prueba_tabla4"))
+                           )),
                            
                            
 
@@ -960,11 +1010,41 @@ server <- function(input, output, session) {
     })
     
     table2017_I <- reactive({
-        data <- datos_df_casen_2017_mil[, 1:16]
-        return(data)
+      data <- datos_df_casen_2017_mil[, 1:16]
+      return(data)
     })
     
-    mydata_educacion <- reactive({
+    table2017_Iedu <- reactive({
+      data <- datos_df_casen_2017_mil[, 43:102]
+      return(data)
+    })
+    
+    table2017_Itrab <- reactive({
+      data <- datos_df_casen_2017_mil[, 102:152]
+      return(data)
+    })
+    
+    table2017_Iing <- reactive({
+      data <- datos_df_casen_2017_mil[, 152:305]
+      return(data)
+    })
+    
+    table2017_Isal <- reactive({
+      data <- datos_df_casen_2017_mil[, 305:398]
+      return(data)
+    })
+    
+    table2017_Iid <- reactive({
+      data <- datos_df_casen_2017_mil[, 398:499]
+      return(data)
+    })
+    
+    table2017_Iviv <- reactive({
+      data <- datos_df_casen_2017_mil[, 500:808]
+      return(data)
+    })
+    
+    prueba_tablaedu <- reactive({
         datos_dfe <- datos_df_casen_2017_miledu[, 43:102]
         datos_dfe 
         return(datos_dfe)
@@ -986,6 +1066,14 @@ server <- function(input, output, session) {
     
     
     output$table2017_I <- renderDataTable(table2017_I())
+    output$table2017_Iedu <- renderDataTable(table2017_Iedu())
+    output$table2017_Itrab <- renderDataTable(table2017_Itrab())
+    output$table2017_Iing <- renderDataTable(table2017_Iing())
+    output$table2017_Isal <- renderDataTable(table2017_Isal())
+    output$table2017_Iid <- renderDataTable(table2017_Iid())
+    output$table2017_Iviv <- renderDataTable(table2017_Iviv())
+    
+    output$prueba_tablaedu <- renderDataTable(prueba_tablaedu())
     ########################################################################## 2006  ##########################################################################  
     
     
@@ -1392,17 +1480,39 @@ server <- function(input, output, session) {
         } 
     })
     ################################################################################################################################3
-    output$prueba_tablaedu <- renderDataTable({
-        
-        
-        if(input$variable_anio == 2017)
-        {
-            preguntaseternas2017<- mydata_educacion()
-            preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2017edu]
-            w2007 = table(preguntaseternas_sub2017)
-            t = as.data.frame(w2007)
-            
-        } 
+    output$prueba_tabla2 <- renderDataTable({
+      
+      if(input$variable_anio == 2017)
+      {
+        preguntaseternas2017 <- mydata_educacion_8000()
+        preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla2]
+        w2001 = table(preguntaseternas_sub2017)
+        t = as.data.frame(w2001)
+      } 
+    })
+    
+    ################################################################################################################################3
+    output$prueba_tabla3 <- renderDataTable({
+      
+      if(input$variable_anio == 2017)
+      {
+        preguntaseternas2017 <- mydata_educacion_8000()
+        preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla3]
+        w2001 = table(preguntaseternas_sub2017)
+        t = as.data.frame(w2001)
+      } 
+    })
+    
+    ################################################################################################################################3
+    output$prueba_tabla4 <- renderDataTable({
+      
+      if(input$variable_anio == 2017)
+      {
+        preguntaseternas2017 <- mydata_educacion_8000()
+        preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla4]
+        w2001 = table(preguntaseternas_sub2017)
+        t = as.data.frame(w2001)
+      } 
     })
 }
 
