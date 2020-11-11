@@ -852,6 +852,10 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   
                                                                                    verbatimTextOutput("tabla_d_c_generalizada")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(3,
@@ -1246,14 +1250,20 @@ server <- function(input, output, session) {
         d <- input$ptabla2017_primeravx
         e <- input$ptabla2017_segundavx
         f <- input$ptabla2017_terceravx
+        g <- input$ptabla2017_cuartavx
+        
         preguntaseternas2001_ab <- mydata_educacion_exp()
+        
+        
         preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
         preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
         preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+        
         
         # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
         
-        cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c)
+        cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
         
         return(cross_tab)
     })

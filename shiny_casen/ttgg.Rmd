@@ -1,0 +1,227 @@
+---
+title: "Tablas de contingencia generalizadas para la Casen"
+author: "DI"
+date: "11-11-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Tables with labels in R 2020-07-27
+# https://cran.r-project.org/web/packages/expss/vignettes/tables-with-labels.html
+
+# kable(), Demonstration
+# https://rpubs.com/tf_peterson/kableDemo
+
+
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+
+library(writexl)
+
+library(foreign)
+library(expss)
+```
+
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+data(mtcars)
+mtcars = apply_labels(mtcars,
+                      mpg = "Miles/(US) gallon",
+                      cyl = "Number of cylinders",
+                      disp = "Displacement (cu.in.)",
+                      hp = "Gross horsepower",
+                      drat = "Rear axle ratio",
+                      wt = "Weight (1000 lbs)",
+                      qsec = "1/4 mile time",
+                      vs = "Engine",
+                      vs = c("V-engine" = 0,
+                             "Straight engine" = 1),
+                      am = "Transmission",
+                      am = c("Automatic" = 0,
+                             "Manual"=1),
+                      gear = "Number of forward gears",
+                      carb = "Number of carburetors"
+)
+
+# Tenemos una interfaz más sofisticada para la construcción de tablas con tuberías magrittr. La construcción de la tabla consta de al menos tres funciones encadenadas con el operador de tubería:%>%. Al principio, necesitamos especificar las variables para las que se calcularán las estadísticas con tab_cells. En segundo lugar, calculamos estadísticas con una de las funciones tab_stat_ *. Y por último, finalizamos la creación de la tabla con tab_pivot, e. g .: conjunto de datos%>% tab_cells (variable)%>% tab_stat_cases ()%>% tab_pivot (). Después de eso, opcionalmente podemos ordenar la tabla con tab_sort_asc, soltar filas / columnas vacías con drop_rc y transponer con tab_transpose. La tabla resultante es solo un data.frame, por lo que podemos usar las operaciones habituales de R en ella. La documentación detallada para la creación de tablas se puede ver a través de? Tables. Para las pruebas de significación, consulte? Significación. En general, las tablas se traducen automáticamente a HTML para su salida en blocs de notas Knitr o Jupyter. Sin embargo, si queremos salida HTML en los cuadernos de R o en el visor de RStudio, necesitamos establecer opciones para eso: expss_output_rnotebook () o expss_output_viewer ().
+
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# mtcars
+
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# 'cro' examples
+# just simple crosstabulation, similar to base R 'table' function
+# cro(mtcars$am, mtcars$vs)
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# Table column % with multiple banners
+# cro_cpct(mtcars$cyl, list(total(), mtcars$am, mtcars$vs))
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# or, the same result with another notation
+# mtcars %>% calc_cro_cpct(cyl, list(total(), am, vs))
+```
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# Table with nested banners (column %).          
+# mtcars %>% calc_cro_cpct(cyl, list(total(), am %nest% vs))    
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+# datasetCasen2017 = read.spss("Casen 2017.sav", to.data.frame=TRUE)
+# write.csv(datasetCasen2017,'Casen2017.csv')
+
+# dataset <- read.csv('Casen_no_humano.csv')
+```
+
+
+```{r}
+# dataset <- read.csv(file = 'Casen2017.csv')
+dataset <- read.csv(file = 'Casen2017_dos_comunas.csv')
+```
+
+```{r}
+# colnames(dataset)
+dataset$sexo
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+# head(dataset,10)
+```
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+dataset = apply_labels(dataset,
+                      # sexo = c("h" = 1,
+                      #        "m" = 2),
+                      ecivil = c("Casado(a)" = 1,
+                                 "Conviviente o pareja sin acuerdo de unión civil" = 2,
+                                 "Conviviente civil (con acuerdo de unión civil)" = 3,
+                                 "Anulado(a)" = 4,
+                                 "Separado(a)" = 5,
+                                 "Divorciado (a)" = 6,
+                                 "Viudo(a)" = 7,
+                                 "Soltero(a)" = 8,
+                                 "No responde" = 9
+                                 ),
+                  pareja = c("Legal" = 1,
+                     "De hecho" = 2,
+                     "No tiene pareja en el hogar" = 7
+                     )
+)
+```
+Una simple tabulación cruzada, similar a la función base R 'table'
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# tabla_cro <- cro(dataset$sexo, dataset$ecivil)
+# tabla_cro
+# tabla_cro_df <- data.frame(tabla_cro)
+# tabla_cro_df 
+
+
+
+
+```
+
+
+Esta tabla nos entrega porcentajes con tablas puestas una al lado de la otra. En este caso primero los sexos y luego los estados civiles
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+tabla_cro_cpct <- cro_cpct(dataset$pobreza_multi_4d, list(total(),dataset$sexo, dataset$ecivil))
+tabla_cro_cpct
+tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
+tabla_cro_cpct_df
+#dataset$"pobreza_multi_4d"
+```
+
+el mismo resultado con otra notacion
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+dataset %>% calc_cro_cpct(pobreza_multi_4d, list(total(), sexo, ecivil))
+#dataset$"r3"
+```
+
+# Tabla con columnas anidadas: estado civil bajo sexo
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+dataset %>% calc_cro_cpct(pobreza_multi_4d, list(total(), sexo %nest% ecivil))
+```
+# Tabla con columnas anidadas: pareja bajo estado civil bajo sexo
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+
+#hhh <- dataset %>% calc_cro_cpct(yaut, list(total(), sexo %nest% ecivil))
+
+#hhh
+#hhh_df <- data.frame(hhh)
+#hhh_df 
+
+```
+
+
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+#cro_cpct(dataset$sexo, list(total(), dataset$ecivil, dataset$r3, dataset$pobreza_multi_4d))
+```
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# or, the same result with another notation
+# mtcars %>% calc_cro_cpct(cyl, list(total(), am, vs))
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# Table with nested banners (column %).          
+# mtcars %>% calc_cro_cpct(cyl, list(total(), am %nest% vs)) 
+```
+
+
+
+
