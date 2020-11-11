@@ -121,23 +121,50 @@ dataset <- read_excel("casen2017_1.xlsx")
 
 
 ```{r}
-# dataset <- read.csv(file = 'Casen2017.csv')
-datasett <- read.csv('Casen2017_dos_comunas.csv')
-#dataset <- data.frame(datasett)
-colnames(datasett)
-typeof(colnames(datasett))
+# dataset
 ```
-
-
-```{r}
-colnames(dataset)
-```
-
 
 ```{r}
 # colnames(dataset)
-dataset$sexo
 ```
+
+
+
+
+```{r}
+# dataset$Sexo
+```
+```{r}
+# dataset$"Estado civil"
+```
+
+```{r}
+# dataset$"Situación de pobreza multidimensional (4 dimensiones)"
+```
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+tabla_cro <- cro(dataset$Sexo, dataset$"Estado civil")
+tabla_cro
+tabla_cro_df <- data.frame(tabla_cro)
+tabla_cro_df
+
+
+
+
+```
+
+
+```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(),dataset$Sexo, dataset$"Estado civil"))
+tabla_cro_cpct
+tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
+tabla_cro_cpct_df
+#dataset$"pobreza_multi_4d"
+```
+
+
+
+
 
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
@@ -145,98 +172,23 @@ dataset$sexo
 # head(dataset,10)
 ```
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-dataset = apply_labels(dataset,
-                      # sexo = c("h" = 1,
-                      #        "m" = 2),
-                      ecivil = c("Casado(a)" = 1,
-                                 "Conviviente o pareja sin acuerdo de unión civil" = 2,
-                                 "Conviviente civil (con acuerdo de unión civil)" = 3,
-                                 "Anulado(a)" = 4,
-                                 "Separado(a)" = 5,
-                                 "Divorciado (a)" = 6,
-                                 "Viudo(a)" = 7,
-                                 "Soltero(a)" = 8,
-                                 "No responde" = 9
-                                 ),
-                  pareja = c("Legal" = 1,
-                     "De hecho" = 2,
-                     "No tiene pareja en el hogar" = 7
-                     )
-)
+# dataset = apply_labels(dataset,
+#                       # sexo = c("h" = 1,
+#                       #        "m" = 2),
+#                       ecivil = c("Casado(a)" = 1,
+#                                  "Conviviente o pareja sin acuerdo de unión civil" = 2,
+#                                  "Conviviente civil (con acuerdo de unión civil)" = 3,
+#                                  "Anulado(a)" = 4,
+#                                  "Separado(a)" = 5,
+#                                  "Divorciado (a)" = 6,
+#                                  "Viudo(a)" = 7,
+#                                  "Soltero(a)" = 8,
+#                                  "No responde" = 9
+#                                  ),
+#                   pareja = c("Legal" = 1,
+#                      "De hecho" = 2,
+#                      "No tiene pareja en el hogar" = 7
+#                      )
+# )
 ```
-Una simple tabulación cruzada, similar a la función base R 'table'
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-# tabla_cro <- cro(dataset$sexo, dataset$ecivil)
-# tabla_cro
-# tabla_cro_df <- data.frame(tabla_cro)
-# tabla_cro_df 
-
-
-
-
-```
-
-```{r}
-dataset$pobreza_multi_4d
-```
-
-Esta tabla nos entrega porcentajes con tablas puestas una al lado de la otra. En este caso primero los sexos y luego los estados civiles
-
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-tabla_cro_cpct <- cro_cpct(dataset$pobreza_multi_4d, list(total(),dataset$sexo, dataset$ecivil))
-tabla_cro_cpct
-tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
-tabla_cro_cpct_df
-#dataset$"pobreza_multi_4d"
-```
-
-el mismo resultado con otra notacion
-
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-
-dataset %>% calc_cro_cpct(pobreza_multi_4d, list(total(), sexo, ecivil))
-#dataset$"r3"
-```
-
-# Tabla con columnas anidadas: estado civil bajo sexo
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-
-dataset %>% calc_cro_cpct(pobreza_multi_4d, list(total(), sexo %nest% ecivil))
-```
-# Tabla con columnas anidadas: pareja bajo estado civil bajo sexo
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-
-#hhh <- dataset %>% calc_cro_cpct(yaut, list(total(), sexo %nest% ecivil))
-
-#hhh
-#hhh_df <- data.frame(hhh)
-#hhh_df 
-
-```
-
-
-
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-#cro_cpct(dataset$sexo, list(total(), dataset$ecivil, dataset$r3, dataset$pobreza_multi_4d))
-```
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-# or, the same result with another notation
-# mtcars %>% calc_cro_cpct(cyl, list(total(), am, vs))
-```
-
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-# Table with nested banners (column %).          
-# mtcars %>% calc_cro_cpct(cyl, list(total(), am %nest% vs)) 
-```
-
-
-
 
