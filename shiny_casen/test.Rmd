@@ -1,0 +1,29 @@
+---
+title: "test"
+author: "Christian Castro"
+date: "12-11-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(epitab)
+library(dplyr)
+library(knitr)
+facs <- c('cyl', 'am', 'gear', 'carb', 'vs')
+mtcars[facs] <- lapply(mtcars[facs], factor)
+head(mtcars) %>%
+    kable()
+```
+
+
+```{r cars}
+contingency_table(independents=list("Cylinders"="cyl", "Num gears"="gear"),
+                  outcomes=list("Manual transmission"="am"),
+                  data=mtcars,
+                  crosstab_funcs = list(freq()))
+```
+

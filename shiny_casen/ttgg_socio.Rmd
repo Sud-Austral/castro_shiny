@@ -1,11 +1,11 @@
 ---
-title: "Tablas de contingencia de interés social con los datos de la Casen"
+title: "Tablas de contingencia de interés social con los datos de la Casen 2017 sobre 5 comunas."
 author: "DI"
 date: "11-11-2020"
 output: html_document
 ---
 
-#### Se plantean una serie de preguntas de interes social para determinar la mejor forma de presentar la informacion mediante tablas de contingencia. Se toman como ejemplos
+#### Se plantean una serie de preguntas de interés social para determinar la mejor forma de presentar la información con tablas de contingencia. Se toman como ejemplos la discriminación y la precariedad laboral.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -120,26 +120,26 @@ mtcars = apply_labels(mtcars,
 
 dataset <- read_excel("casen_2017_6_comunas.xlsx")
 ```
-<br>
 
 
 ```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 # nrow(dataset)
 ```
+<br>
+
 ## Discriminación
 
-#### consiste en marginar y separar a ciertas personas porque se las considera inferiores a las demás.
-
-#### La discriminación es una práctica cotidiana que consiste en dar un trato desfavorable o de desprecio inmerecido a determinada persona o grupo, que a veces no percibimos, pero que en algún momento la hemos causado o recibido. Hay grupos humanos que son víctimas de la discriminación todos los días por alguna de sus características físicas o su forma de vida. El origen étnico o nacional, el sexo, la edad, la discapacidad, la condición social o económica, la condición de salud, el embarazo, la lengua, la religión, las opiniones, las preferencias sexuales, el estado civil y otras diferencias pueden ser motivo de distinción, exclusión o restricción de derechos.
+#### La discriminación es una práctica cotidiana que consiste en dar un trato desfavorable o de desprecio inmerecido a determinada persona o grupo, que a veces no percibimos, pero que **todos** en algún momento la hemos causado o recibido. Hay grupos humanos que son víctimas de la discriminación todos los días por alguna de sus características físicas o su forma de vida. El origen étnico o nacional, el sexo, la edad, la discapacidad, la condición social o económica, la condición de salud, el embarazo, la lengua, la religión, las opiniones, las preferencias sexuales, el estado civil y otras diferencias pueden ser motivo de distinción, exclusión o restricción de derechos.
  
-#### Los efectos de la discriminación en la vida de las personas son negativos y tienen que ver con la pérdida de derechos y la desigualdad para acceder a ellos; lo cual puede orillar al aislamiento, a vivir violencia e incluso, en casos extremos, a perder la vida.
+#### Los efectos de la discriminación en la vida de las personas suelen ser nefastos y tienen que ver con la pérdida de derechos y la desigualdad para acceder a ellos; lo cual puede orillar al aislamiento, a sufrir violencia e incluso, en casos extremos, a perder la vida.
 
-#### El módulo R de la Casen 20017, Identidades, redes y participación contiene un set de discriminacion por 17 categorias y un otro
+#### El módulo R de la Casen 2017, "Identidades, redes y participación" contiene un set de discriminación por 17 categorías y un "otro".
 
 ### Durante los últimos 12 meses, Ud. o alguien de su hogar ha sido tratado injustamente o discriminado, fuera de su hogar debido a...
 
+<br>
 
-#### 1 <span style="color:blue">nivel socioeconómico</span>
+### 1 <span style="color:blue">nivel socioeconómico</span>
 
 #### version I: nido padre: comuna
 ```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
@@ -149,123 +149,96 @@ tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 di
 tabla_cro_cpct
 ```
 
-<br>
-#### version II: nido padre discriminacion
-```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"r9a. Discriminado por nivel socioeconómico", dataset$Comuna   %nest% dataset$Sexo ))
-tabla_cro_cpct
-```
+<!-- <br> -->
+
+<!-- #### version II: nido padre discriminacion -->
+
+<!-- ```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE} -->
+<!-- tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"r9a. Discriminado por nivel socioeconómico", dataset$Comuna   %nest% dataset$Sexo )) -->
+<!-- tabla_cro_cpct -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- #### version III: nido padre: sexo -->
+
+<!-- ```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE} -->
+<!-- tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Sexo %nest% dataset$"r9a. Discriminado por nivel socioeconómico", dataset$Comuna   )) -->
+<!-- tabla_cro_cpct -->
+<!-- ``` -->
 
 <br>
-#### version III: nido padre: sexo
-```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Sexo %nest% dataset$"r9a. Discriminado por nivel socioeconómico", dataset$Comuna   ))
-tabla_cro_cpct
-```
 
+### 2 <span style="color:blue">por su edad</span>
 
 
 ```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
-# dataset$Sexo
-```
-```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
-# dataset$"Estado civil"
-```
-
-```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
-# dataset$"Situación de pobreza multidimensional (4 dimensiones)"
-```
-
-## Verifiquemos una tendencia: Sexo versus estado civil
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-tabla_cro <- cro(dataset$Sexo, dataset$"Estado civil")
-tabla_cro
-# tabla_cro_df <- data.frame(tabla_cro)
-# tabla_cro_df
-
-```
-## Las viudas son menos pobres que los hombres.
-
-```{r echo = FALSE}
-df0 <- table(dataset$"Situación de pobreza multidimensional (4 dimensiones)", dataset$"Sexo", dataset$"Estado civil")
-
-df0 
-```
-
-# Tablas de contingencia relacionadas al ser testigo del consumo de drogas o alcohol.
-
-## ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública?
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"v38b. ¿Ha presenciado?: Personas consumiendo drogas o alcohol en la vía pública"  %nest% dataset$Sexo %nest% dataset$"Estado civil"))
-tabla_cro_cpct
-# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
-# tabla_cro_cpct_df
-#dataset$"pobreza_multi_4d"
-```
-
-
-## pobreza pr comuna, sexo y estado civil
-
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+# colnames(dataset)
 # vec %na<-% 0
-# bloque bueno
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"Estado civil"))
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"r9g. Discriminado por su edad"))
 tabla_cro_cpct
-
-
-
-# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
-# tabla_cro_cpct_df
-#dataset$"pobreza_multi_4d"
 ```
-Esto se modifico ahora ultimo
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
 
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
+```
+<br>
+
+### 3 <span style="color:blue">por pertenecer a un pueblo indígena</span>
 
 
 
-tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"r3. Pueblos indígenas, ¿pertenece usted o es descendiente de alguno de ellos?"))
+
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+# colnames(dataset)
+# vec %na<-% 0
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"r9p. Discriminado por pertenecer a un pueblo indígena"))
 tabla_cro_cpct
-
-
-
-
-
-# tabla_cro_cpct_df <- data.frame(tabla_cro_cpct)
-# tabla_cro_cpct_df
-#dataset$"pobreza_multi_4d"
 ```
 
-Las personas de la etnia Aimara, considerando la totalidad de las 5 comunas que nunca han visto estos hechos y no son pobres, representan el el 61,4%, mientras que los pobres que nunca han visto ésto sólo el 38,6%, lo que indica cierta correlación entre presencia del consumo de alcohol y drogas y pobreza en las comunidades indigenas del Norte de Chile. 
-
-Ocurre lo mismo para la tendencia para la etnia Mapuche.
-
-Se corrobora nuestra hipotesis original.
 
 
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 
-# head(dataset,10)
+<br>
+<br>
+
+## Precariedad laboral
+
+#### Uno de los indicadores con los que se puede medir la calidad del trabajo es el grado de su formalidad. Las transformaciones acontecidas en el mundo del trabajo en los últimos años, instituyeron un modelo laboral caracterizado por la transitoriedad y la alta rotación. Esta situación ha tendido a desvincularlos de los marcos reguladores tradicionales de las relaciones laborales. 
+
+#### El módulo O de la Casen 20017, Trabajo, contiene una pregunta que consulta por la existencia de contrato de trabajo: o17.
+
+### En su trabajo principal, ¿tiene contrato de trabajo escrito?
+
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+# colnames(dataset)
+# vec %na<-% 0
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"o17. En su trabajo principal, ¿tiene contrato de trabajo escrito?"))
+tabla_cro_cpct
 ```
-```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-# dataset = apply_labels(dataset,
-#                       # sexo = c("h" = 1,
-#                       #        "m" = 2),
-#                       ecivil = c("Casado(a)" = 1,
-#                                  "Conviviente o pareja sin acuerdo de unión civil" = 2,
-#                                  "Conviviente civil (con acuerdo de unión civil)" = 3,
-#                                  "Anulado(a)" = 4,
-#                                  "Separado(a)" = 5,
-#                                  "Divorciado (a)" = 6,
-#                                  "Viudo(a)" = 7,
-#                                  "Soltero(a)" = 8,
-#                                  "No responde" = 9
-#                                  ),
-#                   pareja = c("Legal" = 1,
-#                      "De hecho" = 2,
-#                      "No tiene pareja en el hogar" = 7
-#                      )
-# )
+
+### En su trabajo principal, ¿qué tipo de contrato o acuerdo de trabajo tiene…?
+
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+# colnames(dataset)
+# vec %na<-% 0
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"o16. En su trabajo principal, ¿qué tipo de contrato o acuerdo de trabajo tiene?"))
+tabla_cro_cpct
 ```
+
+<br>
+<br>
+
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+# colnames(dataset)
+# vec %na<-% 0
+tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$Comuna   %nest% dataset$Sexo %nest% dataset$"o16. En su trabajo principal, ¿qué tipo de contrato o acuerdo de trabajo tiene?"))
+tabla_cro_cpct
+```
+
+
+
+
+
+
+
+
