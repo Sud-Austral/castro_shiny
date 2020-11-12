@@ -904,14 +904,16 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
                                                                                    
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
-                                                                                   
+                                                                                   downloadButton("tabla_cont_2017", "Descargar"),
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(3,
+                                                                              
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                            
                            
@@ -957,7 +959,7 @@ server <- function(input, output, session) {
     
     
     mydata_educacion_exp <- reactive({
-        datos_dfe <- dataset[, 1:32]
+        datos_dfe <- dataset[, 1:804]
         
         return(datos_dfe)
     })
@@ -1380,6 +1382,31 @@ server <- function(input, output, session) {
     })
     
     
+    output$tabla_cont_2017 <- downloadHandler(
+      filename = function() {
+        "la_data.csv"
+      },
+      content = function(file) {
+        
+        d <- input$ptabla2017_primeravx
+        e <- input$ptabla2017_segundavx
+        f <- input$ptabla2017_terceravx
+        g <- input$ptabla2017_cuartavx
+        
+        preguntaseternas2001_ab <- mydata_educacion_exp()
+        
+        
+        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+        cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
+        
+        
+        write.table(cross_tab, file)
+      }
+    )
+    
     #########################################################################################################################################
     #########################################################################################################################################
     #########################################################################################################################################
@@ -1406,19 +1433,26 @@ server <- function(input, output, session) {
     
     
     output$downloadPlot2009 <- downloadHandler(
-        filename = function(){paste("input$plot3",'.png',sep='')},
-        content = function(file){
-            ggsave(file,plot=ggplot(mydata_educacion_2000(), aes(mydata_educacion_2000()$"Ingreso Del Trabajo")) + geom_density())})
+      filename = function(){paste("input$plot3",'.png',sep='')},
+      content = function(file){
+        ggsave(file,plot=ggplot(mydata_educacion_2000(), aes(mydata_educacion_2000()$"Ingreso Del Trabajo")) + geom_density())})
     
     
     output$downloadData2009 <- downloadHandler(
-        filename = function() {
-            "la_data.csv"
-        },
-        content = function(file) {
-            write.table(mydata_educacion_2000(), file)
-        }
+      filename = function() {
+        "la_data.csv"
+      },
+      content = function(file) {
+        write.table(mydata_educacion_2000(), file)
+      }
     )
+    
+    ################################################################################################################################3
+    
+    
+    
+    
+    
     
     
     
