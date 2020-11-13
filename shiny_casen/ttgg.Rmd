@@ -180,6 +180,8 @@ df0
 
 ## ¿Ha presenciado personas consumiendo drogas o alcohol en la vía pública?
 
+a emular
+
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
 tabla_cro_cpct <- cro_cpct(dataset$"Situación de pobreza multidimensional (4 dimensiones)", list(total(), dataset$"v38b. ¿Ha presenciado?: Personas consumiendo drogas o alcohol en la vía pública"  %nest% dataset$Sexo %nest% dataset$"Estado civil"))
 tabla_cro_cpct
