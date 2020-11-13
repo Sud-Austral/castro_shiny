@@ -43,6 +43,7 @@ options(warn = -1)
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
 dataset <- read.csv('Casen_no_humano.csv')
+#dataset <- read.csv('CASEN_2017_1.csv')
 
 alerta <- read_xlsx("casen_2017_mil.xlsx")
 
