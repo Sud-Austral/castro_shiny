@@ -42,12 +42,12 @@ options(warn = -1)
 
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
-dataset <- read.csv('Casen_no_humano.csv')
-#dataset <- read.csv('CASEN_2017_1.csv')
+#dataset <- read.csv('Casen_no_humano.csv')
+dataset <- read.csv('CASEN_2017_1-10000.csv')
 
 #alerta <- read_xlsx("casen_2017_mil.xlsx")
 
-alerta <- read_csv("Casen_no_humano2.csv")
+# alerta <- read_csv("Casen_no_humano2.csv")
 
 
 
@@ -61,7 +61,7 @@ alerta <- read_csv("Casen_no_humano2.csv")
 datos_df_exp <- colnames(dataset)
 
 #muy importante:
-datos_df_exp_casen_2017_6 <- colnames(alerta)
+#datos_df_exp_casen_2017_6 <- colnames(alerta)
 
 
 data_2017 <- read_xlsx("casen_2017_mil.xlsx")
@@ -969,11 +969,11 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("exp",fluidRow(column(12,
-                                                                                   selectInput("expptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp_casen_2017_6)),
-                                                                                   selectInput("expptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp_casen_2017_6)),
-                                                                                   selectInput("expptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   selectInput("expptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                   selectInput("expptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                   selectInput("expptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
                                                                                    
-                                                                                   selectInput("expptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   selectInput("expptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
                                                                                    
                                                           downloadButton("tabla_cont_2017", "Descargar"),
                                                           tableOutput("exptabla_d_c_generalizada"))))
