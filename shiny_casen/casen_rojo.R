@@ -23,7 +23,7 @@ library(epiDisplay)
 library(haven)
 library(epiDisplay)
 library("readxl")
-
+library(expss)
 library(hrbrthemes)
 library(viridis)
 library(viridisLite)
@@ -39,9 +39,23 @@ options(warn = -1)
 
 dataset <- read.csv('Casen_no_humano.csv')
 
+alerta <- read_xlsx("casen_2017_mil.xlsx")
+
+#alerta <- read_xlsx("casen_2017_6_comunas.xlsx")
+
+
+
+
+
+
+
+
 
 #dataset = read_sav("Casen_no_humano.csv")
 datos_df_exp <- colnames(dataset)
+
+#muy importante:
+datos_df_exp_casen_2017_6 <- colnames(alerta)
 
 
 data_2017 <- read_xlsx("casen_2017_mil.xlsx")
@@ -913,11 +927,19 @@ server <- function(input, output, session) {
                                                                               selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
+                ),
+                navbarMenu("TTCC EXPERIMENTAL",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           
-                           
-                           
-                           
+                           tabPanel("exp",fluidRow(column(12,
+                                                                                   selectInput("expptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   selectInput("expptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   selectInput("expptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   
+                                                                                   selectInput("expptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp_casen_2017_6)),
+                                                                                   
+                                                          downloadButton("tabla_cont_2017", "Descargar"),
+                                                          tableOutput("exptabla_d_c_generalizada"))))
                 )
                 
             )
@@ -927,6 +949,59 @@ server <- function(input, output, session) {
         
         
     })
+    
+    
+    
+    
+    output$tabla_cont_2017 <- downloadHandler(
+        filename = function() {
+            paste("tabla", "csv", sep=".")
+        },
+        content = function(file) {
+            
+            
+            
+            
+            d <- input$expptabla2017_primeravx
+            e <- input$expptabla2017_segundavx
+            f <- input$expptabla2017_terceravx
+            g <- input$expptabla2017_cuartavx
+            
+            preguntaseternas2001_ab <- mydata_educacion_exp2()
+            
+            
+            # tabla_cro <- cro(alerta$Sexo, alerta$"Estado civil")
+            
+            preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+            preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+            preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+            preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+            
+            
+            #fff = cro_cpct(preguntaseternas_sub2001_a, list(total(), preguntaseternas_sub2001_b,  preguntaseternas_sub2001_c, preguntaseternas_sub2001_d ))
+            
+            fff <- table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b,  preguntaseternas_sub2001_c)
+            
+            
+            write.csv(fff, file)
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+        }
+    )
+    
+    
+    
+    
     
     output$promedios_filtros<-renderTable({
         
@@ -952,15 +1027,18 @@ server <- function(input, output, session) {
         
     })
     
-    
-    
-    
-    
     mydata_educacion_exp <- reactive({
-        datos_dfe <- dataset[, 1:32]
-        
-        return(datos_dfe)
+        data <- dataset[, 1:804]
+        return(data)
+    })    
+    
+    mydata_educacion_exp2 <- reactive({
+        data <- alerta
+        return(data)
     })
+    
+    
+
     
     
     
@@ -1353,9 +1431,50 @@ server <- function(input, output, session) {
         
         cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
         
+        
+        
+
+        
+        
+        
+        
         return(cross_tab)
     })
     
+    output$exptabla_d_c_generalizada<-renderTable({
+        d <- input$expptabla2017_primeravx
+        e <- input$expptabla2017_segundavx
+        f <- input$expptabla2017_terceravx
+        g <- input$expptabla2017_cuartavx
+        
+        preguntaseternas2001_ab <- mydata_educacion_exp2()
+        
+
+       # tabla_cro <- cro(alerta$Sexo, alerta$"Estado civil")
+        
+        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+        
+        preguntaseternas_sub2001_a  <-  data.frame( preguntaseternas_sub2001_a )
+
+        preguntaseternas_sub2001_b  <-  data.frame( preguntaseternas_sub2001_b )
+        #fff <- table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b)
+        
+        # *** buena
+       fff <- cro(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b)
+       # fff <- cro(preguntaseternas_sub2001_a, list(total(), preguntaseternas_sub2001_b %nest% preguntaseternas_sub2001_c))
+        
+        #fff = xtabs(unlist(preguntaseternas_sub2001_a) ~ unlist(preguntaseternas_sub2001_b) + unlist(preguntaseternas_sub2001_c))
+        
+        #tabla_cro <- cro_cpct(preguntaseternas_sub2001_a, list(total(), preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d))
+        
+        # aca debe venir la tabla para consumo de Patricio:
+        # cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
+        
+        return(fff)
+    })
     
     
     output$tabla_d_c<-renderPrint({
