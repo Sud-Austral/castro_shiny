@@ -178,7 +178,7 @@ server <- function(input, output, session) {
                            ))
                 ),
 
-                navbarMenu("Filtros",
+                navbarMenu("Promedios filtrados por grupo",
                            tabPanel("a nivel social", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
                                selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_filtros_terr_ddl)),
