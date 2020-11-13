@@ -34,7 +34,7 @@ library(epiDisplay)
 
 ```{r cars}
 dataset = read_sav("Casen 2017.sav")
-dataset_sub <- dataset[1:1000, 1:804]
+dataset_sub <- dataset[, 1:804]
 dataset_sub
 ```
 
@@ -45,7 +45,7 @@ dataset_sub
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-write.csv(dataset_sub,"Casen_no_humano.csv", row.names = FALSE)
+write_xlsx(dataset_sub,"Casen_2017.xlsx", row.names = FALSE)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
