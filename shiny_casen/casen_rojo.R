@@ -966,7 +966,26 @@ server <- function(input, output, session) {
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
-                
+                navbarMenu("Tablas de contingencia > 2x2 para promedios",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
+                                                                                   selectInput("ptabla2017_primeravx_prom", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2017_segundavx_prom", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2017_terceravx_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   downloadButton("boton_ttcc_mayor_2_prom", "Descargar"),
+                                                                                   
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada_prom")))),
+                           
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
+                                                                              selectInput("ptabla2017_primerav_prom", "ingrese primera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2017_segundav_prom", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2017_tercerav_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              verbatimTextOutput("tabla_chi_generalizada_prom"))))
+                ),
                 
                 navbarMenu("Diccionario de variables",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
