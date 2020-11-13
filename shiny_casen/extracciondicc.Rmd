@@ -26,10 +26,8 @@ CASEN_2017 <- read_sav("Casen 2017.sav")
 
 ```
 ```{r}
-CASEN_2017
+sub_dataset <- CASEN_2017[1:10000,]
 ```
-
-
 
 ```{r}
 write.table(CASEN_2017, file = "CASEN_2017.csv", sep = ",", col.names = TRUE, row.names = FALSE)
