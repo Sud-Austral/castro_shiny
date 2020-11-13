@@ -956,6 +956,7 @@ server <- function(input, output, session) {
                                                                                    
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
                                                                                    
+                                                                                   downloadButton("boton_ttcc_mayor_2", "Descargar"),
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada")))),
                            
@@ -965,6 +966,18 @@ server <- function(input, output, session) {
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
+                
+                
+                navbarMenu("Diccionario de variables",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
+                ),
+                
                 navbarMenu("Promedios agrupados por categoría",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
@@ -974,22 +987,27 @@ server <- function(input, output, session) {
 
                                                                                    downloadButton("boton_tabla_papc_2017", "Descargar"),
                                                                                    
-                                                                                   verbatimTextOutput("tabla_papc_2017"))))
+                                                                                   tableOutput("tabla_papc_2017"))))
                 ),
-                navbarMenu("Análisis de algunas tablas de contingencia",
+                
+                navbarMenu("Análisis de series en el tiempo",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
+                           
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
+                ),
+                
+                navbarMenu("Análisis de algunas tablas de contingencia",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
 
-                           tabPanel("exp",fluidRow(column(12,
-                                                                                   selectInput("expptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("expptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                   selectInput("expptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
 
-                                                                                   
-                                                                                   selectInput("expptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
-                                                                                   
-                                                          downloadButton("tabla_cont_2017", "Descargar"),
-                                                          tableOutput("exptabla_d_c_generalizada"))))
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
                 )
                 
             )
@@ -1003,7 +1021,7 @@ server <- function(input, output, session) {
     
     
     
-    output$tabla_cont_2017 <- downloadHandler(
+    output$boton_ttcc_mayor_2 <- downloadHandler(
         filename = function() {
             paste("tabla", "csv", sep=".")
         },
@@ -1016,12 +1034,8 @@ server <- function(input, output, session) {
             g <- input$ptabla2017_cuartavx
 
             
-            d <- input$expptabla2017_primeravx
-            e <- input$expptabla2017_segundavx
-            f <- input$expptabla2017_terceravx
-            g <- input$expptabla2017_cuartavx
             
-            preguntaseternas2001_ab <- mydata_educacion_exp2()
+            preguntaseternas2001_ab <- mydata_2017_1()
             
 
             primera_variable <- preguntaseternas2001_ab[,d]
@@ -1043,23 +1057,21 @@ server <- function(input, output, session) {
         },
         content = function(file) {
             
-            d <- input$primero_papc_2017
-            e <- input$segundo_papc_2017
-
-
+            a <- input$primero_papc_2017
+            b <- input$segundo_papc_2017
             
-            preguntaseternas2001_ab <- mydata_2017_1()
+            base_del_2006 <- mydata_2017_1()
             
+            base_del_2006_terr <- base_del_2006[,b]
             
-            primera_variable <- preguntaseternas2001_ab[,d]
-            segunda_variable <- preguntaseternas2001_ab[,e] 
-
-
+            base_del_2006_terr[is.na(base_del_2006_terr)] <- 0
             
-            cross_tabs = table(segunda_variable, primera_variable)
+            base_del_2006_cat <- base_del_2006[,a]
+            
+            promedios <- aggregate(list(base_del_2006_terr), list(base_del_2006_cat), mean)
             
 
-            write.csv(cross_tabs, file)
+            write.csv(promedios, file)
             
 
         }
@@ -1100,10 +1112,6 @@ server <- function(input, output, session) {
         base_del_2006_cat <- base_del_2006[,a]
         
         promedios <- aggregate(list(base_del_2006_terr), list(base_del_2006_cat), mean)
-        
-
-        
-
     })
     #################################################
     
