@@ -42,8 +42,8 @@ options(warn = -1)
 
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
-dataset <- read.csv('Casen_no_humano.csv')
-#dataset <- read.csv('CASEN_2017_1.csv')
+#dataset <- read.csv('Casen_no_humano.csv')
+dataset <- read.csv('CASEN_2017_1-10000.csv')
 
 alerta <- read_xlsx("casen_2017_mil.xlsx")
 
@@ -936,10 +936,21 @@ server <- function(input, output, session) {
                                                                               
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
+                navbarMenu("Promedios agrupados por categoría",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Promedios agrupados por categoría",fluidRow(column(12,
+                                                                                   selectInput("primero_papc_2017", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                   selectInput("segundo_papc_2017", "ingrese segunda variable:", c(datos_df_exp)),
+
+                                                                                   downloadButton("boton_tabla_papc_2017", "Descargar"),
+                                                                                   
+                                                                                   verbatimTextOutput("tabla_papc_2017"))))
+                ),
                 navbarMenu("Análisis de algunas tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("exp",fluidRow(column(12,
+                           tabPanel(tags$a(href="www.rstudio.com", "Análisis"),fluidRow(column(12,
                                                                                    selectInput("expptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp_casen_2017_6)),
                                                                                    selectInput("expptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp_casen_2017_6)),
                                                                                    selectInput("expptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp_casen_2017_6)),
@@ -966,9 +977,7 @@ server <- function(input, output, session) {
             paste("tabla", "csv", sep=".")
         },
         content = function(file) {
-            
-            
-            
+
             d <- input$ptabla2017_primeravx
             e <- input$ptabla2017_segundavx
             f <- input$ptabla2017_terceravx
@@ -981,22 +990,39 @@ server <- function(input, output, session) {
             segunda_variable <- preguntaseternas2001_ab[,e] 
             tercera_variable <- preguntaseternas2001_ab[,f] 
             cuarta_variable <- preguntaseternas2001_ab[,g] 
-            
-            
-            # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-            
+
             cross_tab = table(primera_variable, segunda_variable, tercera_variable, cuarta_variable)
-            
-            
-            
-            
+
             write.csv(cross_tab, file)
 
         }
     )
     
     
-    
+    output$boton_tabla_papc_2017 <- downloadHandler(
+        filename = function() {
+            paste("tabla", "csv", sep=".")
+        },
+        content = function(file) {
+            
+            d <- input$primero_papc_2017
+            e <- input$segundo_papc_2017
+
+
+            
+            preguntaseternas2001_ab <- mydata_2017_1()
+            
+            
+            primera_variable <- preguntaseternas2001_ab[,d]
+            segunda_variable <- preguntaseternas2001_ab[,e] 
+
+            
+            cross_tabs = table(segunda_variable, primera_variable)
+            
+            write.csv(cross_tabs, file)
+            
+        }
+    )
     
     
     output$promedios_filtros<-renderTable({
@@ -1005,16 +1031,11 @@ server <- function(input, output, session) {
         b <- input$categoria_filtro
         
         base_del_2006 <- mydata_educacion_1000()
-        
-        
-        
-        
+
         base_del_2006_terr <- base_del_2006[,b]
         
         base_del_2006_terr[is.na(base_del_2006_terr)] <- 0
-        
-        
-        
+
         base_del_2006_cat <- base_del_2006[,a]
         
         promedios <- data.frame(aggregate(base_del_2006_terr, base_del_2006_cat, mean))
@@ -1022,6 +1043,27 @@ server <- function(input, output, session) {
         return((promedios))
         
     })
+    
+    output$tabla_papc_2017<-renderTable({
+        
+        a <- input$primero_papc_2017
+        b <- input$segundo_papc_2017
+        
+        base_del_2006 <- mydata_2017_1()
+        
+        base_del_2006_terr <- base_del_2006[,b]
+        
+        base_del_2006_terr[is.na(base_del_2006_terr)] <- 0
+        
+        base_del_2006_cat <- base_del_2006[,a]
+        
+        promedios <- aggregate(list(base_del_2006_terr), list(base_del_2006_cat), mean)
+        
+
+        
+    })
+    
+    
     
     mydata_educacion_exp <- reactive({
         data <- dataset[, 1:804]
@@ -1034,7 +1076,10 @@ server <- function(input, output, session) {
     })
     
     
-
+    mydata_2017_1 <- reactive({
+        data <- dataset
+        return(data)
+    })
     
     
     
