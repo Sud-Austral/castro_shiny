@@ -1,6 +1,11 @@
 # Casen
 # Victor Enamorado - Christian Castro
 # 30 de Octubre del 2020
+
+
+
+    
+    
 library(ggplot2)
 library(ggpubr)
 library(markdown)
@@ -898,7 +903,9 @@ server <- function(input, output, session) {
                                                                                     selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                     verbatimTextOutput("tabla_d_c")))),
                            
-                           tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
+                           tabPanel("Pearson's Chi-squared test",fluidRow(
+                               column(12, includeMarkdown("info_Chi-squared.md")),
+                               column(12,
                                                                                  selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                                  selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                  verbatimTextOutput("tabla_chi"))))
@@ -931,7 +938,7 @@ server <- function(input, output, session) {
                                                                               
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
-                navbarMenu("TTCC EXPERIMENTAL",
+                navbarMenu("Análisis de algunas tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("exp",fluidRow(column(12,
