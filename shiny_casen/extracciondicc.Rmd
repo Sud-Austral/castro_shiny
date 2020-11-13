@@ -35,6 +35,28 @@ CASEN_2017
 write.table(CASEN_2017, file = "CASEN_2017.csv", sep = ",", col.names = TRUE, row.names = FALSE)
 ```
 
+```{r}
+#dataset <- read.csv('Casen_no_humano.csv')
+dataset <- read.csv('CASEN_2017.csv')
+
+# typeof(dataset) 
+
+datos_df_exp <- colnames(dataset)
+datos_df_exp
+```
+
+
+
+```{r}
+
+
+sub_dataset <- dataset[1:10000,]
+write.table(sub_dataset, file = "CASEN_2017_1-10000.csv", sep = ",", col.names = TRUE, row.names = FALSE)
+
+```
+
+
+
 
 
 
