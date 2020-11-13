@@ -1,6 +1,11 @@
 # Casen
 # Victor Enamorado - Christian Castro
 # 30 de Octubre del 2020
+
+
+
+    
+    
 library(ggplot2)
 library(ggpubr)
 library(markdown)
@@ -38,6 +43,7 @@ options(warn = -1)
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
 dataset <- read.csv('Casen_no_humano.csv')
+#dataset <- read.csv('CASEN_2017_1.csv')
 
 #alerta <- read_xlsx("casen_2017_mil.xlsx")
 
@@ -188,8 +194,10 @@ server <- function(input, output, session) {
                            
                            tabPanel("Diagrama de caja y bigotes", fluidRow(
                                column(12, includeMarkdown("info_2006_cyb.md")),
+
                                selectInput("ptabla_cyb", "prueba tabla:", c(datos_df_educacion_preg)),
                                downloadButton("plot_cyb", "Descargar"),
+
                                column(12, plotOutput("cyb"))
                            ))
                 ),
@@ -203,24 +211,15 @@ server <- function(input, output, session) {
                            ))),
                 
                 tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
-                         
                          sidebarLayout(
-                             
                              sidebarPanel(
-                                 
                                  selectInput("dataset", "Escoja una base de datos:",
                                              choices = c("casen 2006", "plot", "casen 2009 ymt")),
-                                 
                                  downloadButton("dl", "Descargar"),
                                  br(),
                                  downloadButton("downloadPlot", "Descargar el plot")
                              ),
-                             
-                             
-                             
                              mainPanel()
-                             
-                             
                          ))
             )
             
@@ -393,7 +392,7 @@ server <- function(input, output, session) {
                            
                            tabPanel("Diagrama de caja y bigotes", fluidRow(
                                column(12, includeMarkdown("info_2006_cyb.md")),
-                               selectInput("ptabla_cyb_2011_ymt", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
+                               selectInput("ptabla_cyb_2011_ymt", "Seleccione variable:", c(datos_df_casen_2011_mil_ymt_preg)),
                                column(12, plotOutput("cyb_2011_ymt"))
                            ))
                            
@@ -929,14 +928,16 @@ server <- function(input, output, session) {
                 navbarMenu("Tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5,
+                           tabPanel("Tablas de contingencia de 2x2",fluidRow(column(12,
                                                                                     selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                                     selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                     verbatimTextOutput("tabla_d_c")))),
                            
-                           tabPanel("Pearson's Chi-squared test",fluidRow(column(3,
-                                                                                 selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                 selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                           tabPanel("Pearson's Chi-squared test",fluidRow(
+                               column(12, includeMarkdown("info_Chi-squared.md")),
+                               column(12,
+                                                                                 selectInput("ptabla2017_primerav_chi", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                 selectInput("ptabla2017_segundav_chi", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                  verbatimTextOutput("tabla_chi"))))
                            
                            
@@ -958,13 +959,13 @@ server <- function(input, output, session) {
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada")))),
                            
-                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(3,
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
-                navbarMenu("TTCC EXPERIMENTAL",
+                navbarMenu("Análisis de algunas tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("exp",fluidRow(column(12,
@@ -1250,21 +1251,23 @@ server <- function(input, output, session) {
     
     
     output$cyb <- renderPlot({
-        a <- input$ptabla_cyb
         
+        a <- input$ptabla_cyb
         preguntaseternas2001_chi <- mydata_educacion_1000()
         preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
         preguntaseternas2001_chi %>%
-            ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
-            geom_boxplot() + scale_fill_manual(values=c("olivedrab2"))+
+
+            ggplot(aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) + geom_boxplot() + 
+            
+            scale_fill_manual(values=c("olivedrab2"))+
+
             theme(
                 legend.position="none",
                 plot.title = element_text(size=11)
             ) +
             ggtitle("Basic boxplot") +
             xlab("")
-       
-        
+
     })
     
     output$plot_cyb <- downloadHandler(
@@ -1433,20 +1436,13 @@ server <- function(input, output, session) {
         preguntaseternas2001_chi %>%
             
             ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
-            
-            
-            
-            
             geom_boxplot() +
-            
             theme(
                 legend.position="none",
                 plot.title = element_text(size=11)
             ) +
             ggtitle("Basic boxplot") +
             xlab("")
-        
-        
     })
     
     
@@ -1592,8 +1588,8 @@ server <- function(input, output, session) {
     })
     
     output$tabla_chi<-renderPrint({
-        a <- input$ptabla2017_primerav
-        b <- input$ptabla2017_segundav
+        a <- input$ptabla2017_primerav_chi
+        b <- input$ptabla2017_segundav_chi
         preguntaseternas2001_ab <- mydata_educacion_exp()
         preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
         preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
@@ -1609,10 +1605,28 @@ server <- function(input, output, session) {
     
     
     
-    output$downloadPlot <- downloadHandler(
-        filename = function(){paste("input$plot3",'.png',sep='')},
-        content = function(file){
-            ggsave(file,plot=ggplot(mydata_educacion_1000(), aes(mydata_educacion_1000()$"Ingreso Del Trabajo")) + geom_density())})
+
+    plotInput666 <- reactive({
+        a <- input$ptabla_cyb
+        preguntaseternas2001_chi <- mydata_educacion_1000()
+        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+        
+       p <-  preguntaseternas2001_chi %>%
+            ggplot(aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) + geom_boxplot()
+    })
+
+   
+        
+        output$downloadPlotaaa<- downloadHandler(
+
+            filename = function() {paste(a, '.png', sep='')},
+            content = function(file){
+
+                ggsave(file,plotInput666())
+            }
+        )
+    
+    
     
     
     output$downloadData <- downloadHandler(
