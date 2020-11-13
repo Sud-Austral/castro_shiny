@@ -45,9 +45,9 @@ options(warn = -1)
 #dataset <- read.csv('Casen_no_humano.csv')
 dataset <- read.csv('CASEN_2017_1-10000.csv')
 
-alerta <- read_xlsx("casen_2017_mil.xlsx")
+#alerta <- read_xlsx("casen_2017_mil.xlsx")
 
-#alerta <- read_xlsx("casen_2017_6_comunas.xlsx")
+alerta <- read_csv("Casen_no_humano2.csv")
 
 
 
@@ -76,8 +76,9 @@ data_2017_modulo_IV <- data_2017[,152:304]
 data_2017_modulo_IV_colnames <- colnames(data_2017_modulo_IV)
 
 
-datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
+
 # datos_df_1000 <- cbind(casen2017_1, casen2017_2)
+datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
 datos_df_educacion <- datos_df_1000[, 1:32]
 datos_df_educacion_preg <- colnames(datos_df_educacion)
 
@@ -95,9 +96,23 @@ datos_df_casen_2009_mil_mn <- read_xlsx("casen_2009_mil_mn.xlsx")
 datos_df_casen_2009_mil_mn <- datos_df_casen_2009_mil_mn[, 1:34]
 datos_df_casen_2009_mil_mn_preg <- colnames(datos_df_casen_2009_mil_mn)
 
+data_2009_filtros_terr <- datos_df_casen_2009_mil_mn[, 1:2]
+data_2009_filtros_terr_ddl <- colnames(data_2009_filtros_terr)
+data_2009_filtros_cat <- datos_df_casen_2009_mil_mn[, 9:32]
+data_2009_filtros_cat_ddl <- colnames(data_2009_filtros_cat)
+
+
 datos_df_casen_2011_mil_mn <- read_xlsx("casen_2011_mil_mn.xlsx")
 datos_df_casen_2011_mil_mn <- datos_df_casen_2011_mil_mn[, 1:34]
 datos_df_casen_2011_mil_mn_preg <- colnames(datos_df_casen_2011_mil_mn)
+
+data_2011_filtros_terr <- datos_df_casen_2011_mil_mn[, 1:2]
+data_2011_filtros_terr_ddl <- colnames(data_2011_filtros_terr)
+data_2011_filtros_cat <- datos_df_casen_2011_mil_mn[, 9:32]
+data_201_filtros_cat_ddl <- colnames(data_2011_filtros_cat)
+
+
+
 
 datos_df_casen_2011_mil_ymt <- read_xlsx("casen_2011_mil_ymt.xlsx")
 datos_df_casen_2011_mil_ymt  <- datos_df_casen_2011_mil_ymt [, 1:24]
@@ -179,18 +194,15 @@ server <- function(input, output, session) {
                            
                            tabPanel("Diagrama de caja y bigotes", fluidRow(
                                column(12, includeMarkdown("info_2006_cyb.md")),
-                               selectInput("ptabla_cyb", "Seleccione variable:", c(datos_df_educacion_preg)),
 
-                               downloadButton("downloadPlotaaa", "Descargar"),
-                               
-                               
-                               
-                               
+                               selectInput("ptabla_cyb", "prueba tabla:", c(datos_df_educacion_preg)),
+                               downloadButton("plot_cyb", "Descargar"),
+
                                column(12, plotOutput("cyb"))
                            ))
                 ),
 
-                navbarMenu("Promedios filtrados por grupo",
+                navbarMenu("Filtros",
                            tabPanel("a nivel social", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
                                selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_filtros_terr_ddl)),
@@ -247,6 +259,8 @@ server <- function(input, output, session) {
                            ))
                            
                 ),
+                
+                
                 tabPanel("Descargas", titlePanel("Descarga de datos Casen"),
                          
                          sidebarLayout(
@@ -287,6 +301,15 @@ server <- function(input, output, session) {
                     selectInput("ptabla20091", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
                     column(12, dataTableOutput("prueba_tabla"))
                 )),
+                
+                navbarMenu("Promedios filtrados por grupo",
+                           tabPanel("a nivel social", fluidRow(
+                             column(12, includeMarkdown("info_2006_prom.md")),
+                             selectInput("nivel_filtro_mn", "Seleccione unidad social:", c(data_2009_filtros_terr_ddl)),
+                             selectInput("categoria_filtro_mn", "Seleccione atributo:", c(data_2009_filtros_cat_ddl)),
+                             column(12, tableOutput("promedios_filtros_mn"))
+                           ))),
+                
                 navbarMenu("Estadísticas y gráficas",
                            tabPanel("Promedios", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
@@ -320,6 +343,15 @@ server <- function(input, output, session) {
                     selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
                     column(12, dataTableOutput("prueba_tabla"))
                 )),
+                
+                navbarMenu("Promedios filtrados por grupo",
+                           tabPanel("a nivel social", fluidRow(
+                             column(12, includeMarkdown("info_2006_prom.md")),
+                             selectInput("nivel_filtro_11mn", "Seleccione unidad social:", c(data_2011_filtros_terr_ddl)),
+                             selectInput("categoria_filtro_11mn", "Seleccione atributo:", c(data_2011_filtros_cat_ddl)),
+                             column(12, tableOutput("promedios_filtros_11mn"))
+                           ))),
+                
                 navbarMenu("Estadísticas y gráficas",
                            tabPanel("Promedios", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
@@ -917,13 +949,13 @@ server <- function(input, output, session) {
                 navbarMenu("Tablas de contingencia > 2x2",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("Tablas de contingencia > 2x2",fluidRow(column(12,
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
                                                                                    selectInput("ptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
                                                                                    
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
-                                                                                  downloadButton("tabla_contt_2017", "Descargar"),
+                                                                                   
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada")))),
                            
@@ -931,9 +963,6 @@ server <- function(input, output, session) {
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
-                                                                              
-                                                                              
-                                                                              
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
                 navbarMenu("Promedios agrupados por categoría",
@@ -972,20 +1001,27 @@ server <- function(input, output, session) {
     
     
     
-    output$tabla_contt_2017 <- downloadHandler(
+    output$tabla_cont_2017 <- downloadHandler(
         filename = function() {
             paste("tabla", "csv", sep=".")
         },
         content = function(file) {
 
+
             d <- input$ptabla2017_primeravx
             e <- input$ptabla2017_segundavx
             f <- input$ptabla2017_terceravx
             g <- input$ptabla2017_cuartavx
+
             
-            preguntaseternas2001_ab <- mydata_educacion_exp()
+            d <- input$expptabla2017_primeravx
+            e <- input$expptabla2017_segundavx
+            f <- input$expptabla2017_terceravx
+            g <- input$expptabla2017_cuartavx
             
+            preguntaseternas2001_ab <- mydata_educacion_exp2()
             
+
             primera_variable <- preguntaseternas2001_ab[,d]
             segunda_variable <- preguntaseternas2001_ab[,e] 
             tercera_variable <- preguntaseternas2001_ab[,f] 
@@ -1016,16 +1052,20 @@ server <- function(input, output, session) {
             primera_variable <- preguntaseternas2001_ab[,d]
             segunda_variable <- preguntaseternas2001_ab[,e] 
 
+
             
             cross_tabs = table(segunda_variable, primera_variable)
             
+
             write.csv(cross_tabs, file)
             
+
         }
     )
     
     
     output$promedios_filtros<-renderTable({
+
         
         a <- input$nivel_filtro
         b <- input$categoria_filtro
@@ -1061,7 +1101,61 @@ server <- function(input, output, session) {
         
 
         
+
     })
+    #################################################
+    
+    output$promedios_filtros_mn<-renderTable({
+      
+      a <- input$nivel_filtro_mn
+      b <- input$categoria_filtro_mn
+      
+      base_del_2009 <- mydata_educacion_3000()
+      
+      
+      
+      
+      base_del_2009_terr <- base_del_2009[,b]
+      
+      base_del_2009_terr[is.na(base_del_2009_terr)] <- 0
+      
+      
+      
+      base_del_2009_cat <- base_del_2009[,a]
+      
+      promedios <- data.frame(aggregate(base_del_2009_terr, base_del_2009_cat, mean))
+      
+      return((promedios))
+      
+    })
+    
+    #################################################
+    
+    output$promedios_filtros_11mn<-renderTable({
+      
+      a <- input$nivel_filtro_11mn
+      b <- input$categoria_filtro_11mn
+      
+      base_del_2011 <- mydata_educacion_3000()
+      
+      
+      
+      
+      base_del_2011_terr <- base_del_2011[,b]
+      
+      base_del_2011_terr[is.na(base_del_2011_terr)] <- 0
+      
+      
+      
+      base_del_2011_cat <- base_del_2011[,a]
+      
+      promedios <- data.frame(aggregate(base_del_2009_terr, base_del_2009_cat, mean))
+      
+      return((promedios))
+      
+    })
+    
+    #######################################################
     
     
     
@@ -1198,7 +1292,7 @@ server <- function(input, output, session) {
     
     output$prueba_tablaedu <- renderDataTable(prueba_tablaedu())
     ########################################################################## 2006  ##########################################################################  
-    
+  
     
     
     output$cyb <- renderPlot({
@@ -1206,18 +1300,41 @@ server <- function(input, output, session) {
         a <- input$ptabla_cyb
         preguntaseternas2001_chi <- mydata_educacion_1000()
         preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
-        
         preguntaseternas2001_chi %>%
+
             ggplot(aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) + geom_boxplot() + 
             
             scale_fill_manual(values=c("olivedrab2"))+
+
             theme(
                 legend.position="none",
                 plot.title = element_text(size=11)
             ) +
             ggtitle("Basic boxplot") +
             xlab("")
+
     })
+    
+    output$plot_cyb <- downloadHandler(
+      filename = function()
+      content = function(file){
+        
+        a <- input$ptabla_cyb
+        preguntaseternas2001_chi <- mydata_educacion_1000()
+        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+        
+        preguntaseternas2001_chi %>%
+        ggsave(file,plot=ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
+                 geom_boxplot() + scale_fill_manual(values=c("olivedrab2"))+
+                 theme(
+                   legend.position="none",
+                   plot.title = element_text(size=11)
+                 ) +
+                 ggtitle("Basic boxplot") +
+                 xlab(""))
+        
+      })
+    
     
     
     
@@ -1449,15 +1566,15 @@ server <- function(input, output, session) {
         preguntaseternas2001_ab <- mydata_educacion_exp()
         
         
-        primera_variable <- preguntaseternas2001_ab[,d]
-        segunda_variable <- preguntaseternas2001_ab[,e] 
-        tercera_variable <- preguntaseternas2001_ab[,f] 
-        cuarta_variable <- preguntaseternas2001_ab[,g] 
+        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
         
         
         # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
         
-        cross_tab = table(primera_variable, segunda_variable, tercera_variable, cuarta_variable)
+        cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
         
         
         
