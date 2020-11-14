@@ -65,6 +65,12 @@ datos_df_exp <- colnames(dataset)
 
 
 data_2017 <- read_xlsx("casen_2017_mil.xlsx")
+
+
+data_2017_colnames <- colnames(data_2017)
+
+
+
 # data_2017_modulo_I <- data_2017[, 1:3]
 data_2017_modulo_I <- data_2017
 data_2017_modulo_I_colnames <- colnames(data_2017_modulo_I)
@@ -784,12 +790,14 @@ server <- function(input, output, session) {
                              column(12, dataTableOutput("table2017_Iid"))
                            )),
                            
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                           tabPanel("______Séptimo módulo (V): Vivienda y Entorno", fluidRow(
                              column(12, includeMarkdown("about_educacion.md.txt")),
                              column(12, dataTableOutput("table2017_Iviv"))
                            )),
                            
                            
+                           
+
                            
                            # tabPanel("Segundo módulo (E): Educacion ",
                            #          fluidRow(column(12, includeMarkdown("about_educacion.md.txt")),
@@ -949,7 +957,14 @@ server <- function(input, output, session) {
                 navbarMenu("Tablas de contingencia > 2x2",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
+                           
+                           
+                   
+                           
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(
+                               selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                               column(7,
                                                                                    selectInput("ptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
@@ -957,8 +972,8 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
-                                                                                   
-                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                      tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                                                                 #  verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
@@ -1585,8 +1600,8 @@ server <- function(input, output, session) {
     
     ########################################################################## 2017  ##########################################################################  
     
-    
-    output$tabla_d_c_generalizada<-renderPrint({
+    # output$tabla_d_c_generalizada<-renderPrint({
+    output$tabla_d_c_generalizada<-renderTable({
         d <- input$ptabla2017_primeravx
         e <- input$ptabla2017_segundavx
         f <- input$ptabla2017_terceravx
