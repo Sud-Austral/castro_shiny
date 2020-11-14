@@ -146,7 +146,11 @@ datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
 
 ui <- fluidPage(theme = shinytheme("cerulean"),
                 
-                selectInput("variable_anio", "Seleccione base de datos:",
+                br(), 
+                br(),
+                br(),
+                
+                selectInput("variable_anio", h4("Seleccione base de datos:"),
                             
                             c("Seleccione año" = "2",
                               "Casen 2006" = "2006",
@@ -159,8 +163,12 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                               "Casen 2017" = "2017"
                               
                             )),       
-                titlePanel("Manual de interpretación de variables y análisis estadísticos de la CASEN"),
+                titlePanel(h1("Manual de interpretación de variables y análisis estadísticos de la CASEN")),
                 br(),
+
+                
+                img(src = "myImage.jpg"),
+                
                 uiOutput("navbarPageUI")
                 
 ) 
@@ -172,6 +180,13 @@ server <- function(input, output, session) {
     output$navbarPageUI <- renderUI({
         
         user <- input$variable_anio
+        
+        
+        
+        
+
+        
+
         
         if (user == 2006) {
             
