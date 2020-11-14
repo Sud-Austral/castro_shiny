@@ -34,7 +34,7 @@ library(viridis)
 library(viridisLite)
 library(DescTools)
 library(roperators)
-
+library(shinycssloaders)
 library(writexl)
 
 oldw <- getOption("warn")
@@ -958,7 +958,7 @@ server <- function(input, output, session) {
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
                                                                                    
-                                                                                   verbatimTextOutput("tabla_d_c_generalizada")))),
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
@@ -1042,7 +1042,7 @@ server <- function(input, output, session) {
     
     output$boton_ttcc_mayor_2 <- downloadHandler(
         filename = function() {
-            paste("tabla", "csv", sep=".")
+            paste("tabla.csv", "csv", sep=".")
         },
         content = function(file) {
 
