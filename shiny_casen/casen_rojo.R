@@ -790,39 +790,15 @@ server <- function(input, output, session) {
                              column(12, dataTableOutput("table2017_Iid"))
                            )),
                            
-                           tabPanel("______Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
                              column(12, includeMarkdown("about_educacion.md.txt")),
                              column(12, dataTableOutput("table2017_Iviv"))
                            )),
-                           
-                           
-                           
-
-                           
-                           # tabPanel("Segundo módulo (E): Educacion ",
-                           #          fluidRow(column(12, includeMarkdown("about_educacion.md.txt")),
-                           #                   column(12,  dataTableOutput("prueba_tablaedu")))),
-                           # 
-                           # tabPanel("Tercer módulo (O): Trabajo ",
-                           #          fluidRow(column(6, includeMarkdown("about_trabajo.txt")),
-                           #                   column(3,  tableOutput("contents3")))),
-                           # 
-                           # tabPanel("Cuarto módulo (Y): Ingresos ",
-                           #          fluidRow(column(6, includeMarkdown("about_ingresos.txt")),
-                           #                   column(3,  tableOutput("contents4")))),
-                           # 
-                           # tabPanel("Quinto módulo (S): Salud ",
-                           #          fluidRow(column(6, includeMarkdown("about_salud.txt")),
-                           #                   column(3,  tableOutput("contents5")))),
-                           # 
-                           # 
-                           # tabPanel("Sexto módulo (R): Identidades, redes y participación ",
-                           #          fluidRow(column(6, includeMarkdown("about_identidades.txt")),
-                           #                   column(3,  tableOutput("contents6")))),
-                           # 
-                           # tabPanel("Séptimo módulo (V): Vivienda y Entorno ",
-                           #          fluidRow(column(6, includeMarkdown("about_vivienda.txt")),
-                           #                   column(3,  tableOutput("contents7")))),
+                           "----",
+                           "",
+                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
+                               column(12, includeMarkdown("hh_d_asis.md"))
+                           )),
                            
                            tabPanel(" ")),
                 
@@ -972,8 +948,8 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
-                                      tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
-                                                                                 #  verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                   #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
@@ -1600,8 +1576,8 @@ server <- function(input, output, session) {
     
     ########################################################################## 2017  ##########################################################################  
     
-    # output$tabla_d_c_generalizada<-renderPrint({
-    output$tabla_d_c_generalizada<-renderTable({
+    output$tabla_d_c_generalizada<-renderPrint({
+    #output$tabla_d_c_generalizada<-renderTable({
         d <- input$ptabla2017_primeravx
         e <- input$ptabla2017_segundavx
         f <- input$ptabla2017_terceravx
@@ -1619,13 +1595,6 @@ server <- function(input, output, session) {
         # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
         
         cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-        
-        
-        
-
-        
-        
-        
         
         return(cross_tab)
     })
@@ -1688,11 +1657,7 @@ server <- function(input, output, session) {
     })
     
     
-    #########################################################################################################################################
-    #########################################################################################################################################
-    #########################################################################################################################################
-    
-    
+
     
 
     plotInput666 <- reactive({
