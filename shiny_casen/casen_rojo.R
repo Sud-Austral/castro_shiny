@@ -743,18 +743,22 @@ server <- function(input, output, session) {
 
                 
                 navbarMenu("Factores de expansión",
-                           tabPanel("Introducción", fluidRow(column(9, includeMarkdown("facintro.txt")))),
+                           tabPanel("Introducción", fluidRow(
+                               
+                               
+                               
+                               column(12, includeMarkdown("facintro.md")))),
                            "----",
                            "",
                            
                            tabPanel("Factor de Expansión Comunal",
-                                    fluidRow(column(9, includeMarkdown("facco.txt")))),
+                                    fluidRow(column(9, includeMarkdown("facco.md")))),
                            
                            tabPanel("Factor de Expansión Regional",
                                     fluidRow(column(9, includeMarkdown("facor.txt")))),
                            
                            tabPanel("Factor de Expansión sobre orientación sexual e identidad de género",
-                                    fluidRow(column(9, includeMarkdown("facreg.txt")))),
+                                    fluidRow(column(9, includeMarkdown("facreg.md")))),
                            
                            tabPanel(" ")),
                 
@@ -770,6 +774,125 @@ server <- function(input, output, session) {
                                     fluidRow(column(9, includeMarkdown("varianza_conglomerado.txt")))),
                            
                            tabPanel(" ")),
+                
+                
+                
+                navbarMenu("Descripción conceptual de módulos y variables",
+                           tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
+                           
+                           "----",
+                           "",
+                           
+                           ####################### Registro residentes ########################
+                           
+                           tabPanel("Primer módulo: Registro Residentes -columnas 1:42-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+
+                           tabPanel("___Sub módulo: Identificacion de los encuestados -1:8-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Factores de expansion -9:11-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Varianza -12:13-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Fecha de la entrevista -14:16-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Personas, nucleos, hogares y parejas -17:20-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Preguntas identificatorias -21:36-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Dificultades o limitaciones fisicas -37:42-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+
+                           ############################# Modulo educacion ######################################
+                           
+                        "----",
+                        "",
+                           tabPanel("Segundo módulo (E): Educacion -columnas 43:101-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+
+                           tabPanel("___Sub módulo: Dificultades o limitaciones fisicas -43:69-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Recepcion de beneficios estatales -70:92-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("___Sub módulo: Pago autonomo por educacion -93:101-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           "----",
+                           "",                           
+                           
+                           ############################# Modulo Trabajo ######################################
+
+                           
+                           tabPanel("Tercer módulo (O): Trabajo -columnas 102:151-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+
+
+                           
+                           "----",
+                           "",                           
+                           
+                           ############################# Modulo ingresos ######################################
+                           
+                           
+                           tabPanel("Cuarto módulo (Y): Ingresos -columnas 152:304-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+
+                           tabPanel("___Sub módulo: Alimentacion y estado nutricional -columnas 305:309-", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           tabPanel("Quinto módulo (S): Salud", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt"))
+                           )),
+                           "----",
+                           "",
+                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
+                               column(12, includeMarkdown("hh_d_asis.md"))
+                           )),
+                           
+                           tabPanel(" ")),
+                
+                
+                
+                
                 
                 navbarMenu("Módulos",
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
@@ -1006,7 +1129,8 @@ server <- function(input, output, session) {
                 navbarMenu("Promedios agrupados por categoría",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("Promedios agrupados por categoría",fluidRow(column(12,
+                           tabPanel("Promedios agrupados por categoría",fluidRow(column(12, includeMarkdown("info_papc.md")),
+                                                                                 column(12,
                                                                                    selectInput("primero_papc_2017", "ingrese primera variable:", c(datos_df_exp)),
                                                                                    selectInput("segundo_papc_2017", "ingrese segunda variable:", c(datos_df_exp)),
 
