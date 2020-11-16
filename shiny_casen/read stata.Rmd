@@ -1,0 +1,28 @@
+---
+title: "read stata"
+author: "Christian Castro"
+date: "16-11-2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+
+```{r cars}
+library(foreign)
+mydata <- read.dta("casen2006.dta") 
+```
+
+```{r}
+mydata2006 <- mydata
+write.csv(mydata2006,"mydata2006.csv", row.names = FALSE)
+
+
+```
+
