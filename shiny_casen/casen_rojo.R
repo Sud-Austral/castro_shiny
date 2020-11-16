@@ -973,7 +973,103 @@ server <- function(input, output, session) {
                            tabPanel("Tablas de contingencia de 2x2",fluidRow(column(5, verbatimTextOutput("tabla_d_c15")))),
                            
                            tabPanel("Pearson's Chi-squared test",fluidRow(column(3, verbatimTextOutput("tabla_chi15"))))
-                ) 
+
+                           
+                            ) ,
+                
+                
+                
+                
+                navbarMenu("Tablas de contingencia > 2x2",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           
+                           
+                           
+                           
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(
+                               selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                               column(7,
+                                      selectInput("ptabla2015_primeravx", "ingrese primera variable:", c(datos_df_exp)),
+                                      selectInput("ptabla2015_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
+                                      selectInput("ptabla2015_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
+                                      
+                                      selectInput("ptabla2015_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                      
+                                      downloadButton("boton_ttcc_mayor_2015", "Descargar"),
+                                      #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                      verbatimTextOutput("tabla_d_c_generalizada_2015") %>% withSpinner(color="#0dc5c1")))),
+                           
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
+                                                                              selectInput("ptabla2015_primerav", "ingrese primera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2015_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2015_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              verbatimTextOutput("tabla_chi_generalizada_2015"))))
+                ),
+                navbarMenu("Tablas de contingencia > 2x2 para promedios",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
+                                                                                   selectInput("ptabla2015_primeravx_prom", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2015_segundavx_prom", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2015_terceravx_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   selectInput("ptabla2015_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   
+                                                                                   downloadButton("boton_ttcc_mayor_2_prom_2015", "Descargar"),
+                                                                                   
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada_prom_2015")))),
+                           
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
+                                                                              selectInput("ptabla2015_primerav_prom", "ingrese primera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2015_segundav_prom", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2015_tercerav_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              verbatimTextOutput("tabla_chi_generalizada_prom_2015"))))
+                ),
+                
+                navbarMenu("Diccionario de variables",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
+                ),
+                
+                navbarMenu("Promedios agrupados por categoría",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Promedios agrupados por categoría",fluidRow(column(12, includeMarkdown("info_papc.md")),
+                                                                                 column(12,
+                                                                                        selectInput("primero_papc_2015", "ingrese primera variable:", c(datos_df_exp)),
+                                                                                        selectInput("segundo_papc_2015", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                        
+                                                                                        downloadButton("boton_tabla_papc_2015", "Descargar"),
+                                                                                        
+                                                                                        tableOutput("tabla_papc_2015"))))
+                ),
+                
+                navbarMenu("Análisis de series en el tiempo",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
+                ),
+                
+                navbarMenu("Análisis de algunas tablas de contingencia",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           
+                           tabPanel("exp",fluidRow(
+                               column(12, includeMarkdown("info_rpubs.md")),
+                               
+                               column(12, )))
+                )
             )
         }
         
@@ -1295,13 +1391,27 @@ server <- function(input, output, session) {
                            tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
                            tabPanel("  ")),
                 
+                
+                ########################################################
+                ########################################################
+                #######################  16   #################################
+                
+                
+                
                 navbarMenu("Tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
-                           tabPanel("Tablas de contingencia de 2x2",fluidRow(column(12,
+                           tabPanel("Tablas de contingencia de 2x2",fluidRow(
+                                 column(12, includeMarkdown("info_ponderacion.md")),
+                               
+                               column(12,
                                                                                     selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                                     selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                    verbatimTextOutput("tabla_d_c")))),
+                                                                                    verbatimTextOutput("tabla_d_c"),
+                                                                                    verbatimTextOutput("tabla_d_c_ponderadas")
+                                                                                    ))
+                                    ),
+
                            
                            tabPanel("Pearson's Chi-squared test",fluidRow(
                                column(12, includeMarkdown("info_Chi-squared.md")),
@@ -1309,20 +1419,20 @@ server <- function(input, output, session) {
                                                                                  selectInput("ptabla2017_primerav_chi", "ingrese primera variable:", c(datos_df_exp)),
                                                                                  selectInput("ptabla2017_segundav_chi", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                  verbatimTextOutput("tabla_chi"))))
-                           
-                           
-                           
-                           
-                           
                 ) ,
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 navbarMenu("Tablas de contingencia > 2x2",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
-                           
-                           
-                           
-                   
-                           
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
                                selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
@@ -1334,7 +1444,26 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
-                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+
+                                   #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1"),
+                                   
+                                   downloadButton("boton_ttcc_mayor_2_pon", "Descargar"),
+                                   #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                   verbatimTextOutput("tabla_d_c_generalizada_pon") %>% withSpinner(color="#0dc5c1")
+                                   
+                                   
+                                   
+                                   
+                                   )
+                               
+                               
+                               )),
+                           
+                           
+                           
+                           
+          
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
@@ -1419,28 +1548,21 @@ server <- function(input, output, session) {
     
     output$boton_ttcc_mayor_2 <- downloadHandler(
         filename = function() {
-            paste("tabla.csv", "csv", sep=".")
+            paste("tabla_ttcc.csv", "csv", sep=".")
         },
         content = function(file) {
-
-
             d <- input$ptabla2017_primeravx
             e <- input$ptabla2017_segundavx
             f <- input$ptabla2017_terceravx
             g <- input$ptabla2017_cuartavx
 
-            
-            
             preguntaseternas2001_ab <- mydata_2017_1()
             
-
             primera_variable <- preguntaseternas2001_ab[,d]
             segunda_variable <- preguntaseternas2001_ab[,e] 
             tercera_variable <- preguntaseternas2001_ab[,f] 
             cuarta_variable <- preguntaseternas2001_ab[,g] 
-
             cross_tab = table(primera_variable, segunda_variable, tercera_variable, cuarta_variable)
-
             write.csv(cross_tab, file)
 
         }
@@ -1529,6 +1651,30 @@ server <- function(input, output, session) {
     
     
     
+    
+    output$boton_ttcc_mayor_2_pon <- downloadHandler(
+        filename = function() {
+            paste("tabla_ttcc_pon.csv", "csv", sep=".")
+        },
+        content = function(file) {
+            d <- input$ptabla2017_primeravx
+            e <- input$ptabla2017_segundavx
+            f <- input$ptabla2017_terceravx
+            g <- input$ptabla2017_cuartavx
+            
+            preguntaseternas2001_ab <- mydata_2017_1()
+            
+            primera_variable <- preguntaseternas2001_ab[,d]
+            segunda_variable <- preguntaseternas2001_ab[,e] 
+            tercera_variable <- preguntaseternas2001_ab[,f] 
+            cuarta_variable <- preguntaseternas2001_ab[,g] 
+            
+     #       cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
+            cross_tab = table(preguntaseternas2001_ab$expc ~ unlist(primera_variable)+unlist(segunda_variable)+unlist(tercera_variable)+unlist(cuarta_variable))
+            write.csv(cross_tab, file)
+            
+        }
+    )
     
     output$boton_tabla_papc_2017 <- downloadHandler(
         filename = function() {
@@ -2141,7 +2287,39 @@ server <- function(input, output, session) {
     ########################################################################## 2017  ##########################################################################  
 
     output$tabla_d_c_generalizada<-renderPrint({
-    #output$tabla_d_c_generalizada<-renderTable({
+        #output$tabla_d_c_generalizada<-renderTable({
+        d <- input$ptabla2017_primeravx
+        e <- input$ptabla2017_segundavx
+        f <- input$ptabla2017_terceravx
+        g <- input$ptabla2017_cuartavx
+        
+        
+        preguntaseternas2001_ab <- mydata_educacion_exp()
+        
+        
+        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+        
+        
+        # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+        
+         cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
+        
+        
+      #     cross_tab = xtabs(unlist(preguntaseternas_sub2001_a)~unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),aggregate(unlist(preguntaseternas_sub2001_a)~unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),preguntaseternas2001_ab,mean))
+        
+       # cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),preguntaseternas2001_ab,mean))
+        
+        
+        return(cross_tab)
+    })
+    
+    
+    
+    output$tabla_d_c_generalizada_pon<-renderPrint({
+
         d <- input$ptabla2017_primeravx
         e <- input$ptabla2017_segundavx
         f <- input$ptabla2017_terceravx
@@ -2156,40 +2334,39 @@ server <- function(input, output, session) {
         preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
         preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
         
-        
-        # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-        
-        # cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-        cross_tab = xtabs(unlist(preguntaseternas_sub2001_a)~unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),aggregate(unlist(preguntaseternas_sub2001_a)~unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c),preguntaseternas2001_ab,mean))
-        return(cross_tab)
+
+          cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
+          
+          
+          return(cross_tab)
     })
     
     
     
-    
-    output$tabla_d_c_generalizada<-renderPrint({
-        d <- input$ptabla2017_primeravx
-        e <- input$ptabla2017_segundavx
-        f <- input$ptabla2017_terceravx
-        g <- input$ptabla2017_cuartavx
-        
-
-        preguntaseternas2001_ab <- mydata_educacion_exp()
-        
-        
-        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
-        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
-        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
-        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
-        
-        
-        # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-        
-        cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-        
-
-        return(cross_tab)
-    })
+    # 
+    # output$tabla_d_c_generalizada<-renderPrint({
+    #     d <- input$ptabla2017_primeravx
+    #     e <- input$ptabla2017_segundavx
+    #     f <- input$ptabla2017_terceravx
+    #     g <- input$ptabla2017_cuartavx
+    #     
+    # 
+    #     preguntaseternas2001_ab <- mydata_educacion_exp()
+    #     
+    #     
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
+    #     preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
+    #     preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
+    #     preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+    #     
+    #     
+    #     # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    #     
+    #     cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
+    #     
+    # 
+    #     return(cross_tab)
+    # })
     
     output$exptabla_d_c_generalizada<-renderTable({
         d <- input$expptabla2017_primeravx
@@ -2299,6 +2476,10 @@ server <- function(input, output, session) {
     })
     
     
+    ###################################################################################
+    #######################################    16    ############################################   
+    ###################################################################################   
+    
     
     #################################################################### 2017
     output$tabla_d_c<-renderPrint({
@@ -2313,6 +2494,19 @@ server <- function(input, output, session) {
         cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
         return(cross_tab)
     })
+    
+    output$tabla_d_c_ponderadas <-renderPrint({
+        a <- input$ptabla2017_primerav
+        b <- input$ptabla2017_segundav
+        preguntaseternas2001_ab <- mydata_educacion_exp()
+        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+        cross_tab = xtabs(expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+        return(cross_tab)
+    })
+    
+    
+    
     
     output$tabla_chi<-renderPrint({
         a <- input$ptabla2017_primerav_chi
