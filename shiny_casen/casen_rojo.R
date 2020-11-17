@@ -743,10 +743,10 @@ server <- function(input, output, session) {
                                     selectInput("ptabla2013_cuartavx", "ingrese cuarta variable:", c(dataset2013_col)),
                                     
                                     downloadButton("boton_ttcc_mayor_2_2013", "Descargar"),
-                                    verbatimTextOutput("tabla_d_c_generalizada_2013") %>% withSpinner(color="#0dc5c1"),
+                                    verbatimTextOutput("tabla_d_c_generalizada_2013") %>% withSpinner(color="#c50d78"),
                                     
                                     downloadButton("boton_ttcc_mayor_2_2013_pon", "Descargar"),
-                                    verbatimTextOutput("tabla_d_c_generalizada_2013_pon") %>% withSpinner(color="#0dc5c1")
+                                    verbatimTextOutput("tabla_d_c_generalizada_2013_pon") %>% withSpinner(color="#0e8c0e")
                                     
                                     ))),
                                     
@@ -1564,9 +1564,35 @@ server <- function(input, output, session) {
             cuarta_variable <- preguntaseternas2001_ab[,g] 
             cross_tab = table(primera_variable, segunda_variable, tercera_variable, cuarta_variable)
             write.csv(cross_tab, file)
-
         }
     )
+    
+    output$boton_ttcc_mayor_2_pon <- downloadHandler(
+        filename = function() {
+            paste("tabla_ttcc_pon.csv", "csv", sep=".")
+        },
+        content = function(file) {
+            d <- input$ptabla2017_primeravx
+            e <- input$ptabla2017_segundavx
+            f <- input$ptabla2017_terceravx
+            g <- input$ptabla2017_cuartavx
+            
+            preguntaseternas2001_ab_pon <- mydata_2017_1()
+            
+            primera_variable <- preguntaseternas2001_ab_pon[,d]
+            segunda_variable <- preguntaseternas2001_ab_pon[,e] 
+            tercera_variable <- preguntaseternas2001_ab_pon[,f] 
+            cuarta_variable <- preguntaseternas2001_ab_pon[,g] 
+            
+            #       cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
+            cross_tab_pon = table(preguntaseternas2001_ab$expc ~ unlist(primera_variable)+unlist(segunda_variable)+unlist(tercera_variable)+unlist(cuarta_variable))
+            write.csv(cross_tab_pon, file)
+            
+        }
+    )
+    
+    
+    
     
   ########################################################
     
@@ -1646,35 +1672,14 @@ server <- function(input, output, session) {
     
     
     #################################################################
+    #################################################################
+    ###########################   ahora!   ##########################
+    #################################################################
+    #################################################################
     
     
     
-    
-    
-    
-    output$boton_ttcc_mayor_2_pon <- downloadHandler(
-        filename = function() {
-            paste("tabla_ttcc_pon.csv", "csv", sep=".")
-        },
-        content = function(file) {
-            d <- input$ptabla2017_primeravx
-            e <- input$ptabla2017_segundavx
-            f <- input$ptabla2017_terceravx
-            g <- input$ptabla2017_cuartavx
-            
-            preguntaseternas2001_ab <- mydata_2017_1()
-            
-            primera_variable <- preguntaseternas2001_ab[,d]
-            segunda_variable <- preguntaseternas2001_ab[,e] 
-            tercera_variable <- preguntaseternas2001_ab[,f] 
-            cuarta_variable <- preguntaseternas2001_ab[,g] 
-            
-     #       cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
-            cross_tab = table(preguntaseternas2001_ab$expc ~ unlist(primera_variable)+unlist(segunda_variable)+unlist(tercera_variable)+unlist(cuarta_variable))
-            write.csv(cross_tab, file)
-            
-        }
-    )
+
     
     output$boton_tabla_papc_2017 <- downloadHandler(
         filename = function() {
@@ -2402,17 +2407,17 @@ server <- function(input, output, session) {
         
         return(fff)
     })
+    
+    
+    
     #########################################################  2013
     output$tabla_d_c_2013<-renderPrint({
       a <- input$ptabla2013_primerav
       b <- input$ptabla2013_segundav
-      
-      
-      #dataset2013_react
-      preguntaseternas2001_ab <- dataset2013_react()
-      preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
-      preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
-      cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+      ab <- dataset2013_react()
+      col_a <- ab[,a]
+      col_b <- ab[,b] 
+      cross_tab = xtabs(~ unlist(col_a) + unlist(col_b), ab)
       return(cross_tab)
     })
     
@@ -2420,13 +2425,10 @@ server <- function(input, output, session) {
     output$tabla_d_c_ponderadas<-renderPrint({
       a <- input$ptabla2013_primerav
       b <- input$ptabla2013_segundav
-      
-      
-      #dataset2013_react
-      preguntaseternas2001_ab <- dataset2013_react()
-      preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
-      preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
-      cross_tab = xtabs(expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+      ab <- dataset2013_react()
+      col_a <- ab[,a]
+      col_b <- ab[,b] 
+      cross_tab = xtabs(ab$expc ~ unlist(col_a) + unlist(col_b), ab)
       return(cross_tab)
     })
     
@@ -2495,16 +2497,16 @@ server <- function(input, output, session) {
         return(cross_tab)
     })
     
-    output$tabla_d_c_ponderadas <-renderPrint({
-        a <- input$ptabla2017_primerav
-        b <- input$ptabla2017_segundav
-        preguntaseternas2001_ab <- mydata_educacion_exp()
-        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
-        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
-        cross_tab = xtabs(expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-        return(cross_tab)
-    })
-    
+    # output$tabla_d_c_ponderadas <-renderPrint({
+    #     a <- input$ptabla2017_primerav
+    #     b <- input$ptabla2017_segundav
+    #     preguntaseternas2001_ab <- mydata_educacion_exp()
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
+    #     preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
+    #     cross_tab = xtabs(expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
+    #     return(cross_tab)
+    # })
+    # 
     
     
     
