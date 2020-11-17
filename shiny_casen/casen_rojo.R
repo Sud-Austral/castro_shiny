@@ -43,6 +43,15 @@ options(warn = -1)
 #rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
 
 #dataset <- read.csv('Casen_no_humano.csv')
+
+dataset2006 <- read.csv('mydata2006.csv')
+dataset2006 <- dataset2006[1:1000,]
+dataset2006_col <- colnames(dataset2006)
+
+
+
+
+
 dataset <- read.csv('CASEN_2017_1-10000.csv')
 datos_df_exp <- colnames(dataset)
 

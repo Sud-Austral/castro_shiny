@@ -33,12 +33,20 @@ library(epiDisplay)
 
 
 ```{r cars}
-dataset = read_sav("CASEN_2013_MN_B_Principal.sav")
-# dataset_sub <- dataset[, 1:600]
-# dataset_sub
+dataset = read_sav("casen2006.sav")
+write.csv(dataset,"mydata2006.csv", row.names = FALSE)
+```
+
+```{r cars}
+dataset = read_sav("casen2009Spss.sav")
+write.csv(dataset,"mydata2009.csv", row.names = FALSE)
 ```
 
 
+```{r cars}
+dataset = read_sav("casen2011_octubre2011_enero2012_principal_08032013spss.sav")
+write.csv(dataset,"mydata2011.csv", row.names = FALSE)
+```
 
 ## Including Plots
 
