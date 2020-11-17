@@ -44,17 +44,19 @@ options(warn = -1)
 
 #dataset <- read.csv('Casen_no_humano.csv')
 
-# dataset2006 <- read.csv('mydata2006.csv')
-# dataset2006 <- dataset2006[1:1000,]
-# dataset2006_col <- colnames(dataset2006)
-# 
-# dataset2009 <- read.csv('mydata2009.csv')
-# dataset2009 <- dataset2009[1:1000,]
-# dataset2009_col <- colnames(dataset2009)
-# 
-# dataset2011 <- read.csv('mydata2011.csv')
-# dataset2011 <- dataset2011[1:1000,]
-# dataset2011_col <- colnames(dataset2011)
+dataset2006 <- read.csv('mydata2006_sub.csv')
+
+dataset2006_col <- colnames(dataset2006)
+
+
+
+dataset2009 <- read.csv('mydata2009_sub.csv')
+dataset2009 <- dataset2009[1:1000,]
+dataset2009_col <- colnames(dataset2009)
+
+dataset2011 <- read.csv('mydata2011_sub.csv')
+dataset2011 <- dataset2011[1:1000,]
+dataset2011_col <- colnames(dataset2011)
 
 ################################################
 
@@ -64,6 +66,12 @@ options(warn = -1)
 
 dataset <- read.csv('CASEN_2017_1-10000.csv')
 datos_df_exp <- colnames(dataset)
+
+
+
+
+
+
 
 dataset2013 <- read.csv('Casen_2013_completa.csv')
 dataset2013 <- dataset2013#[1:1000,]
@@ -163,10 +171,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                             
                             c("Seleccione año" = "2",
                               "Casen 2006" = "2006",
-                              "Casen 2009 ymt" = "20090",
-                              "Casen 2009 mn" = "20091",
-                              "Casen 2011 ymt" = "20110",
-                              "Casen 2011 mn" = "20111",
+                              "Casen 2009" = "2009",
+                              "Casen 2009" = "2011",
+                              # "Casen 2011 ymt" = "20110",
+                              # "Casen 2011 mn" = "20111",
                               "Casen 2013" = "2013",
                               "Casen 2015" = "2015",
                               "Casen 2017" = "2017"
@@ -209,6 +217,92 @@ server <- function(input, output, session) {
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(3, includeMarkdown("info_2006_tabla.md")),
                                   column(12,  tableOutput("contents12"), dataTableOutput('table')))),
+                
+                
+                navbarMenu("Módulos",
+                           tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
+                           "----",
+                           "",
+                           tabPanel("Primer módulo: Registro Residentes", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_1_2006"))
+                           )),
+                           
+                           tabPanel("Segundo módulo (E): Educacion", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_2_2006"))
+                           )),
+                           
+                           tabPanel("Tercer módulo (O): Trabajo", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_3_2006"))
+                           )),
+                           
+                           tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_4_2006"))
+                           )),
+                           
+                           tabPanel("Quinto módulo (S): Salud", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_5_2006"))
+                           )),
+                           
+                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_6_2006"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_7_2006"))
+                           )),
+                           tabPanel("Octavo módulo (V): Vivienda y Entorno", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("modulo_8_2006"))
+                           )),
+                           "----",
+                           "",
+                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
+                               column(12, includeMarkdown("hh_d_asis.md"))
+                           )),
+                           
+                           tabPanel(" ")),
+                
+                
+                navbarMenu("Tablas de contingencia > 2x2",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(
+                              # selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                               column(7,
+                                      
+                                      
+                                  
+                                      
+                                      
+                                      
+                                      selectInput("p2006_primerav", "ingrese primera variable:", c(dataset2006_col)),
+                                      selectInput("p2006_segundav", "ingrese segunda variable:", c(dataset2006_col)),
+                                      selectInput("p2006_tercerav", "ingrese tercera variable:", c(dataset2006_col)),
+                                      selectInput("p2006_cuartav", "ingrese cuarta variable:", c(dataset2006_col)),
+                                      downloadButton("boton_ttcc_2006", "Descargar"),
+                                      verbatimTextOutput("tabla_d_c_generalizada_2006") %>% withSpinner(color="#0dc5c1"),
+                                      
+                                      downloadButton("boton_ttcc_mayor_2_pon_2006", "Descargar"),
+                                      #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
+                                      verbatimTextOutput("tabla_d_c_generalizada_pon_2006") %>% withSpinner(color="#0dc5c1")
+                               )
+                           )),
+                           
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
+                                                                              selectInput("p2006_primerav", "ingrese primera variable:", c(dataset2006_col)),
+                                                                              selectInput("p2006_segundav", "ingrese segunda variable:", c(dataset2006_col)),
+                                                                              selectInput("p2006_tercerav", "ingrese tercera variable:", c(dataset2006_col)),
+                                                                              verbatimTextOutput("tabla_chi_generalizada"))))
+                ),
+                
+                
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("info_2006_frec.md")),
@@ -256,7 +350,7 @@ server <- function(input, output, session) {
         }
         
         
-        else if (user == 20090){
+        else if (user == 2009){
             
             navbarPage(
                 
@@ -269,6 +363,56 @@ server <- function(input, output, session) {
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
                                   column(12,  dataTableOutput("table2009ymt")))),
+                
+                
+                navbarMenu("Módulos",
+                           tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
+                           "----",
+                           "",
+                           tabPanel("Primer módulo: Registro Residentes", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_I"))
+                           )),
+                           
+                           tabPanel("Segundo módulo (E): Educacion", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iedu"))
+                           )),
+                           
+                           tabPanel("Tercer módulo (O): Trabajo", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Itrab"))
+                           )),
+                           
+                           tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iing"))
+                           )),
+                           
+                           tabPanel("Quinto módulo (S): Salud", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Isal"))
+                           )),
+                           
+                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iid"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iviv"))
+                           )),
+                           "----",
+                           "",
+                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
+                               column(12, includeMarkdown("hh_d_asis.md"))
+                           )),
+                           
+                           tabPanel(" ")),
+                
+                
+                
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
@@ -316,7 +460,7 @@ server <- function(input, output, session) {
         
         #### aca vamos
         
-        else if (user == 20091){
+        else if (user == 2011){
             navbarPage(
                 
                 br(),
@@ -325,6 +469,56 @@ server <- function(input, output, session) {
                 tabPanel("Despliegue de la tabla",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
                                   column(12,  dataTableOutput("table2009mn")))),
+                
+                
+                navbarMenu("Módulos",
+                           tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
+                           "----",
+                           "",
+                           tabPanel("Primer módulo: Registro Residentes", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_I"))
+                           )),
+                           
+                           tabPanel("Segundo módulo (E): Educacion", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iedu"))
+                           )),
+                           
+                           tabPanel("Tercer módulo (O): Trabajo", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Itrab"))
+                           )),
+                           
+                           tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iing"))
+                           )),
+                           
+                           tabPanel("Quinto módulo (S): Salud", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Isal"))
+                           )),
+                           
+                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iid"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                               column(12, includeMarkdown("about_educacion.md.txt")),
+                               column(12, dataTableOutput("table2017_Iviv"))
+                           )),
+                           "----",
+                           "",
+                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
+                               column(12, includeMarkdown("hh_d_asis.md"))
+                           )),
+                           
+                           tabPanel(" ")),
+                
+                
+                
                 
                 tabPanel("Frecuencias por preguntas", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
@@ -359,76 +553,76 @@ server <- function(input, output, session) {
         
         # cuatro anio
         
-        else if (user == 20110){
-            navbarPage(
-                
-                br(),
-                tabPanel("Introducción",
-                         fluidRow(column(9, includeMarkdown("about_intro.md")))),
-                tabPanel("Despliegue de la tabla",
-                         fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(12,  dataTableOutput("table2011mn")))),
-                tabPanel("Frecuencias por preguntas", fluidRow(
-                    column(12, includeMarkdown("about_educacion.md.txt")),
-                    selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-                    column(12, dataTableOutput("prueba_tabla"))
-                )),
-                
-                navbarMenu("Promedios filtrados por grupo",
-                           tabPanel("a nivel social", fluidRow(
-                             column(12, includeMarkdown("info_2006_prom.md")),
-                             selectInput("nivel_filtro_11mn", "Seleccione unidad social:", c(data_2011_filtros_terr_ddl)),
-                             selectInput("categoria_filtro_11mn", "Seleccione atributo:", c(data_2011_filtros_cat_ddl)),
-                             column(12, tableOutput("promedios_filtros_11mn"))
-                           ))),
-                
-                navbarMenu("Estadísticas y gráficas",
-                           tabPanel("Promedios", fluidRow(
-                               column(12, includeMarkdown("info_2006_prom.md")),
-                               selectInput("ptabla_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-                               column(12, verbatimTextOutput("promedios_2011"))
-                           )),
-                           
-                           tabPanel("Diagrama de caja y bigotes", fluidRow(
-                               column(12, includeMarkdown("info_2006_cyb.md")),
-                               selectInput("ptabla_cyb_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-                               column(12, plotOutput("cyb_2011"))
-                           ))
-                           
-                )
-            )
-        }
-        
-        else if (user == 20111){
-            navbarPage(
-                
-                br(),
-                tabPanel("Introducción",
-                         fluidRow(column(9, includeMarkdown("about_intro.md")))),
-                tabPanel("Despliegue de la tabla",
-                         fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(12,  dataTableOutput("table20ymt")))),
-                tabPanel("Frecuencias por preguntas", fluidRow(
-                    column(12, includeMarkdown("about_educacion.md.txt")),
-                    selectInput("ptabla20111", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
-                    column(12, dataTableOutput("prueba_tabla"))
-                )),
-                navbarMenu("Estadísticas y gráficas",
-                           tabPanel("Promedios", fluidRow(
-                               column(12, includeMarkdown("info_2006_prom.md")),
-                               selectInput("ptabla_2011_ymt", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
-                               column(12, verbatimTextOutput("promedios_2011_ymt"))
-                           )),
-                           
-                           tabPanel("Diagrama de caja y bigotes", fluidRow(
-                               column(12, includeMarkdown("info_2006_cyb.md")),
-                               selectInput("ptabla_cyb_2011_ymt", "Seleccione variable:", c(datos_df_casen_2011_mil_ymt_preg)),
-                               column(12, plotOutput("cyb_2011_ymt"))
-                           ))
-                           
-                )
-            )
-        }
+        # else if (user == 20110){
+        #     navbarPage(
+        #         
+        #         br(),
+        #         tabPanel("Introducción",
+        #                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
+        #         tabPanel("Despliegue de la tabla",
+        #                  fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
+        #                           column(12,  dataTableOutput("table2011mn")))),
+        #         tabPanel("Frecuencias por preguntas", fluidRow(
+        #             column(12, includeMarkdown("about_educacion.md.txt")),
+        #             selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
+        #             column(12, dataTableOutput("prueba_tabla"))
+        #         )),
+        #         
+        #         navbarMenu("Promedios filtrados por grupo",
+        #                    tabPanel("a nivel social", fluidRow(
+        #                      column(12, includeMarkdown("info_2006_prom.md")),
+        #                      selectInput("nivel_filtro_11mn", "Seleccione unidad social:", c(data_2011_filtros_terr_ddl)),
+        #                      selectInput("categoria_filtro_11mn", "Seleccione atributo:", c(data_2011_filtros_cat_ddl)),
+        #                      column(12, tableOutput("promedios_filtros_11mn"))
+        #                    ))),
+        #         
+        #         navbarMenu("Estadísticas y gráficas",
+        #                    tabPanel("Promedios", fluidRow(
+        #                        column(12, includeMarkdown("info_2006_prom.md")),
+        #                        selectInput("ptabla_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
+        #                        column(12, verbatimTextOutput("promedios_2011"))
+        #                    )),
+        #                    
+        #                    tabPanel("Diagrama de caja y bigotes", fluidRow(
+        #                        column(12, includeMarkdown("info_2006_cyb.md")),
+        #                        selectInput("ptabla_cyb_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
+        #                        column(12, plotOutput("cyb_2011"))
+        #                    ))
+        #                    
+        #         )
+        #     )
+        # }
+        # 
+        # else if (user == 20111){
+        #     navbarPage(
+        #         
+        #         br(),
+        #         tabPanel("Introducción",
+        #                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
+        #         tabPanel("Despliegue de la tabla",
+        #                  fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
+        #                           column(12,  dataTableOutput("table20ymt")))),
+        #         tabPanel("Frecuencias por preguntas", fluidRow(
+        #             column(12, includeMarkdown("about_educacion.md.txt")),
+        #             selectInput("ptabla20111", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
+        #             column(12, dataTableOutput("prueba_tabla"))
+        #         )),
+        #         navbarMenu("Estadísticas y gráficas",
+        #                    tabPanel("Promedios", fluidRow(
+        #                        column(12, includeMarkdown("info_2006_prom.md")),
+        #                        selectInput("ptabla_2011_ymt", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
+        #                        column(12, verbatimTextOutput("promedios_2011_ymt"))
+        #                    )),
+        #                    
+        #                    tabPanel("Diagrama de caja y bigotes", fluidRow(
+        #                        column(12, includeMarkdown("info_2006_cyb.md")),
+        #                        selectInput("ptabla_cyb_2011_ymt", "Seleccione variable:", c(datos_df_casen_2011_mil_ymt_preg)),
+        #                        column(12, plotOutput("cyb_2011_ymt"))
+        #                    ))
+        #                    
+        #         )
+        #     )
+        # }
         
         
         else if (user == 2013){
@@ -1459,37 +1653,30 @@ server <- function(input, output, session) {
                                                                                    selectInput("ptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
                                                                                    selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
-                                                                                   
                                                                                    selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
-                                                                                   
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
-
-                                   #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                                                                                    verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1"),
                                    
                                    downloadButton("boton_ttcc_mayor_2_pon", "Descargar"),
                                    #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                                    verbatimTextOutput("tabla_d_c_generalizada_pon") %>% withSpinner(color="#0dc5c1")
-                                   
-                                   
-                                   
-                                   
                                    )
-                               
-                               
                                )),
-                           
-                           
-                           
-                           
-          
-                           
+
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
                                                                               selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
                                                                               selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
+                
+                
+                
+                
+                
+                
+                
+                
                 navbarMenu("Tablas de contingencia > 2x2 para promedios",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
@@ -2324,6 +2511,44 @@ server <- function(input, output, session) {
     
     ########################################################################## 2006  ##########################################################################  
   
+    output$tabla_d_c_generalizada_2006<-renderPrint({
+
+        d <- input$p2006_primerav
+        e <- input$p2006_segundav
+        f <- input$p2006_tercerav
+        g <- input$p2006_cuartav
+        
+        ab <-  dataset2006
+      #  ab <- dataset2006_react()
+    
+        a <- ab[,d]
+        b <- ab[,e] 
+        c <- ab[,f] 
+        d <- ab[,g] 
+        
+        cross_tab = table(a, b, c, d)
+
+        return(cross_tab)
+    })
+    
+    output$tabla_d_c_generalizada_pon_2006<-renderPrint({
+        
+        d <- input$p2006_primerav
+        e <- input$p2006_segundav
+        f <- input$p2006_tercerav
+        g <- input$p2006_cuartav
+        
+        ab <- dataset2006
+        
+        a <- ab[,d]
+        b <- ab[,e] 
+        c <- ab[,f] 
+        d <- ab[,g] 
+        
+        cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+        
+        return(cross_tab)
+    })
     
     
     output$cyb <- renderPlot({

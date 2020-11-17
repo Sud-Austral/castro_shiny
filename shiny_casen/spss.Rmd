@@ -29,11 +29,12 @@ library(rsconnect)
 library(dplyr)
 library(summarytools)
 library(epiDisplay)
+library(foreign)
 ```
 
 
 ```{r cars}
-dataset = read.spss("casen2006.sav")
+dataset = read.dta("casen2006.dta")
 write.csv(dataset,"mydata2006.csv", row.names = FALSE)
 ```
 
@@ -48,22 +49,65 @@ dataset = read_sav("casen2011_octubre2011_enero2012_principal_08032013spss.sav")
 write.csv(dataset,"mydata2011.csv", row.names = FALSE)
 ```
 
+```{r}
+dataset2006 <- read.csv('mydata2006.csv')
+dataset2009 <- read.csv('mydata2009.csv')
+dataset2011 <- read.csv('mydata2011.csv')
+
+```
 
 
 ```{r}
-dataset2006 <- read.csv('mydata2006.csv')
-dataset2006 <- dataset2006[1:1000,]
-dataset2006_col <- colnames(dataset2006)
 
-dataset2009 <- read.csv('mydata2009.csv')
-dataset2009 <- dataset2009[1:1000,]
-dataset2009_col <- colnames(dataset2009)
-
-dataset2011 <- read.csv('mydata2011.csv')
-dataset2011 <- dataset2011[1:1000,]
-dataset2011_col <- colnames(dataset2011)
+dataset2006_sub <- dataset2006[1:1000,]
+write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+dataset2006_sub <- read.csv('mydata2006_sub.csv')
+dataset2006_sub
 ```
 
+```{r}
+
+dataset2009_sub <- dataset2009[1:1000,]
+write.csv(dataset2009_sub,"mydata2009_sub.csv", row.names = FALSE)
+dataset2009_sub <- read.csv('mydata2009_sub.csv')
+dataset2009_sub
+```
+
+```{r}
+
+dataset2011_sub <- dataset2011[1:1000,]
+write.csv(dataset2011_sub,"mydata2011_sub.csv", row.names = FALSE)
+dataset2011_sub <- read.csv('mydata2011_sub.csv')
+dataset2011_sub
+```
+
+
+
+
+```{r}
+colnames(dataset2006_sub)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+dataset2006_sub <- read.csv('mydata2006_sub.csv')
+dataset2006_sub
+```
 
 
 
