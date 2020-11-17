@@ -33,7 +33,7 @@ library(epiDisplay)
 
 
 ```{r cars}
-dataset = read_sav("casen2006.sav")
+dataset = read.spss("casen2006.sav")
 write.csv(dataset,"mydata2006.csv", row.names = FALSE)
 ```
 
@@ -47,6 +47,28 @@ write.csv(dataset,"mydata2009.csv", row.names = FALSE)
 dataset = read_sav("casen2011_octubre2011_enero2012_principal_08032013spss.sav")
 write.csv(dataset,"mydata2011.csv", row.names = FALSE)
 ```
+
+
+
+```{r}
+dataset2006 <- read.csv('mydata2006.csv')
+dataset2006 <- dataset2006[1:1000,]
+dataset2006_col <- colnames(dataset2006)
+
+dataset2009 <- read.csv('mydata2009.csv')
+dataset2009 <- dataset2009[1:1000,]
+dataset2009_col <- colnames(dataset2009)
+
+dataset2011 <- read.csv('mydata2011.csv')
+dataset2011 <- dataset2011[1:1000,]
+dataset2011_col <- colnames(dataset2011)
+```
+
+
+
+
+
+
 
 ## Including Plots
 

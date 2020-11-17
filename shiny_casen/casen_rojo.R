@@ -44,9 +44,19 @@ options(warn = -1)
 
 #dataset <- read.csv('Casen_no_humano.csv')
 
-dataset2006 <- read.csv('mydata2006.csv')
-dataset2006 <- dataset2006[1:1000,]
-dataset2006_col <- colnames(dataset2006)
+# dataset2006 <- read.csv('mydata2006.csv')
+# dataset2006 <- dataset2006[1:1000,]
+# dataset2006_col <- colnames(dataset2006)
+# 
+# dataset2009 <- read.csv('mydata2009.csv')
+# dataset2009 <- dataset2009[1:1000,]
+# dataset2009_col <- colnames(dataset2009)
+# 
+# dataset2011 <- read.csv('mydata2011.csv')
+# dataset2011 <- dataset2011[1:1000,]
+# dataset2011_col <- colnames(dataset2011)
+
+################################################
 
 
 
@@ -1862,7 +1872,235 @@ server <- function(input, output, session) {
       datos_dfe 
       return(datos_dfe)
     })
-    ###############################################   2013
+    
+    
+    ###############################################   2006 #################################
+    
+    #la base de datos total:
+    dataset2006_react <- reactive({
+        data <- dataset2006[, 1:600]
+        return(data)
+    })
+    
+    dataset2006_react_1 <- reactive({
+        data <- dataset2006[, 1:18]
+        return(data)
+    })
+    
+    dataset2006_react_2 <- reactive({
+        data <- dataset2006[, 19:75]#educacion
+        return(data)
+    })
+    
+    
+    dataset2006_react_3 <- reactive({
+        data <- dataset2006[, 76:118]#trabajo
+        return(data)
+    })
+    
+    
+    dataset2006_react_4 <- reactive({
+        data <- dataset2006[, 119:145]#ingresos
+        return(data)
+    })
+    
+    
+    dataset2006_react_5 <- reactive({
+        data <- dataset2006[, 146:232]#salud
+        return(data)
+    })
+    
+    
+    dataset2006_react_6 <- reactive({
+        data <- dataset2006[, 233:287]#residentes
+        return(data)
+    })
+    
+    
+    dataset2006_react_7 <- reactive({
+        data <- dataset2006[, 288:373]#vivienda
+        return(data)
+    })
+    
+    dataset2006_react_8 <- reactive({
+        data <- dataset2006[, 374:576]#ingresos
+        return(data)
+    })
+    
+    dataset2006_react_9 <- reactive({
+        data <- dataset2006[, 577:578]#Expansiones
+        return(data)
+    })
+    
+    dataset2006_react_10 <- reactive({
+        data <- dataset2006[, 579:582]#Informacion
+        return(data)
+    })
+    
+    dataset2006_react_11 <- reactive({
+        data <- dataset2006[, 583:588]#Informacion
+        return(data)
+    })
+    
+    dataset2006_react_12 <- reactive({
+        data <- dataset2006[, 589:600]#Indicadores
+        return(data)
+    })
+    
+    ###############################################   2009 #################################
+    
+    #la base de datos total:
+    dataset2013_react <- reactive({
+        data <- dataset2013[, 1:600]
+        return(data)
+    })
+    
+    dataset2013_react_1 <- reactive({
+        data <- dataset2013[, 1:18]
+        return(data)
+    })
+    
+    dataset2013_react_2 <- reactive({
+        data <- dataset2013[, 19:75]#educacion
+        return(data)
+    })
+    
+    
+    dataset2013_react_3 <- reactive({
+        data <- dataset2013[, 76:118]#trabajo
+        return(data)
+    })
+    
+    
+    dataset2013_react_4 <- reactive({
+        data <- dataset2013[, 119:145]#ingresos
+        return(data)
+    })
+    
+    
+    dataset2013_react_5 <- reactive({
+        data <- dataset2013[, 146:232]#salud
+        return(data)
+    })
+    
+    
+    dataset2013_react_6 <- reactive({
+        data <- dataset2013[, 233:287]#residentes
+        return(data)
+    })
+    
+    
+    dataset2013_react_7 <- reactive({
+        data <- dataset2013[, 288:373]#vivienda
+        return(data)
+    })
+    
+    dataset2013_react_8 <- reactive({
+        data <- dataset2013[, 374:576]#ingresos
+        return(data)
+    })
+    
+    dataset2013_react_9 <- reactive({
+        data <- dataset2013[, 577:578]#Expansiones
+        return(data)
+    })
+    
+    dataset2013_react_10 <- reactive({
+        data <- dataset2013[, 579:582]#Informacion
+        return(data)
+    })
+    
+    dataset2013_react_11 <- reactive({
+        data <- dataset2013[, 583:588]#Informacion
+        return(data)
+    })
+    
+    dataset2013_react_12 <- reactive({
+        data <- dataset2013[, 589:600]#Indicadores
+        return(data)
+    })
+    
+    ###############################################   2011 #################################
+    
+    
+    #la base de datos total:
+    dataset2013_react <- reactive({
+        data <- dataset2013[, 1:600]
+        return(data)
+    })
+    
+    dataset2013_react_1 <- reactive({
+        data <- dataset2013[, 1:18]
+        return(data)
+    })
+    
+    dataset2013_react_2 <- reactive({
+        data <- dataset2013[, 19:75]#educacion
+        return(data)
+    })
+    
+    
+    dataset2013_react_3 <- reactive({
+        data <- dataset2013[, 76:118]#trabajo
+        return(data)
+    })
+    
+    
+    dataset2013_react_4 <- reactive({
+        data <- dataset2013[, 119:145]#ingresos
+        return(data)
+    })
+    
+    
+    dataset2013_react_5 <- reactive({
+        data <- dataset2013[, 146:232]#salud
+        return(data)
+    })
+    
+    
+    dataset2013_react_6 <- reactive({
+        data <- dataset2013[, 233:287]#residentes
+        return(data)
+    })
+    
+    
+    dataset2013_react_7 <- reactive({
+        data <- dataset2013[, 288:373]#vivienda
+        return(data)
+    })
+    
+    dataset2013_react_8 <- reactive({
+        data <- dataset2013[, 374:576]#ingresos
+        return(data)
+    })
+    
+    dataset2013_react_9 <- reactive({
+        data <- dataset2013[, 577:578]#Expansiones
+        return(data)
+    })
+    
+    dataset2013_react_10 <- reactive({
+        data <- dataset2013[, 579:582]#Informacion
+        return(data)
+    })
+    
+    dataset2013_react_11 <- reactive({
+        data <- dataset2013[, 583:588]#Informacion
+        return(data)
+    })
+    
+    dataset2013_react_12 <- reactive({
+        data <- dataset2013[, 589:600]#Indicadores
+        return(data)
+    })
+    
+    
+    
+    
+    
+    ###############################################   2013 #################################
+    
+    #la base de datos total:
     dataset2013_react <- reactive({
       data <- dataset2013[, 1:600]
       return(data)
@@ -2017,6 +2255,55 @@ server <- function(input, output, session) {
     output$table2017_Iviv <- renderDataTable(table2017_Iviv())
     
     output$prueba_tablaedu <- renderDataTable(prueba_tablaedu())
+    
+    
+    ########################################################################## 2006 modulos  ##########################################################################  
+    output$modulo_1_2006 <- renderDataTable(dataset2006_react_1())
+    output$modulo_2_2006 <- renderDataTable(dataset2006_react_2())
+    output$modulo_3_2006 <- renderDataTable(dataset2006_react_3())
+    output$modulo_4_2006 <- renderDataTable(dataset2006_react_4())
+    output$modulo_5_2006 <- renderDataTable(dataset2006_react_5())
+    output$modulo_6_2006 <- renderDataTable(dataset2006_react_6())
+    output$modulo_7_2006 <- renderDataTable(dataset2006_react_7())
+    output$modulo_8_2006 <- renderDataTable(dataset2006_react_8())
+    output$modulo_9_2006 <- renderDataTable(dataset2006_react_9())
+    output$modulo_10_2006 <- renderDataTable(dataset2006_react_10())
+    output$modulo_11_2006 <- renderDataTable(dataset2006_react_11())
+    output$modulo_12_2006 <- renderDataTable(dataset2006_react_12())
+    ########################################################################## 2009 modulos  ##########################################################################  
+    output$modulo_1_2013 <- renderDataTable(dataset2013_react_1())
+    output$modulo_2_2013 <- renderDataTable(dataset2013_react_2())
+    output$modulo_3_2013 <- renderDataTable(dataset2013_react_3())
+    output$modulo_4_2013 <- renderDataTable(dataset2013_react_4())
+    output$modulo_5_2013 <- renderDataTable(dataset2013_react_5())
+    output$modulo_6_2013 <- renderDataTable(dataset2013_react_6())
+    output$modulo_7_2013 <- renderDataTable(dataset2013_react_7())
+    output$modulo_8_2013 <- renderDataTable(dataset2013_react_8())
+    output$modulo_9_2013 <- renderDataTable(dataset2013_react_9())
+    output$modulo_10_2013 <- renderDataTable(dataset2013_react_10())
+    output$modulo_11_2013 <- renderDataTable(dataset2013_react_11())
+    output$modulo_12_2013 <- renderDataTable(dataset2013_react_12())
+    ########################################################################## 2011 modulos  ##########################################################################  
+    output$modulo_1_2013 <- renderDataTable(dataset2013_react_1())
+    output$modulo_2_2013 <- renderDataTable(dataset2013_react_2())
+    output$modulo_3_2013 <- renderDataTable(dataset2013_react_3())
+    output$modulo_4_2013 <- renderDataTable(dataset2013_react_4())
+    output$modulo_5_2013 <- renderDataTable(dataset2013_react_5())
+    output$modulo_6_2013 <- renderDataTable(dataset2013_react_6())
+    output$modulo_7_2013 <- renderDataTable(dataset2013_react_7())
+    output$modulo_8_2013 <- renderDataTable(dataset2013_react_8())
+    output$modulo_9_2013 <- renderDataTable(dataset2013_react_9())
+    output$modulo_10_2013 <- renderDataTable(dataset2013_react_10())
+    output$modulo_11_2013 <- renderDataTable(dataset2013_react_11())
+    output$modulo_12_2013 <- renderDataTable(dataset2013_react_12())
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     ########################################################################## 2013 modulos  ##########################################################################  
