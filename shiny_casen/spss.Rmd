@@ -49,6 +49,13 @@ dataset = read_sav("casen2011_octubre2011_enero2012_principal_08032013spss.sav")
 write.csv(dataset,"mydata2011.csv", row.names = FALSE)
 ```
 
+
+```{r cars}
+dataset = read_sav("Casen 2017.sav")
+write.csv(dataset,"mydata2017.csv", row.names = FALSE)
+```
+
+
 ```{r}
 dataset2006 <- read.csv('mydata2006.csv')
 dataset2009 <- read.csv('mydata2009.csv')
