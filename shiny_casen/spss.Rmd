@@ -121,7 +121,7 @@ dataset2009_sub
 
 ```{r}
 
-dataset2011_sub <- dataset2011[1:1000,]
+dataset2011_sub <- dataset2011[1:100,]
 write.csv(dataset2011_sub,"mydata2011_sub.csv", row.names = FALSE)
 dataset2011_sub <- read.csv('mydata2011_sub.csv')
 dataset2011_sub
@@ -137,7 +137,7 @@ dataset2017_sub
 
 
 ```{r}
-colnames(dataset2006_sub)
+colnames(dataset2011_sub)
 ```
 
 
