@@ -75,7 +75,7 @@ dataset2011 <- read.csv('mydata2011_sub.csv')
 
 dataset2011_col <- colnames(dataset2011)
 
-data_2011_3_5 <- dataset2011[, c(4,6)]
+data_2011_3_5 <- dataset2011[, 1:6]
 data_2011_1_2_colnames <- colnames(data_2011_3_5)
 
 data_2011_5_348 <- dataset2011[, 7:348]
@@ -2939,7 +2939,25 @@ server <- function(input, output, session) {
           return(cross_tab)
         })
 
-        
+        output$tabla_d_c_generalizada_2011<-renderPrint({
+          
+          d <- input$p2011_primerav
+          e <- input$p2011_segundav
+          f <- input$p2011_tercerav
+          g <- input$p2011_cuartav
+          
+          ab <- dataset2011
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          cross_tab = table(a, b, c, d)
+          
+          return(cross_tab)
+          
+        }) 
         
         output$tabla_d_c_generalizada_pon_2011<-renderPrint({
           
@@ -2955,7 +2973,7 @@ server <- function(input, output, session) {
           c <- ab[,f] 
           d <- ab[,g] 
           
-          cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
           return(cross_tab)
         }) 
