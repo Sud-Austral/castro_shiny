@@ -59,7 +59,7 @@ write.csv(dataset,"mydata2013.csv", row.names = FALSE)
 ```{r}
 dataset2013 <- read.csv('mydata2013.csv')
 
-dataset2013_sub <- dataset2013[1:1000,]
+dataset2013_sub <- dataset2013[1:100,]
 write.csv(dataset2013_sub,"mydata2013_sub.csv", row.names = FALSE)
 dataset2013_sub <- read.csv('mydata2013_sub.csv')
 dataset2013_sub
@@ -67,6 +67,9 @@ dataset2013_sub
 ```
 
 
+```{r}
+colnames(dataset2013_sub)
+```
 
 
 
