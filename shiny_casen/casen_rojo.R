@@ -971,7 +971,10 @@ server <- function(input, output, session) {
                            
                            tabPanel(" ")),
                 
-                navbarMenu("Estadísticas",
+                navbarMenu("Frecuencias de respuestas por campo",
+                           
+                           
+                           
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            tabPanel("Tabla educacion", tableOutput("contents_educacion")),
                            tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
@@ -979,6 +982,58 @@ server <- function(input, output, session) {
                            "",
                            tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
                            tabPanel("  ")),
+                
+                
+                
+                # 
+                # 
+                # tabPanel("Frecuencias por módulo I: Registro de residentes.", fluidRow(
+                #     column(12, includeMarkdown("info_2006_frec.md")),
+                #     
+                #     # debe cargarse el ddl con las cabeceras del rango I:
+                #     selectInput("ptabla", "Seleccione pregunta:", c(data_2017_modulo_I_colnames)),
+                #     column(12, dataTableOutput("prueba_tabla"))
+                # )),  
+                # 
+                # tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
+                #     column(12, includeMarkdown("info_2006_frec.md")),
+                #     selectInput("ptabla2", "Seleccione pregunta:", c(data_2017_modulo_II_colnames)),
+                #     column(12, dataTableOutput("prueba_tabla2"))
+                # )),
+                # 
+                # tabPanel("Frecuencias por módulo III: Registro de residentes.", fluidRow(
+                #     column(12, includeMarkdown("info_2006_frec.md")),
+                #     selectInput("ptabla3", "Seleccione pregunta:", c(data_2017_modulo_III_colnames)),
+                #     column(12, dataTableOutput("prueba_tabla3"))
+                # )),
+                # 
+                # tabPanel("Frecuencias por módulo IV: Registro de residentes.", fluidRow(
+                #     column(12, includeMarkdown("info_2006_frec.md")),
+                #     selectInput("ptabla4", "Seleccione pregunta:", c(data_2017_modulo_IV_colnames)),
+                #     column(12, dataTableOutput("prueba_tabla4"))
+                # )),
+                # 
+                # 
+                # 
+                # tabPanel("Frecuencias por módulo III: Registro de residentes.", tableOutput("modulo_III_2017")),
+                # tabPanel("Frecuencias por módulo IV: Registro de residentes.", tableOutput("modulo_IV_2017")),
+                # tabPanel("Frecuencias por módulo V: Registro de residentes.", tableOutput("modulo_V_2017")),
+                # tabPanel("Frecuencias por módulo VI: Registro de residentes.", tableOutput("modulo_VI_2017")),
+                # tabPanel("Frecuencias por módulo VII: Registro de residentes.", tableOutput("modulo_VII_2017")),
+                # tabPanel("Frecuencias por módulo VIII: Registro de residentes.", tableOutput("modulo_VIII_2017")),
+                # 
+                # tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
+                # "----",
+                # "",
+                # tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
+                # tabPanel("  ")),
+            
+                
+                
+                
+                
+                
+                
                 
                 navbarMenu("Tablas de contingencia",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
@@ -1613,7 +1668,7 @@ server <- function(input, output, session) {
                            
                            tabPanel(" ")),
                 
-                navbarMenu("Estadísticas",
+                navbarMenu("Frecuencias de respuestas por campo",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
 
                            tabPanel("Frecuencias por módulo I: Registro de residentes.", fluidRow(
