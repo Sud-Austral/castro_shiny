@@ -80,8 +80,10 @@ colnames(dataset2013_sub)
 
 
 ```{r cars}
-dataset = read_sav("Casen 2017.sav")
+dataset = read.dta("Casen 2017.dta")
 write.csv(dataset,"mydata2017.csv", row.names = FALSE)
+
+
 ```
 
 
@@ -93,6 +95,9 @@ dataset2011 <- read.csv('mydata2011.csv')
 
 dataset2017 <- read.csv('mydata2017.csv')
 
+```
+```{r}
+dataset2017 <- read.csv('mydata2017.csv')
 ```
 
 
@@ -215,6 +220,11 @@ dataset2009_sub[,6]
 
 
 
+```{r}
+dataset2017 <-  read.csv('mydata2017_sub.csv')
+datos_df_exp <- colnames(dataset2017)
+dataset2017
+```
 
 
 

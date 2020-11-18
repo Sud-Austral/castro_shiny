@@ -69,7 +69,7 @@ data_2009_5_348 <- dataset2009[, 7:348]
 data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
 
-######################### 2011 pendiente ###############################################
+######################### 2011 ###############################################
 
 dataset2011 <- read.csv('mydata2011_sub.csv')
 
@@ -117,24 +117,6 @@ dataset2013_col_VIII <- colnames(dataset2013_sub_VIII)
 
 
 
-########################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############################################################################
-##############################################################################
-##############################################################################
-##############################################################################
 
 dataset2011 <- read.csv('mydata2011_sub.csv')
 dataset2011 <- dataset2011[1:1000,]
@@ -145,25 +127,13 @@ dataset2011 <- dataset2011[1:1000,]
 
 
 dataset2017 <-  read.csv('mydata2017_sub.csv')
-datos_df_exp <- colnames(dataset2017)
+dataset2017_col <- colnames(dataset2017)
 
 ########################################################
 
 
 
 
-
-
-
-
-#alerta <- read_xlsx("casen_2017_mil.xlsx")
-
-# alerta <- read_csv("Casen_no_humano2.csv")
-
-#dataset = read_sav("Casen_no_humano.csv")
-
-#muy importante:
-#datos_df_exp_casen_2017_6 <- colnames(alerta)
 
 data_2017 <- read_xlsx("casen_2017_mil.xlsx")
 data_2017_colnames <- colnames(data_2017)
@@ -1405,8 +1375,14 @@ server <- function(input, output, session) {
                 
                 br(),
                 
-                tabPanel("Introducción",
+                tabPanel("Introducción a la Encuesta",
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
+                
+                
+                tabPanel("Despliegue total de la base de datos Casen 2017",
+                         fluidRow(column(3, includeMarkdown("info_2006_tabla.md")),
+                                  column(12, dataTableOutput('table_2017')))),
+                
                 
                 tabPanel("Variables de identificación",
                          fluidRow(column(9, includeMarkdown("about_varia_intro.md")))),
@@ -1570,7 +1546,7 @@ server <- function(input, output, session) {
                            "",
                            tabPanel("Primer módulo: Registro Residentes", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_I"))
+                               column(12, dataTableOutput("table2017_I_exp"))
                            )),
                            
                            tabPanel("Segundo módulo (E): Educacion", fluidRow(
@@ -1580,7 +1556,7 @@ server <- function(input, output, session) {
                            
                            tabPanel("Tercer módulo (O): Trabajo", fluidRow(
                              column(12, includeMarkdown("about_educacion.md.txt")),
-                             column(12, dataTableOutput("table2017_Itrab"))
+                             column(12, dataTableOutput("dataset2017_react_2"))
                            )),
                            
                            tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
@@ -1718,9 +1694,26 @@ server <- function(input, output, session) {
                            tabPanel("  ")),
                 
                 
-                ########################################################
-                ########################################################
-                #######################  16   #################################
+                navbarMenu("Estadísticas y gráficas",
+                           tabPanel("Promedios", fluidRow(
+                             column(12, includeMarkdown("info_2006_prom.md")),
+                             selectInput("ptabla_promedios_2017", "Seleccione variable:", c(dataset2013_col)),
+                             column(12, verbatimTextOutput("promedios_2017"))
+                           )),
+                           
+                           
+                           
+                           tabPanel("Diagrama de caja y bigotes", fluidRow(
+                             
+                             column(12, includeMarkdown("info_2006_cyb.md")),
+                             
+                             selectInput("ptabla_cyb_2017", "Seleccione la variable:", c(dataset2013_col)),
+                             
+                             downloadButton("plot_cyb_2017", "Descargar"),
+                             
+                             column(12, plotOutput("cyb_2017"))
+                           ))
+                ),
                 
                 
                 
@@ -1821,7 +1814,7 @@ server <- function(input, output, session) {
                                column(12 )))
                 ),
                 
-                navbarMenu("Promedios agrupados por categoría",
+                navbarMenu("Filtros agrupados por categoría",
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Promedios agrupados por categoría",fluidRow(column(12, includeMarkdown("info_papc.md")),
@@ -2439,7 +2432,84 @@ server <- function(input, output, session) {
       return(data)
     })
     
-    ###############################################   2013
+    ###############################################   2017 ##################
+    
+
+    
+    # El objeto sin subindice representa a la totalidad:
+    dataset2017_react <- reactive({
+      data <- dataset2017
+      return(data)
+    })
+    
+    dataset2017_react_1 <- reactive({
+      data <- dataset2017[, 20:100]
+      return(data)
+    })
+    
+    dataset2017_react_2 <- reactive({
+      data <- dataset2017[, 11:20]#educacion
+      return(data)
+    })
+    
+    
+    dataset2017_react_3 <- reactive({
+      data <- dataset2017[, 21:30]#trabajo
+      return(data)
+    })
+    
+    
+    dataset2017_react_4 <- reactive({
+      data <- dataset2017[, 31:40]#ingresos
+      return(data)
+    })
+    
+    
+    dataset2017_react_5 <- reactive({
+      data <- dataset2017[, 41:50]#salud
+      return(data)
+    })
+    
+    
+    dataset2017_react_6 <- reactive({
+      data <- dataset2017[, 51:60]#residentes
+      return(data)
+    })
+    
+    
+    dataset2017_react_7 <- reactive({
+      data <- dataset2017[, 61:70]#vivienda
+      return(data)
+    })
+    
+    dataset2017_react_8 <- reactive({
+      data <- dataset2017[, 71:80]#ingresos
+      return(data)
+    })
+    
+    dataset2017_react_9 <- reactive({
+      data <- dataset2017[, 81:90]#Expansiones
+      return(data)
+    })
+    
+    dataset2017_react_10 <- reactive({
+      data <- dataset2017[, 91:100]#Informacion
+      return(data)
+    })
+    
+    dataset2017_react_11 <- reactive({
+      data <- dataset2017[, 101:110]#Informacion
+      return(data)
+    })
+    
+    dataset2017_react_12 <- reactive({
+      data <- dataset2017[, 111:120]#Indicadores
+      return(data)
+    })
+    
+    
+    
+    ##########################################################################
     
     
     
@@ -2457,6 +2527,12 @@ server <- function(input, output, session) {
         datos_dfe <- datos_df_casen_2017_mil
         return(datos_dfe)
     })
+    
+    
+    
+    
+    ############## expresiones reactivas quer construyen los modulos para la Casen 2017 #############################
+    
     
     table2017_I <- reactive({
       data <- datos_df_casen_2017_mil[, 1:16]
@@ -2499,6 +2575,9 @@ server <- function(input, output, session) {
         return(datos_dfe)
     })
     
+    
+    ################################################################################################
+    
 
     
     ###################### carga de las tablas en su totalidad ################################
@@ -2521,7 +2600,11 @@ server <- function(input, output, session) {
     output$table_2013 <- renderDataTable(dataset2013_react())
     
     ###########################################################################################
+
     
+    output$table_2017 <- renderDataTable(dataset2017_react())
+    
+    ###########################################################################################
     
     output$table2009mn <- renderDataTable(mydata_educacion_3000())
     output$table2011mn <- renderDataTable(mydata_educacion_4000())
