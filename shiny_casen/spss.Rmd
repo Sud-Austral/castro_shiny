@@ -70,7 +70,7 @@ dataset2017 <- read.csv('mydata2017.csv')
 
 ```{r}
 
-dataset2006_sub <- dataset2006[1:10000,]
+dataset2006_sub <- dataset2006[1:100,]
 write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
 dataset2006_sub <- read.csv('mydata2006_sub.csv')
 dataset2006_sub
