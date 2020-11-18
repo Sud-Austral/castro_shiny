@@ -69,7 +69,18 @@ data_2009_5_348 <- dataset2009[, 7:348]
 data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
 
-######################### 2011 pendiente ##########################
+######################### 2011 pendiente ###############################################
+
+dataset2011 <- read.csv('mydata2011_sub.csv')
+
+dataset2011_col <- colnames(dataset2011)
+
+data_2011_3_5 <- dataset2011[, c(4,6)]
+data_2011_1_2_colnames <- colnames(data_2011_3_5)
+
+data_2011_5_348 <- dataset2011[, 7:348]
+data_2011_5_348_colnames <- colnames(data_2011_5_348)
+
 
 ###################################### 2013 ############################################
 
@@ -127,7 +138,7 @@ dataset2013_col_VIII <- colnames(dataset2013_sub_VIII)
 
 dataset2011 <- read.csv('mydata2011_sub.csv')
 dataset2011 <- dataset2011[1:1000,]
-dataset2011_col <- colnames(dataset2011)
+# dataset2011_col <- colnames(dataset2011)
 
 
 ##################   2017 ##############################
@@ -548,9 +559,9 @@ server <- function(input, output, session) {
                 br(),
                 tabPanel("Introducción",
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
-                tabPanel("Despliegue de la tabla",
+                tabPanel("Despliegue total de la base de datos Casen 2011",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-                                  column(12,  dataTableOutput("table2009mn")))),
+                                  column(12,  dataTableOutput("table_2011")))),
                 
                 
                 navbarMenu("Módulos",
@@ -559,153 +570,131 @@ server <- function(input, output, session) {
                            "",
                            tabPanel("Primer módulo: Registro Residentes", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_I"))
+                               column(12, dataTableOutput("modulo_1_2011"))
                            )),
                            
                            tabPanel("Segundo módulo (E): Educacion", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Iedu"))
+                               column(12, dataTableOutput("modulo_2_2011"))
                            )),
                            
                            tabPanel("Tercer módulo (O): Trabajo", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Itrab"))
+                               column(12, dataTableOutput("modulo_3_2011"))
                            )),
                            
                            tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Iing"))
+                               column(12, dataTableOutput("modulo_4_2011"))
                            )),
                            
                            tabPanel("Quinto módulo (S): Salud", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Isal"))
+                               column(12, dataTableOutput("modulo_5_2011"))
                            )),
                            
                            tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Iid"))
+                               column(12, dataTableOutput("modulo_6_2011"))
                            )),
                            
                            tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("table2017_Iviv"))
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_7_2011"))
                            )),
-                           "----",
-                           "",
-                           tabPanel("______Submódulo: Hogares carentes: hh_d_asis-hh_d_seg", fluidRow(
-                               column(12, includeMarkdown("hh_d_asis.md"))
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_8_2011"))
                            )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_9_2011"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_10_2011"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_11_2011"))
+                           )),
+                           
+                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
+                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             column(12, dataTableOutput("modulo_12_2011"))
+                           )),
+                           
                            
                            tabPanel(" ")),
                 
                 
+                navbarMenu("Tabla de contingencia > 2x2",
+                           #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
+                           
+                           tabPanel("Tablas de contingencia > 2x2",fluidRow(
+                             # selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                             column(12,
+                                    
+                                    selectInput("p2011_primerav", "ingrese primera variable:", c(dataset2011_col)),
+                                    selectInput("p2011_segundav", "ingrese segunda variable:", c(dataset2011_col)),
+                                    selectInput("p2011_tercerav", "ingrese tercera variable:", c(dataset2011_col)),
+                                    selectInput("p2011_cuartav", "ingrese cuarta variable:", c(dataset2011_col)),
+                                    downloadButton("boton_ttcc_2011", "Descargar"),
+                                    verbatimTextOutput("tabla_d_c_generalizada_2011") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5),
+                                    
+                                    downloadButton("boton_ttcc_2011_pon", "Descargar"),
+                                    verbatimTextOutput("tabla_d_c_generalizada_pon_2011") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
+                             )
+                           )),
+                           
+                           tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
+                                                                              selectInput("p2006_primerav", "ingrese primera variable:", c(dataset2011_col)),
+                                                                              selectInput("p2006_segundav", "ingrese segunda variable:", c(dataset2011_col)),
+                                                                              selectInput("p2006_tercerav", "ingrese tercera variable:", c(dataset2011_col)),
+                                                                              verbatimTextOutput("tabla_chi_generalizada"))))
+                ),
                 
-                
-                tabPanel("Frecuencias por preguntas", fluidRow(
+                tabPanel("Frecuencias de respuestas por campo", fluidRow(
                     column(12, includeMarkdown("about_educacion.md.txt")),
-                    selectInput("ptabla20091", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
+                    selectInput("ptabla_2011", "prueba tabla:", c(dataset2011_col)),
                     column(12, dataTableOutput("prueba_tabla"))
                 )),
                 
-                navbarMenu("Promedios filtrados por grupo",
-                           tabPanel("a nivel social", fluidRow(
-                             column(12, includeMarkdown("info_2006_prom.md")),
-                             selectInput("nivel_filtro_mn", "Seleccione unidad social:", c(data_2009_filtros_terr_ddl)),
-                             selectInput("categoria_filtro_mn", "Seleccione atributo:", c(data_2009_filtros_cat_ddl)),
-                             column(12, tableOutput("promedios_filtros_mn"))
-                           ))),
                 
                 navbarMenu("Estadísticas y gráficas",
                            tabPanel("Promedios", fluidRow(
-                               column(12, includeMarkdown("info_2006_prom.md")),
-                               selectInput("ptabla_promedios_2009_mn", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
-                               column(12, verbatimTextOutput("promedios_2009_mn"))
+                             column(12, includeMarkdown("info_2006_prom.md")),
+                             selectInput("input_promedios_2011", "Ingrese variable:", c(dataset2011_col)),
+                             column(12, verbatimTextOutput("promedios_2011"))
                            )),
                            
                            tabPanel("Diagrama de caja y bigotes", fluidRow(
-                               column(12, includeMarkdown("info_2006_cyb.md")),
-                               selectInput("ptabla_cyb_2009_mn", "prueba tabla:", c(datos_df_casen_2009_mil_mn_preg)),
-                               column(12, plotOutput("cyb_2009_mn"))
+                             column(12, includeMarkdown("info_2006_cyb.md")),
+                             selectInput("input_cyb_2011", "Ingrese variable:", c(dataset2011_col)),
+                             downloadButton("plot_cyb_2011", "Descargar"),
+                             column(12, plotOutput("cyb_2011"))
                            ))
                            
-                )
+                ),
+                
+                navbarMenu("Filtros agrupados por categorías",
+                           tabPanel("Seleccione variable que funga como grupo:", fluidRow(
+                             column(12, includeMarkdown("info_2006_prom.md")),
+                             selectInput("nivel_filtro_2011", "Seleccione unidad social:", c(data_2011_1_2_colnames)),
+                             selectInput("categoria_filtro_2011", "Seleccione atributo:", c(data_2011_5_348_colnames)),
+                             
+                             column(12, tableOutput("promedios_filtros_2011"))
+                           )))
+                
+                
             )
         }
         
-        # cuatro anio
-        
-        # else if (user == 20110){
-        #     navbarPage(
-        #         
-        #         br(),
-        #         tabPanel("Introducción",
-        #                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
-        #         tabPanel("Despliegue de la tabla",
-        #                  fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-        #                           column(12,  dataTableOutput("table2011mn")))),
-        #         tabPanel("Frecuencias por preguntas", fluidRow(
-        #             column(12, includeMarkdown("about_educacion.md.txt")),
-        #             selectInput("ptabla20110", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-        #             column(12, dataTableOutput("prueba_tabla"))
-        #         )),
-        #         
-        #         navbarMenu("Promedios filtrados por grupo",
-        #                    tabPanel("a nivel social", fluidRow(
-        #                      column(12, includeMarkdown("info_2006_prom.md")),
-        #                      selectInput("nivel_filtro_11mn", "Seleccione unidad social:", c(data_2011_filtros_terr_ddl)),
-        #                      selectInput("categoria_filtro_11mn", "Seleccione atributo:", c(data_2011_filtros_cat_ddl)),
-        #                      column(12, tableOutput("promedios_filtros_11mn"))
-        #                    ))),
-        #         
-        #         navbarMenu("Estadísticas y gráficas",
-        #                    tabPanel("Promedios", fluidRow(
-        #                        column(12, includeMarkdown("info_2006_prom.md")),
-        #                        selectInput("ptabla_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-        #                        column(12, verbatimTextOutput("promedios_2011"))
-        #                    )),
-        #                    
-        #                    tabPanel("Diagrama de caja y bigotes", fluidRow(
-        #                        column(12, includeMarkdown("info_2006_cyb.md")),
-        #                        selectInput("ptabla_cyb_2011", "prueba tabla:", c(datos_df_casen_2011_mil_mn_preg)),
-        #                        column(12, plotOutput("cyb_2011"))
-        #                    ))
-        #                    
-        #         )
-        #     )
-        # }
-        # 
-        # else if (user == 20111){
-        #     navbarPage(
-        #         
-        #         br(),
-        #         tabPanel("Introducción",
-        #                  fluidRow(column(9, includeMarkdown("about_intro.md")))),
-        #         tabPanel("Despliegue de la tabla",
-        #                  fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
-        #                           column(12,  dataTableOutput("table20ymt")))),
-        #         tabPanel("Frecuencias por preguntas", fluidRow(
-        #             column(12, includeMarkdown("about_educacion.md.txt")),
-        #             selectInput("ptabla20111", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
-        #             column(12, dataTableOutput("prueba_tabla"))
-        #         )),
-        #         navbarMenu("Estadísticas y gráficas",
-        #                    tabPanel("Promedios", fluidRow(
-        #                        column(12, includeMarkdown("info_2006_prom.md")),
-        #                        selectInput("ptabla_2011_ymt", "prueba tabla:", c(datos_df_casen_2011_mil_ymt_preg)),
-        #                        column(12, verbatimTextOutput("promedios_2011_ymt"))
-        #                    )),
-        #                    
-        #                    tabPanel("Diagrama de caja y bigotes", fluidRow(
-        #                        column(12, includeMarkdown("info_2006_cyb.md")),
-        #                        selectInput("ptabla_cyb_2011_ymt", "Seleccione variable:", c(datos_df_casen_2011_mil_ymt_preg)),
-        #                        column(12, plotOutput("cyb_2011_ymt"))
-        #                    ))
-        #                    
-        #         )
-        #     )
-        # }
-        
+       
         
         else if (user == 2013){
             navbarPage(
@@ -2525,6 +2514,10 @@ server <- function(input, output, session) {
     
     ###########################################################################################
     
+    output$table_2011 <- renderDataTable(dataset2011_react())
+    
+    ###########################################################################################
+    
     output$table_2013 <- renderDataTable(dataset2013_react())
     
     ###########################################################################################
@@ -2852,12 +2845,7 @@ server <- function(input, output, session) {
             c <- data_2009[,a]
             d <- data_2009[,b]
             
-            # base_del_2006_terr <- base_del_2006[,b]
-            # base_del_2006_terr[is.na(base_del_2006_terr)] <- 0
-            # base_del_2006_cat <- base_del_2006[,a]
-            
             promedios_grupales <-aggregate(d, by=list(c), FUN = mean , na.rm = TRUE)
-            # promedios_grupales <- aggregate(b, by=list(a), FUN = mean , na.rm = TRUE)
         }) 
         
 
@@ -2873,7 +2861,6 @@ server <- function(input, output, session) {
                 g <- input$p2009_cuartav
                 
                 ab <-  dataset2009
-                #  ab <- dataset2006_react()
                 
                 a <- ab[,d]
                 b <- ab[,e] 
@@ -2929,6 +2916,7 @@ server <- function(input, output, session) {
         
 
         
+
     ########################################################################## 2013  ######################################################################
        
          output$tabla_d_c_generalizada_2013<-renderPrint({
@@ -2939,6 +2927,7 @@ server <- function(input, output, session) {
           g <- input$ptabla2013_cuartavx
           
           ab <- dataset2013_react()
+
           
           a <- ab[,d]
           b <- ab[,e] 
@@ -2949,6 +2938,133 @@ server <- function(input, output, session) {
           
           return(cross_tab)
         })
+
+        
+        
+        output$tabla_d_c_generalizada_pon_2011<-renderPrint({
+          
+          d <- input$p2011_primerav
+          e <- input$p2011_segundav
+          f <- input$p2011_tercerav
+          g <- input$p2011_cuartav
+          
+          ab <- dataset2011
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          
+          return(cross_tab)
+        }) 
+        
+        output$promedios_2011<-renderPrint({
+          a <- input$input_promedios_2011
+          b <- dataset2011_react()
+          p<- b[,a]
+          o <- summary(p)
+          return(o)
+          
+        })
+        
+        output$cyb_2011 <- renderPlot({
+          a <- input$input_cyb_2011
+          b <- dataset2011_react()
+          c <- b[,a]
+          
+          b %>% ggplot(aes(x = a, y = unlist(c), fill = a)) + geom_boxplot() + 
+            scale_fill_manual(values=c("olivedrab2"))+
+            theme(
+              legend.position="none",
+              plot.title = element_text(size=11)
+            ) +
+            ggtitle("Diagrama de caja y bigotes") + xlab("")
+        })
+        
+        
+        output$promedios_filtros_2011<-renderTable({
+          
+          a <- input$nivel_filtro_2011
+          b <- input$categoria_filtro_2011
+          
+          data_2011 <- dataset2011_react()
+          
+          c <- data_2011[,a]
+          d <- data_2011[,b]
+          
+          promedios_grupales <-aggregate(d, by=list(c), FUN = mean , na.rm = TRUE)
+        }) 
+        
+        
+        output$boton_ttcc_2011 <- downloadHandler(
+          filename = function() {
+            paste("ttcc_2011.csv", "csv", sep=".")
+          },
+          content = function(file) {
+            
+            d <- input$p2011_primerav
+            e <- input$p2011_segundav
+            f <- input$p2011_tercerav
+            g <- input$p2011_cuartav
+            
+            ab <-  dataset2011
+            
+            a <- ab[,d]
+            b <- ab[,e] 
+            c <- ab[,f] 
+            d <- ab[,g] 
+            
+            cross_tab = table(a, b, c, d)
+            
+            write.csv(cross_tab, file)
+          }
+        )
+        
+        output$boton_ttcc_2011_pon <- downloadHandler(
+          filename = function() {
+            paste("ttcc_2011_pon.csv", "csv", sep=".")
+          },
+          content = function(file) {
+            
+            
+            d <- input$p2011_primerav
+            e <- input$p2011_segundav
+            f <- input$p2011_tercerav
+            g <- input$p2011_cuartav
+          
+            ab <- dataset2011
+            
+            a <- ab[,d]
+            b <- ab[,e] 
+            c <- ab[,f] 
+            d <- ab[,g] 
+            
+            cross_tab = xtabs(ab[,16]  ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16]  ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            
+            
+            write.csv(cross_tab, file)
+            
+          }
+        )
+        
+        plot2011 <- reactive({
+          df <- dataset2011_react()
+          col <- input$input_cyb_2011
+          p <-   ggplot(df, aes(0, df[,col])) +  geom_boxplot()
+        })
+        
+        output$plot_cyb_2011 <- downloadHandler(
+          filename = function() { paste(input$input_cyb_2011, '.png', sep='') },
+          content = function(file) {
+            device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 300, units = "in")
+            ggsave(file, plot = plot2011(), device = device)
+          }
+        )
+        
+        
+
 
 
         output$tabla_d_c_generalizada_2013_pon<-renderPrint({
@@ -3123,79 +3239,79 @@ server <- function(input, output, session) {
     
     ########################################################################## 2011 mn  ######################################################################
     
-    output$cyb_2011 <- renderPlot({
-        a <- input$ptabla_cyb_2011
-        
-        preguntaseternas2001_chi <- mydata_educacion_4000()
-        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
-        
-        preguntaseternas2001_chi %>%
-            
-            ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
-            
-            
-            
-            
-            geom_boxplot() +
-            
-            theme(
-                legend.position="none",
-                plot.title = element_text(size=11)
-            ) +
-            ggtitle("Basic boxplot") +
-            xlab("")
-        
-        
-    })
-    
-    
-    
-    
-    
-    output$promedios_2011<-renderPrint({
-        a <- input$ptabla_2011
-        preguntaseternas2001_chi <- mydata_educacion_4000()
-        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
-        b <- summary(preguntaseternas_sub2001_a)
-        return(b)
-        
-    })
-    
+    # output$cyb_2011 <- renderPlot({
+    #     a <- input$ptabla_cyb_2011
+    #     
+    #     preguntaseternas2001_chi <- mydata_educacion_4000()
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+    #     
+    #     preguntaseternas2001_chi %>%
+    #         
+    #         ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
+    #         
+    #         
+    #         
+    #         
+    #         geom_boxplot() +
+    #         
+    #         theme(
+    #             legend.position="none",
+    #             plot.title = element_text(size=11)
+    #         ) +
+    #         ggtitle("Basic boxplot") +
+    #         xlab("")
+    #     
+    #     
+    # })
+    # 
+    # 
+    # 
+    # 
+    # 
+    # output$promedios_2011<-renderPrint({
+    #     a <- input$ptabla_2011
+    #     preguntaseternas2001_chi <- mydata_educacion_4000()
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+    #     b <- summary(preguntaseternas_sub2001_a)
+    #     return(b)
+    #     
+    # })
+    # 
     
     ########################################################################## 2011 ymt  ######################################################################
-    
-    output$cyb_2011_ymt <- renderPlot({
-        a <- input$ptabla_cyb_2011_ymt
-        
-        preguntaseternas2001_chi <- mydata_educacion_5000()
-        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
-        
-        preguntaseternas2001_chi %>%
-            
-            ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
-            geom_boxplot() +
-            theme(
-                legend.position="none",
-                plot.title = element_text(size=11)
-            ) +
-            ggtitle("Basic boxplot") +
-            xlab("")
-    })
-    
-    
-    
-    
-    
-    output$promedios_2011_ymt<-renderPrint({
-        a <- input$ptabla_2011_ymt
-        preguntaseternas2001_chi <- mydata_educacion_5000()
-        preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
-        b <- summary(preguntaseternas_sub2001_a)
-        return(b)
-        
-    })
-    
-    
+    # 
+    # output$cyb_2011_ymt <- renderPlot({
+    #     a <- input$ptabla_cyb_2011_ymt
+    #     
+    #     preguntaseternas2001_chi <- mydata_educacion_5000()
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+    #     
+    #     preguntaseternas2001_chi %>%
+    #         
+    #         ggplot( aes(x = a, y = unlist(preguntaseternas_sub2001_a), fill = a)) +
+    #         geom_boxplot() +
+    #         theme(
+    #             legend.position="none",
+    #             plot.title = element_text(size=11)
+    #         ) +
+    #         ggtitle("Basic boxplot") +
+    #         xlab("")
+    # })
+    # 
+    # 
+    # 
+    # 
+    # 
+    # output$promedios_2011_ymt<-renderPrint({
+    #     a <- input$ptabla_2011_ymt
+    #     preguntaseternas2001_chi <- mydata_educacion_5000()
+    #     preguntaseternas_sub2001_a <- preguntaseternas2001_chi[,a]
+    #     b <- summary(preguntaseternas_sub2001_a)
+    #     return(b)
+    #     
+    # })
+    # 
+    # 
     ########################################################################## 2013  ##########################################################################  
     
     
@@ -3512,21 +3628,14 @@ server <- function(input, output, session) {
             t = as.data.frame(c)
         } 
         
-        else if(input$variable_anio == 20091)
-        {
-            preguntas20091 <- mydata_educacion_3000()
-            preguntaseternas_sub2002 <- preguntas20091[,input$ptabla20091]
-            w2003 = table(preguntaseternas_sub2002)
-            t3 = as.data.frame(w2003)
-        } 
-        
-        else if(input$variable_anio == 20110)
-        {
-            preguntas20110 <- mydata_educacion_4000()
-            preguntaseternas_sub20110 <- preguntas20110[,input$ptabla20110]
-            w2004 = table(preguntaseternas_sub20110)
-            t = as.data.frame(w2004)
-        } 
+      else if(input$variable_anio == 2011)
+      {
+        a <- dataset2011_react()
+        b <- a[,input$ptabla_2011]
+        c = table(b)
+        t = as.data.frame(c)
+      } 
+      
         else if(input$variable_anio == 20111)
         {
             preguntaseternas20111<- mydata_educacion_5000()
