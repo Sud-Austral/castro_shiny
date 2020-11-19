@@ -38,11 +38,6 @@ library(writexl)
 oldw <- getOption("warn")
 options(warn = -1)
 
-#rsconnect::deployApp('C:/Users/usuario/Desktop/shinycasen1')
-
-#dataset <- read.csv('Casen_no_humano.csv')
-
-
 ####################### consumo de tablas excel ##################################
 
 ##################################### 2006 #######################################
@@ -148,34 +143,13 @@ dataset2015_col_VII <- colnames(dataset2015_sub_VII)
 dataset2015_sub_VIII <- dataset2015[,71:80]
 dataset2015_col_VIII <- colnames(dataset2015_sub_VIII)
 
-
-
 ########################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############################################################################
-##############################################################################
-##############################################################################
-##############################################################################
 
 dataset2011 <- read.csv('mydata2011_sub.csv')
 dataset2011 <- dataset2011[1:1000,]
 # dataset2011_col <- colnames(dataset2011)
 
-
 ##################   2017 ##############################
-
 
 dataset2017 <-  read.csv('mydata2017_sub.csv')
 datos_df_exp <- colnames(dataset2017)
@@ -183,25 +157,9 @@ datos_df_exp <- colnames(dataset2017)
 ########################################################
 
 
-
-
-
-
-
-
-#alerta <- read_xlsx("casen_2017_mil.xlsx")
-
-# alerta <- read_csv("Casen_no_humano2.csv")
-
-#dataset = read_sav("Casen_no_humano.csv")
-
-#muy importante:
-#datos_df_exp_casen_2017_6 <- colnames(alerta)
-
 data_2017 <- read_xlsx("casen_2017_mil.xlsx")
 data_2017_colnames <- colnames(data_2017)
 
-# data_2017_modulo_I <- data_2017[, 1:3]
 data_2017_modulo_I <- data_2017[,1:42]
 data_2017_modulo_I_colnames <- colnames(data_2017_modulo_I)
 data_2017_modulo_II <- data_2017[,43:102]
@@ -211,15 +169,9 @@ data_2017_modulo_III_colnames <- colnames(data_2017_modulo_III)
 data_2017_modulo_IV <- data_2017[,152:304]
 data_2017_modulo_IV_colnames <- colnames(data_2017_modulo_IV)
 
-
-
-# datos_df_1000 <- cbind(casen2017_1, casen2017_2)
 datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
 datos_df_educacion <- datos_df_1000[, 1:32]
 datos_df_educacion_preg <- colnames(datos_df_educacion)
-
-
-
 
 datos_df_2000 <- read_xlsx("casen_2009_mil_ymt.xlsx")
 datos_df_2009_ymt <- datos_df_2000[, 1:5]
@@ -234,7 +186,6 @@ data_2009_filtros_terr_ddl <- colnames(data_2009_filtros_terr)
 data_2009_filtros_cat <- datos_df_casen_2009_mil_mn[, 9:32]
 data_2009_filtros_cat_ddl <- colnames(data_2009_filtros_cat)
 
-
 datos_df_casen_2011_mil_mn <- read_xlsx("casen_2011_mil_mn.xlsx")
 datos_df_casen_2011_mil_mn <- datos_df_casen_2011_mil_mn[, 1:34]
 datos_df_casen_2011_mil_mn_preg <- colnames(datos_df_casen_2011_mil_mn)
@@ -243,9 +194,6 @@ data_2011_filtros_terr <- datos_df_casen_2011_mil_mn[, 1:2]
 data_2011_filtros_terr_ddl <- colnames(data_2011_filtros_terr)
 data_2011_filtros_cat <- datos_df_casen_2011_mil_mn[, 9:32]
 data_201_filtros_cat_ddl <- colnames(data_2011_filtros_cat)
-
-
-
 
 datos_df_casen_2011_mil_ymt <- read_xlsx("casen_2011_mil_ymt.xlsx")
 datos_df_casen_2011_mil_ymt  <- datos_df_casen_2011_mil_ymt [, 1:24]
