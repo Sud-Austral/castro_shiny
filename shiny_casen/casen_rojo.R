@@ -284,17 +284,26 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 3: Módulo Residente", fluidRow(
-                               column(12, includeMarkdown("modulo_3_2006.md")),
+                               column(4, includeMarkdown("modulo_3_2006_1.md")),
+                               column(4, includeMarkdown("modulo_3_2006_2.md")),
+                               column(4, includeMarkdown("modulo_3_2006_3.md")),
+                               
                                column(12, dataTableOutput("modulo_3_2006"))
                            )),
                            
                            tabPanel("Módulo 4: Módulo Educación", fluidRow(
-                               column(12, includeMarkdown("modulo_4_2006.md")),
+                               column(4, includeMarkdown("modulo_4_2006_1.md")),
+                               column(4, includeMarkdown("modulo_4_2006_2.md")),
+                               column(4, includeMarkdown("modulo_4_2006_3.md")),
+                               
                                column(12, dataTableOutput("modulo_4_2006"))
                            )),
                            
                            tabPanel("Módulo 5: Módulo Empleo", fluidRow(
-                               column(12, includeMarkdown("modulo_5_2006.md")),
+                               column(4, includeMarkdown("modulo_5_2006_1.md")),
+                               column(4, includeMarkdown("modulo_5_2006_2.md")),
+                               column(4, includeMarkdown("modulo_5_2006_3.md")),
+                               
                                column(12, dataTableOutput("modulo_5_2006"))
                            )),
                            
@@ -313,7 +322,7 @@ server <- function(input, output, session) {
                            )),
                            tabPanel("Módulo 9: Tema Chile solidario", fluidRow(
                              column(12, includeMarkdown("modulo_9_2006.md")),
-                             column(12, dataTableOutput("modulo_9_2006"))
+                             column(9, dataTableOutput("modulo_9_2006"))
                            )),
                            
                            tabPanel("Módulo 10: Tema Etnia", fluidRow(
@@ -347,24 +356,24 @@ server <- function(input, output, session) {
                            )),
                            
                            
-                           tabPanel("16 VARIABLES CREADAS : Empleo", fluidRow(
+                           tabPanel("16 Variables creadas: Empleo", fluidRow(
                              column(12, includeMarkdown("modulo_16_2006.md")),
                              column(12, dataTableOutput("modulo_16_2006"))
                            )),
-                           tabPanel("17 VARIABLES CREADAS : Ingresos del trabajo", fluidRow(
+                           tabPanel("17 Variables creadas: Ingresos del trabajo", fluidRow(
                              column(12, includeMarkdown("modulo_17_2006.md")),
                              column(12, dataTableOutput("modulo_17_2006"))
                            )),
-                           tabPanel("18 VARIABLES CREADAS : Subsidios monetarios", fluidRow(
+                           tabPanel("18 Variables creadas: Subsidios monetarios", fluidRow(
                              column(12, includeMarkdown("modulo_18_2006.md")),
                              column(12, dataTableOutput("modulo_18_2006"))
                            )),
-                           tabPanel("19 VARIABLES CREADAS : Otros ingresos", fluidRow(
+                           tabPanel("19 Variables creadas: Otros ingresos", fluidRow(
                              column(12, includeMarkdown("modulo_19_2006.md")),
                              column(12, dataTableOutput("modulo_19_2006"))
                            )),
                            
-                           tabPanel("VARIABLES CREADAS : Línea de pobreza, quintiles y deciles de ingreso", fluidRow(
+                           tabPanel("20 Variables creadas: Línea de pobreza, quintiles y deciles de ingreso", fluidRow(
                              column(12, includeMarkdown("modulo_20_2006.md")),
                              column(12, dataTableOutput("modulo_20_2006"))
                            )),
@@ -2456,18 +2465,18 @@ server <- function(input, output, session) {
     })
     
     dataset2006_react_1 <- reactive({
-        data <- dataset2006[, 1:19] #registro de personas
+        data <- dataset2006[, 1:9] #registro de personas
         return(data)
     })
     
     dataset2006_react_2 <- reactive({
-        data <- dataset2006[, 20:33]#posesiones y comunicacion
+        data <- dataset2006[, 10:12]#posesiones y comunicacion
         return(data)
     })
     
     
     dataset2006_react_3 <- reactive({
-        data <- dataset2006[, 34:45]#vias de comunicacion
+        data <- dataset2006[, 13:45]#vias de comunicacion
         return(data)
     })
     
@@ -2501,17 +2510,20 @@ server <- function(input, output, session) {
     })
     
     dataset2006_react_9 <- reactive({
-        data <- dataset2006[, 228:288]#Chile solidario
+
+
+       data <- dataset2006[, 228:229]
+       data <- data.frame(data$t3)
         return(data)
     })
     
     dataset2006_react_10 <- reactive({
-        data <- dataset2006[, 229:231]#etnia
+        data <- dataset2006[, 229:232]#etnia
         return(data)
     })
     
     dataset2006_react_11 <- reactive({
-        data <- dataset2006[, 232:237]#residencia
+        data <- dataset2006[, 233:237]#residencia
         return(data)
     })
     
@@ -2531,16 +2543,31 @@ server <- function(input, output, session) {
     })
     
     dataset2006_react_15 <- reactive({
-      data <- dataset2006[, 213:322]#actividades en escolaridad y trabajo
+      data <- dataset2006[, 313:315]#actividades en escolaridad y trabajo
       return(data)
     })
     
     dataset2006_react_16 <- reactive({
-      data <- dataset2006[, 323:341]#subsidios
+      data <- dataset2006[, 316:318]#subsidios
       return(data)
     })
     
     dataset2006_react_17 <- reactive({
+      data <- dataset2006[, 319:322]#pobreza
+      return(data)
+    })
+    
+    dataset2006_react_18 <- reactive({
+      data <- dataset2006[, 323:335]#pobreza
+      return(data)
+    })
+    
+    dataset2006_react_19 <- reactive({
+      data <- dataset2006[, 336:341]#pobreza
+      return(data)
+    })
+    
+    dataset2006_react_20 <- reactive({
       data <- dataset2006[, 342:348]#pobreza
       return(data)
     })
@@ -2967,6 +2994,9 @@ server <- function(input, output, session) {
     output$modulo_15_2006 <- renderDataTable(dataset2006_react_15())
     output$modulo_16_2006 <- renderDataTable(dataset2006_react_16())
     output$modulo_17_2006 <- renderDataTable(dataset2006_react_17())
+    output$modulo_18_2006 <- renderDataTable(dataset2006_react_18())
+    output$modulo_19_2006 <- renderDataTable(dataset2006_react_19())
+    output$modulo_20_2006 <- renderDataTable(dataset2006_react_20())
     
     ########################################################################## 2009 modulos  ##########################################################################  
     output$modulo_1_2009 <- renderDataTable(dataset2009_react_1())
