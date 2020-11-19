@@ -2440,68 +2440,93 @@ server <- function(input, output, session) {
     })
     
     dataset2006_react_1 <- reactive({
-        data <- dataset2006[, 1:18]
+        data <- dataset2006[, 1:19] #registro de personas
         return(data)
     })
     
     dataset2006_react_2 <- reactive({
-        data <- dataset2006[, 19:75]#educacion
+        data <- dataset2006[, 20:33]#pocesiones y comunicacion
         return(data)
     })
     
     
     dataset2006_react_3 <- reactive({
-        data <- dataset2006[, 76:118]#trabajo
+        data <- dataset2006[, 34:45]#vias de comunicacion
         return(data)
     })
     
     
     dataset2006_react_4 <- reactive({
-        data <- dataset2006[, 119:145]#ingresos
+        data <- dataset2006[, 46:81]#educacion
         return(data)
     })
     
     
     dataset2006_react_5 <- reactive({
-        data <- dataset2006[, 146:232]#salud
+        data <- dataset2006[, 82:114]#trabajo
         return(data)
     })
     
     
     dataset2006_react_6 <- reactive({
-        data <- dataset2006[, 233:287]#residentes
+        data <- dataset2006[, 115:165]#ingresos
         return(data)
     })
     
     
     dataset2006_react_7 <- reactive({
-        data <- dataset2006[, 288:373]#vivienda
+        data <- dataset2006[, 166:221]#salud
         return(data)
     })
     
     dataset2006_react_8 <- reactive({
-        data <- dataset2006[, 374:576]#ingresos
+        data <- dataset2006[, 222:227]#discapacidad
         return(data)
     })
     
     dataset2006_react_9 <- reactive({
-        data <- dataset2006[, 577:578]#Expansiones
+        data <- dataset2006[, 228:288]#Chile solidario
         return(data)
     })
     
     dataset2006_react_10 <- reactive({
-        data <- dataset2006[, 579:582]#Informacion
+        data <- dataset2006[, 229:231]#etnia
         return(data)
     })
     
     dataset2006_react_11 <- reactive({
-        data <- dataset2006[, 583:588]#Informacion
+        data <- dataset2006[, 232:237]#residencia
         return(data)
     })
     
     dataset2006_react_12 <- reactive({
-        data <- dataset2006[, 589:600]#Indicadores
-        return(data)
+      data <- dataset2006[, 238:243]#cultura
+      return(data)
+    })
+    
+    dataset2006_react_13 <- reactive({
+      data <- dataset2006[, 244:255]#situacion pasada
+      return(data)
+    })
+    
+    dataset2006_react_14 <- reactive({
+      data <- dataset2006[, 256:312]#vivienda
+      return(data)
+    })
+    
+    dataset2006_react_15 <- reactive({
+      data <- dataset2006[, 213:322]#actividades en escolaridad y trabajo
+      return(data)
+    })
+    
+    dataset2006_react_16 <- reactive({
+      data <- dataset2006[, 323:341]#subsidios
+      return(data)
+    })
+    
+    dataset2006_react_17 <- reactive({
+      data <- dataset2006[, 342:348]#pobreza
+      return(data)
     })
     
     ###############################################   2009 #################################
