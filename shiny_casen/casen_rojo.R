@@ -315,7 +315,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 7: Salud", fluidRow(
-                               column(12, includeMarkdown("modulo_7_2006.md")),
+                             column(4, includeMarkdown("modulo_7_2006_1.md")),
+                             column(4, includeMarkdown("modulo_7_2006_2.md")),
+                             column(4, includeMarkdown("modulo_7_2006_3.md")),
                                column(12, dataTableOutput("modulo_7_2006"))
                            )),
                            tabPanel("Módulo 8: Tema Discapacidad", fluidRow(
@@ -344,12 +346,16 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 13: Tema Autobiografía", fluidRow(
-                             column(12, includeMarkdown("modulo_13_2006.md")),
+                             column(4, includeMarkdown("modulo_13_2006_1.md")),
+                             column(4, includeMarkdown("modulo_13_2006_2.md")),
+                             column(4, includeMarkdown("modulo_13_2006_3.md")),
                              column(12, dataTableOutput("modulo_13_2006"))
                            )),
                            
                            tabPanel("Módulo 14: Módulo Vivienda", fluidRow(
-                             column(12, includeMarkdown("modulo_14_2006.md")),
+                             column(4, includeMarkdown("modulo_14_2006_1.md")),
+                             column(4, includeMarkdown("modulo_14_2006_2.md")),
+                             column(4, includeMarkdown("modulo_14_2006_3.md")),
                              column(12, dataTableOutput("modulo_14_2006"))
                            )),
                            
