@@ -283,7 +283,7 @@ server <- function(input, output, session) {
                                column(12, dataTableOutput("modulo_2_2006"))
                            )),
                            
-                           tabPanel("Módulo 3: Módulo Residente", fluidRow(
+                           tabPanel("Módulo 3: Residentes", fluidRow(
                                column(4, includeMarkdown("modulo_3_2006_1.md")),
                                column(4, includeMarkdown("modulo_3_2006_2.md")),
                                column(4, includeMarkdown("modulo_3_2006_3.md")),
@@ -291,7 +291,7 @@ server <- function(input, output, session) {
                                column(12, dataTableOutput("modulo_3_2006"))
                            )),
                            
-                           tabPanel("Módulo 4: Módulo Educación", fluidRow(
+                           tabPanel("Módulo 4: Educación", fluidRow(
                                column(4, includeMarkdown("modulo_4_2006_1.md")),
                                column(4, includeMarkdown("modulo_4_2006_2.md")),
                                column(4, includeMarkdown("modulo_4_2006_3.md")),
@@ -299,7 +299,7 @@ server <- function(input, output, session) {
                                column(12, dataTableOutput("modulo_4_2006"))
                            )),
                            
-                           tabPanel("Módulo 5: Módulo Empleo", fluidRow(
+                           tabPanel("Módulo 5: Empleo", fluidRow(
                                column(4, includeMarkdown("modulo_5_2006_1.md")),
                                column(4, includeMarkdown("modulo_5_2006_2.md")),
                                column(4, includeMarkdown("modulo_5_2006_3.md")),
@@ -307,12 +307,12 @@ server <- function(input, output, session) {
                                column(12, dataTableOutput("modulo_5_2006"))
                            )),
                            
-                           tabPanel("Módulo 6: Módulo Ingresos", fluidRow(
+                           tabPanel("Módulo 6: Ingresos", fluidRow(
                                column(12, includeMarkdown("modulo_6_2006.md")),
                                column(12, dataTableOutput("modulo_6_2006"))
                            )),
                            
-                           tabPanel("Módulo 7: Módulo Salud", fluidRow(
+                           tabPanel("Módulo 7: Salud", fluidRow(
                                column(12, includeMarkdown("modulo_7_2006.md")),
                                column(12, dataTableOutput("modulo_7_2006"))
                            )),
@@ -648,11 +648,14 @@ server <- function(input, output, session) {
 
         
         else if (user == 2011){
+          
             navbarPage(
                 
                 br(),
-                tabPanel("Introducción",
+                
+                tabPanel("Introducción a la Encuesta",
                          fluidRow(column(9, includeMarkdown("about_intro.md")))),
+                
                 tabPanel("Despliegue total de la base de datos Casen 2011",
                          fluidRow(column(9, includeMarkdown("about_pobporin_vei.txt")),
                                   column(12,  dataTableOutput("table_2011")))),
@@ -660,70 +663,170 @@ server <- function(input, output, session) {
                 
                 navbarMenu("Módulos",
                            tabPanel("Introducción", fluidRow(column(9, includeMarkdown("intro_modulos.txt")))),
-                           "----",
-                           "",
-                           tabPanel("Primer módulo: Registro Residentes", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
+
+                           tabPanel("Módulo 1: Identificación", fluidRow(
+                               column(12, includeMarkdown("modulo_1_2011.md")),
                                column(12, dataTableOutput("modulo_1_2011"))
                            )),
                            
-                           tabPanel("Segundo módulo (E): Educacion", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
+                           tabPanel("Módulo 2: Expansión", fluidRow(
+                               column(12, includeMarkdown("modulo_2_2011.md")),
                                column(12, dataTableOutput("modulo_2_2011"))
                            )),
                            
-                           tabPanel("Tercer módulo (O): Trabajo", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
+                           tabPanel("Módulo 3: Residentes", fluidRow(
+                               column(12, includeMarkdown("modulo_3_2011.md")),
                                column(12, dataTableOutput("modulo_3_2011"))
                            )),
                            
-                           tabPanel("Cuarto módulo (Y): Ingresos", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
+                           tabPanel("Módulo 4: Educación", fluidRow(
+                               column(4, includeMarkdown("modulo_4_2011_1.md")),
+                               column(4, includeMarkdown("modulo_4_2011_2.md")),
+                               column(4, includeMarkdown("modulo_4_2011_3.md")),
                                column(12, dataTableOutput("modulo_4_2011"))
                            )),
                            
-                           tabPanel("Quinto módulo (S): Salud", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
+                           tabPanel("Módulo 5: Empleo", fluidRow(
+                               column(12, includeMarkdown("modulo_5_2011.md")),
                                column(12, dataTableOutput("modulo_5_2011"))
                            )),
-                           
-                           tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
-                               column(12, includeMarkdown("about_educacion.md.txt")),
-                               column(12, dataTableOutput("modulo_6_2011"))
+
+                          tabPanel("Tema: Chile solidario", fluidRow(
+                             column(12, includeMarkdown("modulo_Chile_solidario_2011.md")),
+                             column(12, dataTableOutput("modulo_Chile_solidario_2011"))
                            )),
-                           
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
+                             
+                           tabPanel("Módulo 7: Ingresos", fluidRow(
+                             column(12, includeMarkdown("modulo_7_2011.md")),
                              column(12, dataTableOutput("modulo_7_2011"))
                            )),
-                           
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
+                          
+                           tabPanel("Módulo 8: Salud", fluidRow(
+                             column(12, includeMarkdown("modulo_8_2011.md")),
                              column(12, dataTableOutput("modulo_8_2011"))
                            )),
                            
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
+                          tabPanel("Tema 1: Discapacidad", fluidRow(
+                             column(12, includeMarkdown("modulo_Discapacidad_2011.md")),
+                             column(12, dataTableOutput("modulo_Discapacidad_2011"))
+                           )), 
+                           
+                           tabPanel("Tema 2: Quien responde al módulo Salud", fluidRow(
+                             column(12, includeMarkdown("modulo_Quien_responde_al_modulo_Salud_2011.md")),
+                             column(12, dataTableOutput("modulo_Quien_responde_al_modulo_Salud_2011"))
+                           )),
+
+                           tabPanel("Tema 3: Migración", fluidRow(
+                             column(12, includeMarkdown("modulo_Migracion_2011.md")),
+                             column(12, dataTableOutput("modulo_Migracion_2011"))
+                           )),
+
+                           tabPanel("Tema 4: Autobiografía (Padres y su nivel educacional)", fluidRow(
+                             column(12, includeMarkdown("modulo_Autobiografía_2011.md")),
+                             column(12, dataTableOutput("modulo_Autobiografía_2011"))
+                           )),
+                           tabPanel("Tema 5: Etnia", fluidRow(
+                             column(12, includeMarkdown("modulo_Etnia_2011.md")),
+                             column(12, dataTableOutput("modulo_Etnia_2011"))
+                           )),
+                           tabPanel("Tema 6: Participación", fluidRow(
+                             column(12, includeMarkdown("modulo_Participacion_2011.md")),
+                             column(12, dataTableOutput("modulo_Participacion_2011"))
+                           )),
+                           
+                          tabPanel("Módulo 3: Residentes: Patrimonio.", fluidRow(
+                            column(12, includeMarkdown("modulo_Residentes_Patrimonio_2011.md")),
+                            column(12, dataTableOutput("modulo_Residentes_Patrimonio_2011"))
+                          )),
+                          
+                          tabPanel("Tema 7: Internet", fluidRow(
+                            column(12, includeMarkdown("modulo_Internet_2011.md")),
+                            column(12, dataTableOutput("modulo_Internet_2011"))
+                          )),
+                          
+                          tabPanel("Tema 8: Teléfono móvil", fluidRow(
+                            column(12, includeMarkdown("modulo_telefono_movil_2011.md")),
+                            column(12, dataTableOutput("modulo_telefono_movil_2011"))
+                          )),
+                          
+                          tabPanel("Tema 9: Satisfacción con la vida", fluidRow(
+                            column(12, includeMarkdown("modulo_Satisfaccion_con_la_vida_2011.md")),
+                            column(12, dataTableOutput("modulo_Satisfaccion_con_la_vida_2011"))
+                          )),
+
+                          tabPanel("Tema 10: Quien responde al módulo residentes", fluidRow(
+                            column(12, includeMarkdown("modulo_Quien_responde_al_modulo_residentes_2011.md")),
+                            column(12, dataTableOutput("modulo_Quien_responde_al_modulo_residentes_2011"))
+                          )),
+
+                           tabPanel("Módulo 9: Vivienda", fluidRow(
+                             column(12, includeMarkdown("modulo_9_2011.md")),
                              column(12, dataTableOutput("modulo_9_2011"))
                            )),
-                           
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
-                             column(12, dataTableOutput("modulo_10_2011"))
+                          
+                          tabPanel("Tema 11: Lugar donde se produce la entrevista", fluidRow(
+                            column(12, includeMarkdown("modulo_Lugar_donde_se_produce_la_entrevista_2011.md")),
+                            column(12, dataTableOutput("modulo_Lugar_donde_se_produce_la_entrevista_2011"))
+                          )),
+                          
+                          
+                          "----",
+                          "",
+                          
+                          # Variables creadas:
+                          # https://studylib.es/doc/1097171/manual-usuario-casen-2006.pdf
+                          
+                           tabPanel("1 Variables creadas: Educación", fluidRow(
+                             column(12, includeMarkdown("vvcc_Educacion_2011.md")),
+                             column(12, dataTableOutput("vvcc_Educacion_2011"))
                            )),
+
+                          tabPanel("2 Variables creadas: Empleo", fluidRow(
+                            column(12, includeMarkdown("vvcc_Empleo_2011.md")),
+                            column(12, dataTableOutput("vvcc_Empleo_2011"))
+                          )),
+                          tabPanel("3 Variables creadas: Línea de pobreza, quintiles y deciles de ingreso", fluidRow(
+                            column(12, includeMarkdown("vvcc_Linea_de_pobreza_2011.md")),
+                            column(12, dataTableOutput("vvcc_Linea_de_pobreza_2011"))
+                          )),
+                          tabPanel("4 Variables creadas: Ingresos del trabajo", fluidRow(
+                            column(12, includeMarkdown("vvcc_Ingresos_del_trabajo_2011.md")),
+                            column(12, dataTableOutput("vvcc_Ingresos_del_trabajo_2011"))
+                          )),
+                          tabPanel("5 Variables creadas: Subsidios monetarios", fluidRow(
+                            column(12, includeMarkdown("vvcc_Subsidios_monetarios_2011.md")),
+                            column(12, dataTableOutput("vvcc_Subsidios_monetarios_2011"))
+                          )),
+                          tabPanel("6 Variables creadas: Otros Ingresos", fluidRow(
+                            column(12, includeMarkdown("vvcc_Otros_Ingresos_2011.md")),
+                            column(12, dataTableOutput("vvcc_Otros_Ingresos_2011"))
+                          )),
+                          tabPanel("7 Variables creadas: Índices e indicadores", fluidRow(
+                            column(12, includeMarkdown("vvcc_Indices_2011.md")),
+                            column(12, dataTableOutput("vvcc_Indices_2011"))
+                          )),
                            
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
-                             column(12, dataTableOutput("modulo_11_2011"))
-                           )),
-                           
-                           tabPanel("Séptimo módulo (V): Vivienda y Entorno", fluidRow(
-                             column(12, includeMarkdown("about_educacion.md.txt")),
-                             column(12, dataTableOutput("modulo_12_2011"))
-                           )),
-                           
-                           
+                          "----",
+                          "",
+                          
+                          tabPanel("Tema 12: Índice de Hacinamiento", fluidRow(
+                            column(12, includeMarkdown("vvcc_Indice_de_Hacinamiento_2011.md")),
+                            column(12, dataTableOutput("vvcc_Indice_de_Hacinamiento_2011"))
+                          )),
+                          
+                          tabPanel("Variable: Fecha", fluidRow(
+                            column(12, includeMarkdown("fecha_2011.md")),
+                            column(12, dataTableOutput("fecha_2011"))
+                          )),
+
                            tabPanel(" ")),
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 navbarMenu("Tabla de contingencia > 2x2",
@@ -1875,6 +1978,13 @@ server <- function(input, output, session) {
                            tabPanel("Quinto módulo (S): Salud", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt"))
                            )),
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                            
                            tabPanel("Sexto módulo (R): Identidades, redes y participación", fluidRow(
                                column(12, includeMarkdown("about_educacion.md.txt"))
@@ -2695,7 +2805,6 @@ server <- function(input, output, session) {
     
     ###############################################   2011 #################################
     
-    
     #la base de datos total:
     dataset2011_react <- reactive({
         data <- dataset2011
@@ -2703,72 +2812,231 @@ server <- function(input, output, session) {
     })
     
     dataset2011_react_1 <- reactive({
-        data <- dataset2011[, 1:27]#Registro de Residentes
+        data <- dataset2011[, 1:9]
         return(data)
     })
     
     dataset2011_react_2 <- reactive({
-        data <- dataset2011[, 28:75]#educacion
+        data <- dataset2011[, 10:13]
         return(data)
     })
     
     
     dataset2011_react_3 <- reactive({
-        data <- dataset2011[, 76:118]#trabajo
+        data <- dataset2011[, 14:27]
         return(data)
     })
     
     
     dataset2011_react_4 <- reactive({
-        data <- dataset2011[, 119:145]#ingresos
+        data <- dataset2011[, 28:77]
         return(data)
     })
     
     
     dataset2011_react_5 <- reactive({
-        data <- dataset2011[, 146:232]#salud
+        data <- dataset2011[, 78:109]
         return(data)
     })
     
-    
-    dataset2011_react_6 <- reactive({
-        data <- dataset2011[, 233:287]#residentes
-        return(data)
-    })
-    
-    
+    # Chile Solidario
     dataset2011_react_7 <- reactive({
-        data <- dataset2011[, 288:373]#vivienda
+        data <- dataset2011[, 110:111]
         return(data)
     })
+    
+    
+    # Ingresos:
+    # dataset2011_react_6 <- reactive({
+    #     data <- dataset2011[, 111:127]
+    #     return(data)
+    # })
+    # 
+    
+
     
     dataset2011_react_8 <- reactive({
-        data <- dataset2011[, 374:576]#ingresos
+        data <- dataset2011[, 111:127] #ingresos
         return(data)
     })
     
+    # salud
     dataset2011_react_9 <- reactive({
-        data <- dataset2011[, 577:578]#Expansiones
+        data <- dataset2011[, 128:190]
         return(data)
     })
     
+    
+    ### ahora ###########
+    
+    #tema discapacidad
     dataset2011_react_10 <- reactive({
-        data <- dataset2011[, 579:582]#Informacion
+        data <- dataset2011[, 191:209]
         return(data)
     })
-    
+
+    # quien responde al modulo salud
     dataset2011_react_11 <- reactive({
-        data <- dataset2011[, 583:588]#Informacion
+        data <- dataset2011[, 210:211]
         return(data)
     })
     
+    # migracion:
     dataset2011_react_12 <- reactive({
-        data <- dataset2011[, 589:600]#Indicadores
+        data <- dataset2011[, 211:217]
         return(data)
+    })
+    
+    ### ahora ###########   
+    
+
+    # 
+    # dataset2011_react_13 <- reactive({
+    #   data <- dataset2011[, 1:27]
+    #   return(data)
+    # })
+    # 
+    # dataset2011_react_14 <- reactive({
+    #   data <- dataset2011[, 28:75]
+    #   return(data)
+    # })
+    # 
+    # 
+    # dataset2011_react_15 <- reactive({
+    #   data <- dataset2011[, 76:118]
+    #   return(data)
+    # })
+    # 
+    # 
+    # dataset2011_react_16 <- reactive({
+    #   data <- dataset2011[, 119:145]
+    #   return(data)
+    # })
+    
+    # autobiografia
+    dataset2011_react_17 <- reactive({
+      data <- dataset2011[, 218:222]
+      return(data)
+    })
+    
+    # Entia
+    dataset2011_react_18 <- reactive({
+      data <- dataset2011[, 223:225]
+      return(data)
+    })
+    
+    # participacion
+    dataset2011_react_19 <- reactive({
+      data <- dataset2011[, 226:227]
+      return(data)
     })
     
     
     
+    # Residentes: patrimonio:
+    dataset2011_react_20 <- reactive({
+      data <- dataset2011[, 227:236]
+      return(data)
+    })
+    
+    ### ahora: 
+    
+    # tema internet
+    dataset2011_react_21 <- reactive({
+      data <- dataset2011[, 237:252]
+      return(data)
+    })
+    
+    # telefono movil
+    dataset2011_react_22 <- reactive({
+      data <- dataset2011[, 253:254]
+      return(data)
+    })
+    
+    # tema satisfaccion con la vida
+    dataset2011_react_23 <- reactive({
+      data <- dataset2011[, 254:255]
+      return(data)
+    })
+    
+    # tema quien responde al modulo residentes
+    dataset2011_react_24 <- reactive({
+      data <- dataset2011[, 255:256]
+      return(data)
+    })
+    
+    # Modulo 8: vivienda
+    dataset2011_react_25 <- reactive({
+      data <- dataset2011[, 256:310]
+      return(data)
+    })
+    
+    # Tema lugar de la entrevista
+    dataset2011_react_26 <- reactive({
+      data <- dataset2011[, 311:312]
+      return(data)
+    })
+    
+    # vvcc: educacion
+    dataset2011_react_27 <- reactive({
+      data <- dataset2011[, 312:315]
+      return(data)
+    })
+    
+    
+    
+    
+    # vvcc: empleo: aca no despliega:
+    dataset2011_react_28 <- reactive({
+      data <- dataset2011[, 316:320]
+      return(data)
+    })
+    
+    
+    
+    
+    
+    # vvcc linea de pobreza
+    dataset2011_react_29 <- reactive({
+      data <- dataset2011[, 321:325]
+      return(data)
+    })
+    
+    # vvcc: ingresos del trabajo:
+    dataset2011_react_30 <- reactive({
+      data <- dataset2011[, 326:329]
+      return(data)
+    })
+    
+    # vvcc: subsidios monetarios
+    dataset2011_react_31 <- reactive({
+      data <- dataset2011[, 330:365]
+      return(data)
+    })
+    
+    # vvcc: Otros ingresos
+    dataset2011_react_32 <- reactive({
+      data <- dataset2011[, 366:378]
+      return(data)
+    })
+    
+    # vvcc: Indices e indicadores
+    dataset2011_react_33 <- reactive({
+      data <- dataset2011[, 379:383]
+      return(data)
+    })
+    
+    # vvcc: Indice de hacinamiento
+    dataset2011_react_34 <- reactive({
+      data <- dataset2011[, 384:385]
+      return(data)
+    })
+    
+    # Fecha:
+    dataset2011_react_35 <- reactive({
+      data <- dataset2011[, 385:388]
+      return(data)
+    })
     
     
     ###############################################   2013 #################################
@@ -3070,13 +3338,92 @@ server <- function(input, output, session) {
     output$modulo_3_2011 <- renderDataTable(dataset2011_react_3())
     output$modulo_4_2011 <- renderDataTable(dataset2011_react_4())
     output$modulo_5_2011 <- renderDataTable(dataset2011_react_5())
-    output$modulo_6_2011 <- renderDataTable(dataset2011_react_6())
-    output$modulo_7_2011 <- renderDataTable(dataset2011_react_7())
-    output$modulo_8_2011 <- renderDataTable(dataset2011_react_8())
-    output$modulo_9_2011 <- renderDataTable(dataset2011_react_9())
-    output$modulo_10_2011 <- renderDataTable(dataset2011_react_10())
-    output$modulo_11_2011 <- renderDataTable(dataset2011_react_11())
-    output$modulo_12_2011 <- renderDataTable(dataset2011_react_12())
+    # output$modulo_6_2011 <- renderDataTable(dataset2011_react_6())
+    
+    output$modulo_Chile_solidario_2011 <- renderDataTable(dataset2011_react_7()) # Chile solidario
+    
+    
+    
+    
+    # Ingresos:
+    output$modulo_7_2011 <- renderDataTable(dataset2011_react_8()) 
+    
+    
+    
+    output$modulo_8_2011 <- renderDataTable(dataset2011_react_9())
+    
+    
+    
+    output$modulo_Discapacidad_2011 <- renderDataTable(dataset2011_react_10())
+    output$modulo_Quien_responde_al_modulo_Salud_2011 <- renderDataTable(dataset2011_react_11())
+    output$modulo_Migracion_2011 <- renderDataTable(dataset2011_react_12())
+    
+    # aca voy
+    
+
+    
+
+    
+    output$modulo_Autobiografía_2011 <- renderDataTable(dataset2011_react_17())
+    
+    output$modulo_Etnia_2011 <- renderDataTable(dataset2011_react_18())
+    
+    output$modulo_Participacion_2011 <- renderDataTable(dataset2011_react_19())
+    
+    output$modulo_Residentes_Patrimonio_2011 <- renderDataTable(dataset2011_react_20())
+    
+    output$modulo_Internet_2011 <- renderDataTable(dataset2011_react_21())
+    
+    output$modulo_telefono_movil_2011 <- renderDataTable(dataset2011_react_22())
+    
+    output$modulo_Satisfaccion_con_la_vida_2011 <- renderDataTable(dataset2011_react_23())
+    
+    output$modulo_Quien_responde_al_modulo_residentes_2011 <- renderDataTable(dataset2011_react_24())
+    
+    
+    output$modulo_9_2011 <- renderDataTable(dataset2011_react_25())
+    
+    output$modulo_Lugar_donde_se_produce_la_entrevista_2011 <- renderDataTable(dataset2011_react_26())
+    
+    output$vvcc_Educacion_2011 <- renderDataTable(dataset2011_react_27())
+    
+    output$vvcc_Empleo_2011 <- renderDataTable(dataset2011_react_28())
+    
+    
+    output$vvcc_Linea_de_pobreza_2011 <- renderDataTable(dataset2011_react_29())
+    
+    output$vvcc_Ingresos_del_trabajo_2011 <- renderDataTable(dataset2011_react_30())
+    
+    output$vvcc_Subsidios_monetarios_2011 <- renderDataTable(dataset2011_react_31())
+    
+    output$vvcc_Otros_Ingresos_2011 <- renderDataTable(dataset2011_react_32())
+    
+    
+    output$vvcc_Indices_2011 <- renderDataTable(dataset2011_react_33())
+    
+    output$vvcc_Indice_de_Hacinamiento_2011 <- renderDataTable(dataset2011_react_34())
+    
+    output$fecha_2011 <- renderDataTable(dataset2011_react_35())
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
