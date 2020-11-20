@@ -308,7 +308,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 6: Ingresos", fluidRow(
-                               column(12, includeMarkdown("modulo_6_2006.md")),
+                               column(4, includeMarkdown("modulo_6_2006_1.md")),
+                               column(4, includeMarkdown("modulo_6_2006_2.md")),
+                               column(4, includeMarkdown("modulo_6_2006_3.md")),
                                column(12, dataTableOutput("modulo_6_2006"))
                            )),
                            
@@ -317,7 +319,8 @@ server <- function(input, output, session) {
                                column(12, dataTableOutput("modulo_7_2006"))
                            )),
                            tabPanel("Módulo 8: Tema Discapacidad", fluidRow(
-                               column(12, includeMarkdown("modulo_8_2006.md")),
+                               column(6, includeMarkdown("modulo_8_2006_1.md")),
+                               column(6, includeMarkdown("modulo_8_2006_2.md")),
                                column(12, dataTableOutput("modulo_8_2006"))
                            )),
                            tabPanel("Módulo 9: Tema Chile solidario", fluidRow(
@@ -377,20 +380,7 @@ server <- function(input, output, session) {
                              column(12, includeMarkdown("modulo_20_2006.md")),
                              column(12, dataTableOutput("modulo_20_2006"))
                            )),
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
+
                            "----",
                            "",
 
@@ -463,20 +453,11 @@ server <- function(input, output, session) {
             )
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         else if (user == 2009){
             
             navbarPage(
-                
                 
                 br(),
                 
