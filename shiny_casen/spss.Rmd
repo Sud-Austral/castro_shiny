@@ -56,6 +56,16 @@ dataset = read_sav("Casen_2013_MN_B_Principal.sav")
 write.csv(dataset,"mydata2013.csv", row.names = FALSE)
 ```
 
+```{r cars}
+dataset = read_sav("Casen 2015.sav")
+write.csv(dataset,"mydata2015.csv", row.names = FALSE)
+```
+
+```{r cars}
+dataset = read_sav("Casen 2017.sav")
+write.csv(dataset,"mydata2017.csv", row.names = FALSE)
+```
+
 ```{r}
 dataset2013 <- read.csv('mydata2013.csv')
 

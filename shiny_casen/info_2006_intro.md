@@ -37,20 +37,16 @@ http://observatorio.ministeriodesarrollosocial.gob.cl/casen/casen_obj.php
 El archivo histórico consta de 50 bases de datos.
 http://observatorio.ministeriodesarrollosocial.gob.cl/casen/basededatos_historico.php
 
-### Casen 2006
+### Bases de datos utilizadas
 
-Se encontró la base completa.
+casen2006.dta: mydata2006.csv
 
-Se llama Casen2006.data
+casen2009Spss.sav: mydata2009.csv
 
-o su version csv:
+casen2011_octubre2011_enero2012_principal_08032013spss.sav: mydata2011.csv
 
-mydata2006.csv
+Casen_2013_MN_B_Principal.sav: mydata2013.csv
 
-posee 600 columnas divididas en modulos.
+Casen 2015.sav: mydata2015.csv
 
-### Casen 2013:
-
-casen2013_mn_B_principal.sav
-
-su csv se llama: casen_2013_completa.
+Casen 2017.sav: mydata2017.csv
