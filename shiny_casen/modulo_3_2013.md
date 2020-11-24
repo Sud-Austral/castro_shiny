@@ -1,5 +1,4 @@
-<font size="0.5">
-e1	¿Sabe leer y escribir?
+e1.	¿Sabe leer y escribir?
 
 1. Sí, lee y escribe
 2. No, sólo lee
@@ -7,31 +6,27 @@ e1	¿Sabe leer y escribir?
 4. No, ninguno
 9. NS/NR
 
-
-e2a	Nivelación de estudios para personas que no completaron la enseñanza básica o media
+e2.a	Nivelación de estudios para personas que no completaron la enseñanza básica o media
 
 1. Sí
 2. No
 
-e2b	Asiste a Nivelación de estudios enseñanza básica o media
+e2.b	Asiste a Nivelación de estudios enseñanza básica o media
 
 1. Nivelación de estudios básicos
 2. Nivelación de estudios medios
 
-
-e2c	Asiste a Nivelación bajo modalidad regular o flexible
+e2.c	Asiste a Nivelación bajo modalidad regular o flexible
 
 1. Modalidad regular
 2. Modalidad flexible
 
-
-e3	Asiste a algún establecimiento educacional
+e3.	Asiste a algún establecimiento educacional
 
 1. Sí
 2. No
 
-
-e4	Principal razón por la cual no asiste actualmente (0 a 6 años)
+e4.	Principal razón por la cual no asiste actualmente (0 a 6. años)
 
 1. No es necesario porque lo cuidan en la casa
 2. No me parece necesario que asista a esta edad
@@ -47,14 +42,10 @@ e4	Principal razón por la cual no asiste actualmente (0 a 6 años)
 12. Otra razón. Especifique
 99. NS/NR
 
+e4.esp	"Especifique principal razón por la cual no asiste actualmente (0
+a 6. años)"
 
-
-e4esp	"Especifique principal razón por la cual no asiste actualmente (0 a 6 años)"
-
-Válidos
-
-
-e5	Principal razón por la cual no asiste actualmente (7 a 30 años)
+e5.	Principal razón por la cual no asiste actualmente (7. a 3.0 años)
 
 1. Ayuda en la casa o quehaceres del hogar
 2. Embarazo, maternidad o paternidad
@@ -73,12 +64,10 @@ e5	Principal razón por la cual no asiste actualmente (7 a 30 años)
 15. Otra razón. Especifique
 99. NS/NR
 
-e5esp	"Especifique principal razón por la cual no asiste actualmente (7 a 30 años)"
+e5.esp	"Especifique principal razón por la cual no asiste actualmente (7.
+a 3.0 años)"
 
-Válidos
-
-
-e6a	Tipo de nivel educacional actual
+e6.a	Tipo de nivel educacional actual
 
 1. Nunca asistió
 2. Jardín infantil/Sala cuna
@@ -90,45 +79,53 @@ e6a	Tipo de nivel educacional actual
 8. Educación Media Científico-Humanista
 9. Técnica, Comercial, Industrial o Normalista (sistema antiguo)
 10. Educación Media Técnica Profesional
-11. Técnico Nivel Superior (carreras de 1 a 3 años)
-12. Profesional (carreras de 4 o más años)
+11. Técnico Nivel Superior (carreras de 1. a 3. años)
+12. Profesional (carreras de 4. o más años)
 13. Postgrado
 99. NS/NR
 
-e6b	Último curso aprobado
+e6.b	Último curso aprobado
 
-e6c	Completó el nivel educacional
+99. NS/NR
+
+e6.c	Completó el nivel educacional
 
 1. Sí
 2. No
 9. NS/NR
 
+e6.d	Tipo de establecimiento donde realizó su educación superior
 
-e6d	Tipo de establecimiento donde realizó su educación superior
-
-1. Centro de Formación
+1. Centro de Formación	Técnica
 2. Instituto Profesional
 3. Universidad Privada
-4. Universidad Consejo
+4. Universidad Consejo	de Rectores
 9. NS/NR
 
+e7.	Años que dura la carrera que estudió o que estudia
 
-e7	Años que dura la	1 carrera que estudió o	2 que estudia
+99. NS/NR
 
-e8nom	Nombre del establecimiento educacional
-
-e8dir	Dirección del establecimiento educacional
-
-e8com	Comuna del establecimiento educacional
-
-e8com_cod	Códigos de Comuna del establecimiento
-
-e8rbd	Rol base de datos Minisetrio de Educación
-
-e8dv	Dígito Verificador (Rol base de datos Minisetrio de Educación)
+e8.nom	Nombre del establecimiento educacional
 
 
-e8depen	Dependencia del establecimiento
+
+e8.dir	Dirección del establecimiento educacional
+
+
+e8.com	Comuna del establecimiento educacional
+
+
+e8.com_cod	Códigos de Comuna del establecimiento
+
+
+e8.rbd	Rol base de datos Minisetrio de Educación
+
+
+e8.dv	Dígito Verificador (Rol base de datos Minisetrio de Educación)
+
+
+e8.depen	Dependencia del establecimiento
 
 1. Coorporación Municipal
 2. Municipal
@@ -142,11 +139,41 @@ e8depen	Dependencia del establecimiento
 10. Instituto Profesional
 11. Centro de Formación Técnica
 
-
 e8te	Tipo de enseñanza
 
+  0. Educación Superior
+  10. Parvularia
+  110. Educación Básica Niños y Jóvenes
+  160. Educación Básica Especial Adultos
+  165. Educación Básica Adultos Sin Oficios
+  167. Educación Básica Adultos Con Oficios
+  211. Educación Especial Discapacidad Auditiva
+  212. Educación Especial Discapacidad Intelectual
+  213. Educación Especial Discapacidad Visual
+  214. Educación Especial Trastornos Específicos del Lenguaje
+  215. Educación Especial Trastornos Motores
+  216. Educación Especial Autismo
+  217. Educación Especial Discapacidad Graves Alteraciones en la Capacidad de Relación y Comunicación
+  299. Opción 4. Integración Escolar
+  310. Educación Media C-H Niños y Jóvenes
+  360. Educación Media C-H adulto vespertino y nocturno decreto n° 1.9.0/1.9.7.5.
+  363. Educación Media C-H Adultos decreto n° 10.00/2.009.
+  390. Educación Media C-H en E. Educación Superior
+  410. Educación Media T-P Comercial Niños y Jóvenes
+  460. Educación Media T-P Comercial Adultos decreto n° 15.2./1.9.8.9.
+  463. Educación Media T-P Comercial Adultos decreto n° 10.00/2.009.
+  490. Educación Media T-P en E. Educación Superior
+  510. Educación Media T-P Industrial Niños y Jóvenes
+  563. Educación Media T-P Industrial Adultos decreto n° 10.00/2.009.
+  610. Educación Media T-P Técnica Niños y Jóvenes
+  663. Educación Media T-P Técnica Adultos decreto n° 10.00/2.009.
+  710. Educación Media T-P Agrícola Niños y Jóvenes
+  763. Educación Media T-P Agrícola Adultos decreto n° 10.00/2.009.
+  810. Educación Media T-P Marítima Niños y Jóvenes
+  910. Educación Media Artística Niños y Jóvenes
+  980. Nivel declarado inconsistente con TE
 
-e9	Dependencia administrativa del establecimiento
+e9.	Dependencia administrativa del establecimiento
 
 1. Municipal
 2. Particular Subvencionada
@@ -161,8 +188,7 @@ e9	Dependencia administrativa del establecimiento
 11. Centro de Formación Técnica
 99. No sabe
 
-
-e10	Jornada que asiste
+e10.	Jornada que asiste
 
 1. Jornada mañana
 2. Jornada tarde
@@ -172,51 +198,44 @@ e10	Jornada que asiste
 6. Otra (horario variable, esporádico,flexible)
 9. NS/NR
 
+e11.a	Recibe Desayuno	en el establecimiento	educacional
 
-e11a	Recibe Desayuno	gratuita en el establecimiento educacional
+1. Sí	gratuita
+2. No
+9. NS/NR	3.6.5.
+
+e11.b	Recibe Almuerzo	gratuita en el establecimiento
 
 1. Sí
 2. No
 9. NS/NR
 
-
-e11b	Recibe Almuerzo gratuita en el establecimiento
-
-1. Sí
-2. No
-9. NS/NR
-
-
-e11c	Recibe Once gratuita en el establecimiento educacional
+e11.c	Recibe Once gratuita en el establecimiento educacional
 
 1. Sí
 2. No
 9. NS/NR
 
+e11.d	Recibe Colación	gratuita en el	establecimiento	educacional
 
-e11d	Recibe Colación 	gratuita en el establecimiento educacional
+1. Sí
+2. No
+9. NS/NR	5.8.1.
+
+e11.e	Tarjeta JUNAEB para alimentación (Educción Superior)
 
 1. Sí
 2. No
 9. NS/NR
 
-
-e11e	Tarjeta JUNAEB para alimentación (Educción Superior)
-
-1. Sí
-2. No
-9. NS/NR
-
-
-e12a	"En el año escolar 2013
-
+e12.a	"En el año escolar 2.013.
 ¿Ha recibido o recibió alguna beca?"
 
 1. Sí
 2. No
 
 
-e12b1	Tipo de Becas 1
+e12.b1.	Tipo de Becas 1.
 
 1. Beca Indígena (Todos los estudiantes)
 2. BARE (Ed. Media)
@@ -232,7 +251,7 @@ e12b1	Tipo de Becas 1
 99. NS/NR
 
 
-e12b2	Tipo de Becas 2
+e12.b2.	Tipo de Becas 2.
 
 1. Beca Indígena (Todos los estudiantes)
 2. BARE (Ed. Media)
@@ -247,121 +266,119 @@ e12b2	Tipo de Becas 2
 11. Otra beca no estatal. Especifique (Todos los estudiantes)
 
 
-e12esp	Especofique Otro tipo beca	Válidos
+e12.esp	Especofique Otro tipo beca
 
 
-
-e13pbu	Recibió Útiles (Parvularia)
-
-1. Sí
-2. No
-9. NS/NR
-
-
-e13pbt	Recibió Textos
-
-1. Sí
-
-e13pbd	Recibió At. Dental (Parvularia)
+e13.pbu	Recibió Útiles (Parvularia)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13pbm	Recibió At. Médica (Parvularia)
+e13.pbt	Recibió Textos	(Parvularia)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13bu	Recibió Útiles (Básica)
+e13.pbd	Recibió At. Dental (Parvularia)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13bt	Recibió Textos (Básica)
+e13.pbm	Recibió At. Médica (Parvularia)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13bd	Recibió At. Dental (Básica)
+e13.bu	Recibió Útiles (Básica)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13bm	Recibió At. Médica (Básica)
+e13.bt	Recibió Textos (Básica)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13bpc	Recibió PC (7° Básico)
+e13.bd	Recibió At. Dental (Básica)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13mu	Recibió Útiles (Media)
+e13.bm	Recibió At. Médica (Básica)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13mt	Recibió Textos (Media)
+e13.bpc	Recibió PC (7.° Básico)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13md	Recibió At. Dental (Media)
+e13.mu	Recibió Útiles (Media)
+
+1. Sí
+
+2. No
+9. NS/NR
+
+
+e13.mt	Recibió Textos (Media)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e13mm	Recibió At. Médica (Media)
+e13.md	Recibió At. Dental (Media)
 
 1. Sí
 2. No
 9. NS/NR
 
 
-e14a "En el año escolar 2013
+e13.mm	Recibió At. Médica (Media)
 
+1. Sí
+2. No
+9. NS/NR
+
+
+e14.a	"En el año escolar 2.013.
 ¿paga colegiatura o financiamiento compartido?"
 
 1. Sí
 2. No
 
 
-e14b "En el año escolar 2013
-
+e14.b	"En el año escolar 2.013.
 ¿Cuánto paga mensualmente? (colegiatura o financiamiento compartido)"
 
-e15	Costo mensual de la carrera que estudia	Válidos
+
+e15.	Costo mensual de la carrera que estudia
 
 
-
-e16	Cuanto paga mensualmente por la carrera que estudia
-
-= 0
-  0
+e1.6.	Cuanto paga mensualmente por la carrera que estudia
 
 
-e17t1	Crédito universitario: Tipo 1
+e1.7.t1.	Crédito universitario: Tipo 1.
 
 1. Sí, crédito Universitario o Fondo Solidario
 2. Sí crédito CORFO
@@ -373,19 +390,15 @@ e17t1	Crédito universitario: Tipo 1
 8. No
 9. NS/NR
 
-e18m1	Crédito universitario:
 
-Monto 1	Válidos
-
-
-e18p1	Crédito universitario:
-
-Porcentaje 1	Válidos
+e1.8.m1.	Crédito universitario: Monto 1.
 
 
-e17t2 Crédito universitario:
+e1.8.p1.	Crédito universitario: Porcentaje 1.
 
-Tipo 2
+
+e1.7.t2.	Crédito universitario: Tipo 2.
+
 1. Sí, crédito Universitario o Fondo Solidario
 2. Sí crédito CORFO
 3. Sí, crédito con garantía estatal o aval del Estado
@@ -394,14 +407,10 @@ Tipo 2
 7. Sí, otro crédito
 
 
-e18m2	Crédito universitario:
-
-Monto 2	Válidos
+e1.8.m2.	Crédito universitario: Monto 2.
 
 
-e18p2	Crédito universitario:
-
-Porcentaje 2	Válidos
+e1.8.p2.	Crédito universitario: Porcentaje 2.
 
 
 e0	¿Quién (o quiénes) responde(n) el módulo Educación?
@@ -410,45 +419,3 @@ e0	¿Quién (o quiénes) responde(n) el módulo Educación?
 2. Presente, pero no contesta
 3. No está presente
 9. NS/NR
-
-
-asiste	Asiste
-
-1. Si
-2. No
-esc	Escolaridad	Validos
-
-
-
-educ	Nivel Educacional
-
-0. Sin Educ. Formal
-1. Básica Incom.
-2. Básica Compl.
-3. M. Hum. Incompleta
-4. M. Téc. Prof. Incompleta
-5. M. Hum. Completa
-6. M. Téc Completa
-7. Técnico Nivel Superior Incompleta
-8. Técnico Nivel Superior Completo
-9. Profesional  Incompleto
-10. Postgrado Incompleto
-11. Profesional Completo
-12. Postgrado Completo
-99. NS/NR
-
-depen	Dependencia
-
-1. Coorporación Municipal
-2. Municipal
-3. Particular Subvencionado
-4. Particular No Subvencionado
-5. Corporación de Adminstración Delegada
-6. JUNJI
-7. INTEGRA
-8. Educación Superior del Consejo de Rectores
-9. Educación Superior Privada
-10. Instituto Profesional
-11. Centro de Formación Técnica
-99. NS/NR
-</font>

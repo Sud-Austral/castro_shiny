@@ -6,18 +6,17 @@ inactivo
 
 **oficio1** 	Oficio (1. dígito)
 
-0	Fuerzas Armadas
-1.	"Miembros del poder ejecutivo y de los cuerpos legislativos y personal directivo de la
-administración pública"
-2.	Profesionales científicos e intelectuales
-3.	Técnicos y profesionales de nivel medio
-4.	Empleados de oficina
-5.	Trabajadores de los servicios y vendedores de comercios y mercados
-6.	"Agricultores y trabajadores
-calificados agropecuarios y pesqueros"
-7.	Oficiales, operarios y artesanos de artes mecánicas y de otros oficios
-8.	Operadores de instalaciones y máquinas y montadores
-9.	Trabajadores no calificados
+1. Miembros del poder ejecutivo y de los cuerpos legislativos y personal directivo de la
+administración pública
+2. Profesionales científicos e intelectuales
+3. Técnicos y profesionales de nivel medio
+4. Empleados de oficina
+5. Trabajadores de los servicios y vendedores de comercios y mercados
+6. Agricultores y trabajadores
+calificados agropecuarios y pesqueros
+7. Oficiales, operarios y artesanos de artes mecánicas y de otros oficios
+8. Operadores de instalaciones y máquinas y montadores
+9. Trabajadores no calificados
 
 **rama1_sub**	Rama_sub ( a 1. dígito)
 
