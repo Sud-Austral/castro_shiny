@@ -35,28 +35,4 @@ DISCAPACIDAD TODOS
 7.     No tiene ninguna de estas condiciones de larga duración
 9.     Sin dato
 
-**T2A** ¿El origen de esta condición es ? (1)
-
-1.     De nacimiento
-2.     Por enfermedad
-3.     Por accidente
-4.     Otra
-9.     Sin dato
-
-**T2B** ¿El origen de esta condición es? (2)
-
-1. De nacimiento
-2. Por enfermedad
-3. Por accidente
-4. Otra
-9. Sin dato
-
-**T2C** ¿El origen de esta condición es? (3)
-
-1. De nacimiento
-2. Por enfermedad
-3. Por accidente
-4. Otra
-9. Sin dato
-
 </font>
