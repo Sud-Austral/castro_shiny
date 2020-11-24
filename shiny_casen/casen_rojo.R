@@ -42,7 +42,7 @@ options(warn = -1)
 
 ##################################### 2006 #######################################
 
-dataset2006 <- read.csv('mydata2006_sub.csv')
+dataset2006 <- read.csv('mydata2006.csv')
 
 dataset2006_col <- colnames(dataset2006)
 
@@ -387,20 +387,7 @@ server <- function(input, output, session) {
                              column(12, includeMarkdown("modulo_20_2006.md")),
                              column(12, dataTableOutput("modulo_20_2006"))
                            )),
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
+
                            "----",
                            "",
 
@@ -410,6 +397,7 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
+                             column(12, includeMarkdown("ejercicio_001_2006.md")),
                               # selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
                                column(12,
 
@@ -417,9 +405,22 @@ server <- function(input, output, session) {
                                       selectInput("p2006_segundav", "ingrese segunda variable:", c(dataset2006_col)),
                                       selectInput("p2006_tercerav", "ingrese tercera variable:", c(dataset2006_col)),
                                       selectInput("p2006_cuartav", "ingrese cuarta variable:", c(dataset2006_col)),
+                                      
+                                    #  includeMarkdown("frecuencias_muestrales.md"),
+                                      
+                                    column(12, includeMarkdown("frecuencias_muestrales.md")),
+                                    
+                                    
                                       downloadButton("boton_ttcc_2006", "Descargar"),
+                                    
+                                    
+                                    
                                       verbatimTextOutput("tabla_d_c_generalizada_2006") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5),
                                       
+                                      
+                                    #  includeMarkdown("frecuencias_poblacionales.md"),
+                                      
+                                    column(12, includeMarkdown("frecuencias_poblacionales.md")),
                                       downloadButton("boton_ttcc_2006_pon", "Descargar"),
                                       #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
                                       verbatimTextOutput("tabla_d_c_generalizada_pon_2006") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
@@ -469,6 +470,11 @@ server <- function(input, output, session) {
                                selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_1_2_colnames)),
                                selectInput("categoria_filtro", "Seleccione atributo:", c(data_2006_5_348_colnames)),
                                column(12, tableOutput("promedios_filtros_2006"))
+                           ))),
+                
+                navbarMenu("Pobreza y exclusión social",
+                           tabPanel("Seleccione variable que funga como grupo:", fluidRow(
+                             column(12, includeMarkdown("info_2006_prom.md"))
                            )))
             )
             
