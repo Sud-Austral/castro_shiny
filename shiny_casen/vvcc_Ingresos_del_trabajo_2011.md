@@ -1,3 +1,4 @@
+
 **yopraj**: Ingreso de la
 ocupación principal
 
@@ -11,3 +12,4 @@ Trabajo
 **ytrabhaj**: Ingreso del
 Trabajo en el
 Hogar
+
