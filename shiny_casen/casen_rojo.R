@@ -595,8 +595,6 @@ server <- function(input, output, session) {
                            
                            tabPanel("Módulo 13: Tema Autobiografía", fluidRow(
                              column(4, includeMarkdown("modulo_13_2009_1.md")),
-                             column(4, includeMarkdown("modulo_13_2009_2.md")),
-                             column(4, includeMarkdown("modulo_13_2009_3.md")),
                              column(12, dataTableOutput("modulo_13_2009"))
                            )),
                            
@@ -952,7 +950,7 @@ server <- function(input, output, session) {
                            )),
 
                           tabPanel("2 Variables creadas: Empleo", fluidRow(
-                            column(12, includeMarkdown("vvcc_Empleo_2011.md")),
+                            column(12, includeMarkdown("vvcc_Empleooo_2011.md")),
                             column(12, dataTableOutput("vvcc_Empleo_2011"))
                           )),
                           tabPanel("3 Variables creadas: Línea de pobreza, quintiles y deciles de ingreso", fluidRow(
