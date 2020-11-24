@@ -39,7 +39,7 @@ http://observatorio.ministeriodesarrollosocial.gob.cl/casen/basededatos_historic
 
 ### Bases de datos utilizadas
 
-casen2006.dta: mydata2006.csv
+casen2006.dta: mydata2006.csv (consta de 268.874 registros)
 
 casen2009Spss.sav: mydata2009.csv
 
