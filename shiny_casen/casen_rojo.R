@@ -1,8 +1,8 @@
 
 # Casen
 # Victor Enamorado - Christian Castro
-# 19 de Noviembre del 2020
-# version 10:55 am
+# 25 de Noviembre del 2020
+# version 15:40 am
   
 library(ggplot2)
 library(ggpubr)
@@ -1733,99 +1733,99 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 2: Educación", fluidRow(
-                             column(12, includeMarkdown("modulo_2_2013.md")),
+                             column(12, includeMarkdown("modulo_2_2015_edu.md")),
                              column(12, dataTableOutput("modulo_2_2015"))
                            )),
                            
                            tabPanel("Módulo 3: Empleo ", fluidRow(
-                             column(12, includeMarkdown("modulo_3_2013.md")),
+                             column(12, includeMarkdown("modulo_3_2015.md")),
                              column(12, dataTableOutput("modulo_3_2015"))
                            )),
                            
                            tabPanel("Módulo 4: Ingresos ", fluidRow(
-                             column(4, includeMarkdown("modulo_4_2013_1.md")),
+                             column(4, includeMarkdown("modulo_4_2015_1.md")),
                              column(4, includeMarkdown("modulo_4_2013_2.md")),
                              column(4, includeMarkdown("modulo_4_2013_3.md")),
                              column(12, dataTableOutput("modulo_4_2015"))
                            )),
                            
                            tabPanel("Módulo 5: Salud ", fluidRow(
-                             column(12, includeMarkdown("modulo_5_2013.md")),
+                             column(12, includeMarkdown("modulo_5_2015.md")),
                              column(12, dataTableOutput("modulo_5_2015"))
                            )),
                            
                            tabPanel("Tema 1: Discapacidad", fluidRow(
-                             column(12, includeMarkdown("modulo_6_2013.md")),
+                             column(12, includeMarkdown("modulo_6_2015.md")),
                              column(12, dataTableOutput("modulo_6_2015"))
                            )),
                            
                            tabPanel("Módulo 6: Migración", fluidRow(
-                             column(12, includeMarkdown("modulo_7_2013.md")),
+                             column(12, includeMarkdown("modulo_7_2015.md")),
                              column(12, dataTableOutput("modulo_7_2015"))
                            )),
                            
                            tabPanel("Tema 2: Etnias", fluidRow(
-                             column(12, includeMarkdown("modulo_8_2013.md")),
+                             column(12, includeMarkdown("modulo_8_2015.md")),
                              column(12, dataTableOutput("modulo_8_2015"))
                            )),
                            
                            tabPanel("Tema 3: Redes y Participación", fluidRow(
-                             column(12, includeMarkdown("modulo_9_2013.md")),
+                             column(12, includeMarkdown("modulo_9_2015.md")),
                              column(12, dataTableOutput("modulo_9_2015"))
                            )),
                            
                            tabPanel("Módulo 7: Discriminación", fluidRow(
-                             column(12, includeMarkdown("modulo_10_2013.md")),
+                             column(12, includeMarkdown("modulo_10_2015.md")),
                              column(12, dataTableOutput("modulo_10_2015"))
                            )),
                            
                            tabPanel("Tema 4: Autobiografia", fluidRow(
-                             column(12, includeMarkdown("modulo_11_2013.md")),
+                             column(12, includeMarkdown("modulo_11_2015.md")),
                              column(12, dataTableOutput("modulo_11_2015"))
                            )),
                            
                            tabPanel("Módulo 8: Residentes (Patrimonio)", fluidRow(
-                             column(12, includeMarkdown("modulo_12_2013.md")),
+                             column(12, includeMarkdown("modulo_12_2015.md")),
                              column(12, dataTableOutput("modulo_12_2015"))
                            )),
                            
                            tabPanel("Módulo 9: Residentes (Internet)", fluidRow(
-                             column(12, includeMarkdown("modulo_13_2013.md")),
+                             column(12, includeMarkdown("modulo_13_2015.md")),
                              column(12, dataTableOutput("modulo_13_2015"))
                            )),
                            
                            tabPanel("Módulo 10: Residentes (Telefono movil)", fluidRow(
-                             column(12, includeMarkdown("modulo_14_2013.md")),
+                             column(12, includeMarkdown("modulo_14_2015.md")),
                              column(12, dataTableOutput("modulo_14_2015"))
                            )),
                            
                            tabPanel("Tema 5: Orientación sexual", fluidRow(
-                             column(12, includeMarkdown("modulo_15_2013.md")),
+                             column(12, includeMarkdown("modulo_15_2015.md")),
                              column(12, dataTableOutput("modulo_15_2015"))
                            )),
                            
                            tabPanel("Tema 6: Respuesta en módulo residentes", fluidRow(
-                             column(12, includeMarkdown("modulo_16_2013.md")),
+                             column(12, includeMarkdown("modulo_16_2015.md")),
                              column(12, dataTableOutput("modulo_16_2015"))
                            )),
                            
                            tabPanel("Módulo 11: Vivienda", fluidRow(
-                             column(12, includeMarkdown("modulo_17_2013.md")),
+                             column(12, includeMarkdown("modulo_17_2015.md")),
                              column(12, dataTableOutput("modulo_17_2015"))
                            )),
                            
                            tabPanel("Módulo 12: Ingresos", fluidRow(
-                             column(12, includeMarkdown("modulo_18_2013.md")),
+                             column(12, includeMarkdown("modulo_18_2015.md")),
                              column(12, dataTableOutput("modulo_18_2015"))
                            )),
                            
                            tabPanel("Módulo 13: Pobreza, quintiles y deciles", fluidRow(
-                             column(12, includeMarkdown("modulo_19_2013.md")),
+                             column(12, includeMarkdown("modulo_19_2015.md")),
                              column(12, dataTableOutput("modulo_19_2015"))
                            )),
                            
                            tabPanel("Módulo 14: Expansión", fluidRow(
-                             column(12, includeMarkdown("modulo_20_2013.md")),
+                             column(12, includeMarkdown("modulo_20_2015.md")),
                              column(12, dataTableOutput("modulo_20_2015"))
                            )),
                            
