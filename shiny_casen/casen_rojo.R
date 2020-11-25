@@ -2354,7 +2354,7 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Tema 5: Dificultades físicas (pseudo-discapacidades) ", fluidRow(
-                             column(12, includeMarkdown("modulo_13_2017.md")),
+                             column(12, includeMarkdown("modulo_8_2017.md")),
                              column(12, dataTableOutput("modulo_8_2017"))
                            )),
                            
