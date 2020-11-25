@@ -1,1 +1,3 @@
-modulo_3_2017.md
+**varstrat**	Estratos de Varianza
+
+**varunit**	Conglomerados de Varianza
