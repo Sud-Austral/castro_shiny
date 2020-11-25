@@ -1830,29 +1830,29 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Tema 7: Comunas auto-representadas", fluidRow(
-                             column(12, includeMarkdown("modulo_21_2013.md")),
+                             column(12, includeMarkdown("modulo_21_2015.md")),
                              column(12, dataTableOutput("modulo_21_2015"))
                            )),
                            
                            tabPanel("Módulo 15: Varianzas", fluidRow(
-                             column(12, includeMarkdown("modulo_22_2013.md")),
+                             column(12, includeMarkdown("modulo_22_2015.md")),
                              column(12, dataTableOutput("modulo_22_2015"))
                            )),
                            
                            tabPanel("Módulo 16: Fecha", fluidRow(
-                             column(12, includeMarkdown("modulo_23_2013.md")),
+                             column(12, includeMarkdown("modulo_23_2015.md")),
                              column(12, dataTableOutput("modulo_23_2015"))
                            )),
                            
                            
                            tabPanel("Tema 8: Número de personas en el hogar", fluidRow(
-                             column(12, includeMarkdown("modulo_24_2013.md")),
+                             column(12, includeMarkdown("modulo_24_2015.md")),
                              column(12, dataTableOutput("modulo_24_2015"))
                            )),
                            
                            
                            tabPanel("Módulo 17: Variables creadas: Educación", fluidRow(
-                             column(12, includeMarkdown("modulo_25_2013.md")),
+                             column(12, includeMarkdown("modulo_25_2015.md")),
                              column(12, dataTableOutput("modulo_25_2015"))
                            )),
                            
