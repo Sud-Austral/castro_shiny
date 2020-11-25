@@ -1857,42 +1857,48 @@ server <- function(input, output, session) {
                            )),
                            
                            
+                           ##############################
+                           ##############################
+                           ##############################
+                           
+                           
                            tabPanel("Módulo 18: Variables creadas: Condición de actividad", fluidRow(
-                             column(12, includeMarkdown("modulo_26_2013.md")),
+                             column(12, includeMarkdown("modulo_26_2015.md")),
                              column(12, dataTableOutput("modulo_26_2015"))
                            )),
                            
                            
                            tabPanel("Módulo 19: Variables creadas: Indicadores de calidad de la vivienda", fluidRow(
-                             column(12, includeMarkdown("modulo_27_2013.md")),
+                             column(12, includeMarkdown("modulo_27_2015.md")),
                              column(12, dataTableOutput("modulo_27_2015"))
                            )),
                            
                            tabPanel("Módulo 20: Variables creadas: Indicadores de allegamiento", fluidRow(
-                             column(12, includeMarkdown("modulo_28_2013.md")),
+                             column(12, includeMarkdown("modulo_28_2015.md")),
                              column(12, dataTableOutput("modulo_28_2015"))
                            )),
                            
                            tabPanel("Módulo 21: Variables creadas: Hacinamiento", fluidRow(
-                             column(12, includeMarkdown("modulo_29_2013.md")),
+                             column(12, includeMarkdown("modulo_29_2015.md")),
                              column(12, dataTableOutput("modulo_29_2015"))
                            )),
                            
                            tabPanel("Módulo 22: Variables creadas: Carecias", fluidRow(
-                             column(12, includeMarkdown("modulo_30_2013.md")),
+                             column(12, includeMarkdown("modulo_30_2015.md")),
                              column(12, dataTableOutput("modulo_30_2015"))
                            )),
                            
                            tabPanel("Módulo 23: Variables creadas: Pobreza", fluidRow(
-                             column(12, includeMarkdown("modulo_31_2013.md")),
+                             column(12, includeMarkdown("modulo_31_2015.md")),
                              column(12, dataTableOutput("modulo_31_2015"))
                            )),
                            
                            
+                           ##############################################
+                           ##############################################
+                           ##############################################
                            
                            
-                           
-                           # 
                            tabPanel(" ")),
                 
                 
