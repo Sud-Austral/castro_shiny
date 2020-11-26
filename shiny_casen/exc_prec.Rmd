@@ -4,7 +4,10 @@ author: "Victor"
 date: "26 de noviembre de 2020"
 output: html_document
 ---
-```{r}
+```{r , message=FALSE, warning=FALSE}
+
+suppressWarnings(library(RODBC))
+
 library(ggplot2)
 library(ggpubr)
 library(markdown)
@@ -41,12 +44,15 @@ library(haven)
 library(readr)
 library(sjmisc)
 library(WriteXLS)
-oldw <- getOption("warn")
-options(warn = -1)
+
 ```
 
-```{r}
+```{r , echo=FALSE, cache=FALSE, results=FALSE, warning=FALSE, comment=FALSE, warning=FALSE}
+
+
 dataset2006 <- read_sav('casen2006.sav')
+
+
 ```
 
 ```{r}
@@ -77,7 +83,7 @@ dataset06 <- read.csv('mydata2006_sub.csv')
 ```{r}
 tabla <- as.data.frame(cross_tab)
 #head(tabla,10)
-tabla
+head(tabla,10)
 ```
 
 ```{r}
@@ -121,5 +127,4 @@ ppp <- data_frame()
 ```{r}
 ppp 
 
-options(warn = oldw)
 ```
