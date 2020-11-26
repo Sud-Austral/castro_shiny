@@ -1168,8 +1168,14 @@ server <- function(input, output, session) {
                              column(12, dataTableOutput("modulo_4_2013"))
                            )),
                            
+                           ####################
+                           
                            tabPanel("Módulo 5: Ingresos ", fluidRow(
-                             column(12, includeMarkdown("modulo_5_2013.md")),
+                             column(4, includeMarkdown("modulo_5_2013.md")),
+                             
+                             column(4, includeMarkdown("modulo_5_2013_2.md")),
+                             
+                             column(4, includeMarkdown("modulo_5_2013_3.md")),
                              column(12, dataTableOutput("modulo_5_2013"))
                            )),
                            
@@ -1179,7 +1185,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Tema 1: Discapacidad", fluidRow(
-                             column(12, includeMarkdown("modulo_7_2013.md")),
+                             column(4, includeMarkdown("modulo_7_2013.md")),
+                             column(4, includeMarkdown("modulo_7_2013_2.md")),
+                             column(4, includeMarkdown("modulo_7_2013_3.md")),
                              column(12, dataTableOutput("modulo_7_2013"))
                            )),
                            
@@ -1205,6 +1213,11 @@ server <- function(input, output, session) {
                              column(12, includeMarkdown("modulo_11_2013.md")),
                              column(12, dataTableOutput("modulo_11_2013"))
                            )),
+                           
+                           
+                           
+                           ###################################
+                           
                            
                            tabPanel("Tema 6: Participación", fluidRow(
                              column(12, includeMarkdown("modulo_12_2013.md")),
@@ -3095,8 +3108,6 @@ server <- function(input, output, session) {
     })
     
     dataset2006_react_9 <- reactive({
-
-
        data <- dataset2006[, 228:229]
        data <- data.frame(data$t3)
         return(data)
@@ -3577,7 +3588,7 @@ server <- function(input, output, session) {
     
     
     dataset2013_react_4 <- reactive({
-      data <- dataset2013[, 76:121]#ingresos
+      data <- dataset2013[, 76:118]#ingresos
       return(data)
     })
     
@@ -3599,8 +3610,18 @@ server <- function(input, output, session) {
       return(data)
     })
     
+    
+    dataset2006_react_9 <- reactive({
+      data <- dataset2006[, 228:229]
+      data <- data.frame(data$t3)
+      return(data)
+    })
+    
+    
+    
     dataset2013_react_8 <- reactive({
-      data <- dataset2013[, 232:233]#ingresos
+      data <- dataset2013[, 232:233]# quien responde al modulo
+      data <- data.frame(data$s0)
       return(data)
     })
     
