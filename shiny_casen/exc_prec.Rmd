@@ -1,0 +1,177 @@
+---
+title: "exc_prec"
+author: "Victor"
+date: "26 de noviembre de 2020"
+output: html_document
+---
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(expss)
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+library(shinycssloaders)
+library(writexl)
+library(labelled)
+library(tidyverse)
+library(haven)
+library(readr)
+library(sjmisc)
+library(WriteXLS)
+```
+
+```{r}
+dataset2006 <- read_sav('casen2006.sav')
+# dataset2006 <- read.csv('mydata2006_sub.csv')
+
+#dataset2006_col <- colnames(dataset2006)
+
+```
+
+```{r}
+dataset2006
+```
+
+```{r}
+for(i in names(dataset2006)){
+
+w <- dataset2006[[i]] %>% attr('labels')
+print(w)
+}
+```
+
+```{r}
+w <- dataset2006[[6]] %>% attr('labels')
+head(w,5)
+
+a <- names(w[1])
+a
+```
+
+```{r}
+a <- levels(w[1])
+a
+```
+
+```{r}
+a <- w[[1]]
+a
+```
+
+
+```{r}
+head(dataset2006,1)
+```
+
+
+```{r}
+
+        a <- dataset2006$comuna
+        b <- dataset2006$t4
+        c <- dataset2006$e1
+        d <- dataset2006$sexo
+        e <- dataset2006$
+        f <-   
+      #   
+      #   ab <-  dataset2006
+      # #  ab <- dataset2006_react()
+      # 
+      #   a <- ab[,d]
+      #   b <- ab[,e] 
+      #   c <- ab[,f] 
+      #   d <- ab[,g] 
+      #   
+        cross_tab= table(a, b, c, d, exclude=c(0))
+        #cross_tab = table(a, b, c, d)
+
+        cross_tab
+    
+```
+
+```{r}
+tabla <- as.data.frame(cross_tab)
+
+
+
+row_sub = apply(tabla, 1, function(row) all(row !=0 ))
+# 
+ tabla[row_sub,]
+
+# typeof(tabla)
+```
+
+```{r}
+head(tabla,20)
+```
+
+```{r}
+for( i in 1: nrow(tabla)){
+  if(tabla[,5]!=0) {
+  
+  newdata <- tabla[i, ]
+}
+
+}
+
+```
+
+```{r}
+newdata
+```
+
+```{r}
+ppp <- data_frame()
+for( i in 1: nrow(tabla)){
+  if(tabla[i,5]!=0) {
+    lll <- tabla[i,]
+    ppp <-rbind(ppp,lll)
+     
+}
+ 
+
+}
+```
+
+```{r}
+ppp
+```
+
+```{r}
+WriteXLS(dataset2006, "dataset2006.xlsx")
+```
+
+```{r}
+for(i in names(dataset2006)){
+
+w <- dataset2006[[i]] %>% attr('labels')
+print(w)
+}
+```
+
+
+
+
+
