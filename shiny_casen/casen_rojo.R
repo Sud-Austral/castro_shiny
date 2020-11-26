@@ -1147,7 +1147,8 @@ server <- function(input, output, session) {
                            "----",
                            "",
                            tabPanel("Módulo 1: Identificación", fluidRow(
-                             column(12, includeMarkdown("modulo_1_2013.md")),
+                             column(6, includeMarkdown("modulo_1_2013.md")),
+                             column(6, includeMarkdown("modulo_1_2013_2.md")),
                              column(12, dataTableOutput("modulo_1_2013"))
                            )),
                            
@@ -1157,7 +1158,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 3: Educación ", fluidRow(
-                             column(12, includeMarkdown("modulo_3_2013.md")),
+                             column(4, includeMarkdown("modulo_3_2013.md")),
+                             column(4, includeMarkdown("modulo_3_2013_2.md")),
+                             column(4, includeMarkdown("modulo_3_2013_3.md")),
                              column(12, dataTableOutput("modulo_3_2013"))
                            )),
                            
@@ -1174,7 +1177,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 6: Salud", fluidRow(
-                             column(12, includeMarkdown("modulo_6_2013.md")),
+                             column(4, includeMarkdown("modulo_6_2013.md")),
+                             column(4, includeMarkdown("modulo_6_2013_2.md")),
+                             column(4, includeMarkdown("modulo_6_2013_3.md")),
                              column(12, dataTableOutput("modulo_6_2013"))
                            )),
                            
@@ -1192,7 +1197,8 @@ server <- function(input, output, session) {
                            ####################################333
                            
                            tabPanel("Tema 3: Migración", fluidRow(
-                             column(12, includeMarkdown("modulo_9_2013.md")),
+                             column(6, includeMarkdown("modulo_9_2013.md")),
+                             column(6, includeMarkdown("modulo_9_2013_2.md")),
                              column(12, dataTableOutput("modulo_9_2013"))
                            )),
                            
@@ -1252,7 +1258,9 @@ server <- function(input, output, session) {
                            )),
                            
                            tabPanel("Módulo 9: Ingresos", fluidRow(
-                             column(12, includeMarkdown("modulo_21_2013.md")),
+                             column(4, includeMarkdown("modulo_21_2013_1.md")),
+                             column(4, includeMarkdown("modulo_21_2013_2.md")),
+                             column(4, includeMarkdown("modulo_21_2013_3.md")),
                              column(12, dataTableOutput("modulo_21_2013"))
                            )),
                            

@@ -1,4 +1,6 @@
-h8	Principal razón para compartir esta vivienda con otro grupo familiar
+<font size="0.5">
+
+**h8**	Principal razón para compartir esta vivienda con otro grupo familiar
 
 1. Cuidar niños enfermos, ancianos o personas con discapacidad
 2. Razones económicas
@@ -12,9 +14,9 @@ h8	Principal razón para compartir esta vivienda con otro grupo familiar
 99. NS/NR
 
 
-h8esp	¿Cuál es esa otra razón para compartir esta vivienda con otro grupo familiar?
+**h8esp**	¿Cuál es esa otra razón para compartir esta vivienda con otro grupo familiar?
 
-h9	¿Está haciendo algo para vivir en una vivienda exclusiva para su grupo familiar?
+**h9**	¿Está haciendo algo para vivir en una vivienda exclusiva para su grupo familiar?
 
 1. Sí, postulando o postuló a un subsidio
 2. Sí, está participando en un Comité, inscrito en la Municipalidad o entidad patrocinante
@@ -25,4 +27,6 @@ h9	¿Está haciendo algo para vivir en una vivienda exclusiva para su grupo fami
 9. NS/NR
 
 
-h9esp	¿Está haciendo algo para vivir en una vivienda exclusiva para su grupo familiar?
+**h9esp**	¿Está haciendo algo para vivir en una vivienda exclusiva para su grupo familiar?
+
+</font>
