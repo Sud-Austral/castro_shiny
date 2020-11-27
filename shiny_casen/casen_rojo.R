@@ -42,6 +42,9 @@ options(warn = -1)
 
 ##################################### 2006 #######################################
 
+####con esta linea de codigo funciona 
+#dataset2006 <- read.csv('mydata2006_sub.csv')
+################
 dataset2006 <- read.csv('mydata2006_sub.csv')
 
 dataset2006_col <- colnames(dataset2006)
@@ -51,6 +54,13 @@ data_2006_1_2_colnames <- colnames(data_2006_3_5)
 
 data_2006_5_348 <- dataset2006[, 7:348]
 data_2006_5_348_colnames <- colnames(data_2006_5_348)
+
+
+dataset06 <- read_sav('casen2006.sav')
+
+
+
+
 
 ###################################### 2009 ############################################
 
@@ -3421,28 +3431,6 @@ server <- function(input, output, session) {
     ### ahora ###########   
     
 
-    # 
-    # dataset2011_react_13 <- reactive({
-    #   data <- dataset2011[, 1:27]
-    #   return(data)
-    # })
-    # 
-    # dataset2011_react_14 <- reactive({
-    #   data <- dataset2011[, 28:75]
-    #   return(data)
-    # })
-    # 
-    # 
-    # dataset2011_react_15 <- reactive({
-    #   data <- dataset2011[, 76:118]
-    #   return(data)
-    # })
-    # 
-    # 
-    # dataset2011_react_16 <- reactive({
-    #   data <- dataset2011[, 119:145]
-    #   return(data)
-    # })
     
     # autobiografia
     dataset2011_react_17 <- reactive({
@@ -4492,6 +4480,14 @@ server <- function(input, output, session) {
     ########################################################################## 2006  ##########################################################################  
   
     output$tabla_d_c_generalizada_2006<-renderPrint({
+      
+      w <- dataset06[[6]] %>% attr('labels')
+      head(w,4)
+      #### Aqui se obtienen los nombres de las comunas
+      a <- names(w) 
+      head(a,4)
+      b<-w[[4]]
+      #//////////////////////////////////////////// 
 
         d <- input$p2006_primerav
         e <- input$p2006_segundav
@@ -4507,8 +4503,82 @@ server <- function(input, output, session) {
         d <- ab[,g] 
         
         cross_tab = table(a, b, c, d)
+        
+        #/////////////////////////////////////////////////////////
+        tabla <- as.data.frame(cross_tab)
+        ppp <- data_frame()
+        
+        # for( i in 1: nrow(tabla))
+        # {
+        #   
+        #   if(tabla[i,5]!=0) 
+        #   {
+        #     lll<-tabla[i,]
+        #     lll
+        #     llll<-lll[,1]
+        #     llll
+        #     
+        #     sentenceString <- toString(llll)
+        #     searchString <- ' '
+        #     replacementString <- ''
+        #     sentenceString = sub(searchString,replacementString,sentenceString)
+        #     sentenceString
+        #     
+        #     
+        #     for(j in 1: 336){
+        #       w <- dataset06[[6]] %>% attr('labels')
+        #       ww<-names(w[j])
+        #       vv<-tolower(ww)
+        #       if(sentenceString==vv){
+        #         lll <- cbind(lll,w[[j]])
+        #         lll <- cbind(lll,"2006")
+        #         
+        #       }
+        #     }
+        #     ppp <-rbind(ppp,lll)
+        #   }
+        #   
+        # }
+        #return(ppp)
+        
+        
+        ######################################################################################################
+        d <-tabla[!(tabla$Freq == 0),]
+       
+        datallll <- data.frame()
+        nrow(d)
+        for(i in 1: nrow(d)){
+          llll_fila <- d[i,]
+          llll<-d[i,1]
+          sentenceString <- toString(llll)
+          searchString <- ' '
+          replacementString <- ''
+          sentenceString = sub(searchString,replacementString,sentenceString)
+          sentenceString
+          w <- dataset06[[6]] %>% attr('labels')
+          for(j in 1: 336){
+            
+            
+            ww<-names(w[j])
+            vv<-tolower(ww)
+            
+            if(sentenceString==vv){
+              llll_fila <- cbind(llll_fila,w[[j]])
+              llll_fila <- cbind(llll_fila,"2006")
+              
+            }
+            
+            
+            
+            
+          }
+          datallll <-rbind(datallll,llll_fila)
+          
+        }
+        ###########################################################################################################
+        return(datallll)
 
-        return(cross_tab)
+        #return(cross_tab)
     })
     
     output$tabla_d_c_generalizada_pon_2006<-renderPrint({
@@ -4593,22 +4663,66 @@ server <- function(input, output, session) {
             },
             content = function(file) {
                 
-                d <- input$p2006_primerav
-                e <- input$p2006_segundav
-                f <- input$p2006_tercerav
-                g <- input$p2006_cuartav
-                
-                ab <-  dataset2006
-                #  ab <- dataset2006_react()
-                
-                a <- ab[,d]
-                b <- ab[,e] 
-                c <- ab[,f] 
-                d <- ab[,g] 
-                
-                cross_tab = table(a, b, c, d)
-                
-                write.csv(cross_tab, file)
+              # w <- dataset06[[6]] %>% attr('labels')
+              # head(w,4)
+              # #### Aqui se obtienen los nombres de las comunas
+              # a <- names(w) 
+              # head(a,4)
+              # b<-w[[4]]
+              # #//////////////////////////////////////////// 
+              # 
+              # d <- input$p2006_primerav
+              # e <- input$p2006_segundav
+              # f <- input$p2006_tercerav
+              # g <- input$p2006_cuartav
+              # 
+              # ab <-  dataset2006
+              # #  ab <- dataset2006_react()
+              # 
+              # a <- ab[,d]
+              # b <- ab[,e] 
+              # c <- ab[,f] 
+              # d <- ab[,g] 
+              # 
+              # cross_tab = table(a, b, c, d)
+              # 
+              # #/////////////////////////////////////////////////////////
+              # tabla <- as.data.frame(cross_tab)
+              # ppp <- data_frame()
+              # 
+              # for( i in 1: nrow(tabla))
+              # {
+              #   
+              #   if(tabla[i,5]!=0) 
+              #   {
+              #     lll<-tabla[i,]
+              #     lll
+              #     llll<-lll[,1]
+              #     llll
+              #     
+              #     sentenceString <- toString(llll)
+              #     searchString <- ' '
+              #     replacementString <- ''
+              #     sentenceString = sub(searchString,replacementString,sentenceString)
+              #     sentenceString
+              #     
+              #     
+              #     for(j in 1: 336){
+              #       w <- dataset06[[6]] %>% attr('labels')
+              #       ww<-names(w[j])
+              #       vv<-tolower(ww)
+              #       if(sentenceString==vv){
+              #         lll <- cbind(lll,w[[j]])
+              #         lll <- cbind(lll,"2006")
+              #         
+              #       }
+              #     }
+              #     ppp <-rbind(ppp,lll)
+              #   }
+              #   
+              # }
+              # 
+              #   write.csv(ppp, file)
             }
         )
         
@@ -4661,7 +4775,8 @@ server <- function(input, output, session) {
             d <- ab[,g] 
             
             cross_tab = table(a, b, c, d)
-            
+            #/////////////////////////////////////////////////
+           
             return(cross_tab)
         })
         
