@@ -34,7 +34,7 @@ library(DescTools)
 library(roperators)
 library(shinycssloaders)
 library(writexl)
-library(beepr)
+
 
 
 oldw <- getOption("warn")
