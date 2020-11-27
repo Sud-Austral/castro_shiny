@@ -34,6 +34,8 @@ library(DescTools)
 library(roperators)
 library(shinycssloaders)
 library(writexl)
+library(beepr)
+
 
 oldw <- getOption("warn")
 options(warn = -1)
@@ -45,6 +47,12 @@ options(warn = -1)
 ####con esta linea de codigo funciona 
 #dataset2006 <- read.csv('mydata2006_sub.csv')
 ################
+
+# dataset06 <- read.dta('casen2006.dta')
+# 
+# dataset2006_sub <- dataset06
+# write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+
 dataset2006 <- read.csv('mydata2006_sub.csv')
 
 dataset2006_col <- colnames(dataset2006)
@@ -56,7 +64,12 @@ data_2006_5_348 <- dataset2006[, 7:348]
 data_2006_5_348_colnames <- colnames(data_2006_5_348)
 
 
-dataset06 <- read_sav('casen2006.sav')
+#dataset06 <- read_sav('casen2006.sav')
+
+
+  dataset06 <- read_sav('casen2006.sav')
+
+
 
 
 
@@ -4482,11 +4495,11 @@ server <- function(input, output, session) {
     output$tabla_d_c_generalizada_2006<-renderPrint({
       
       w <- dataset06[[6]] %>% attr('labels')
-      head(w,4)
-      #### Aqui se obtienen los nombres de las comunas
-      a <- names(w) 
-      head(a,4)
-      b<-w[[4]]
+      # head(w,4)
+      # #### Aqui se obtienen los nombres de las comunas
+      # a <- names(w) 
+      # head(a,4)
+      # b<-w[[4]]
       #//////////////////////////////////////////// 
 
         d <- input$p2006_primerav
@@ -4506,47 +4519,13 @@ server <- function(input, output, session) {
         
         #/////////////////////////////////////////////////////////
         tabla <- as.data.frame(cross_tab)
-        ppp <- data_frame()
-        
-        # for( i in 1: nrow(tabla))
-        # {
-        #   
-        #   if(tabla[i,5]!=0) 
-        #   {
-        #     lll<-tabla[i,]
-        #     lll
-        #     llll<-lll[,1]
-        #     llll
-        #     
-        #     sentenceString <- toString(llll)
-        #     searchString <- ' '
-        #     replacementString <- ''
-        #     sentenceString = sub(searchString,replacementString,sentenceString)
-        #     sentenceString
-        #     
-        #     
-        #     for(j in 1: 336){
-        #       w <- dataset06[[6]] %>% attr('labels')
-        #       ww<-names(w[j])
-        #       vv<-tolower(ww)
-        #       if(sentenceString==vv){
-        #         lll <- cbind(lll,w[[j]])
-        #         lll <- cbind(lll,"2006")
-        #         
-        #       }
-        #     }
-        #     ppp <-rbind(ppp,lll)
-        #   }
-        #   
-        # }
-        #return(ppp)
-        
         
         ######################################################################################################
+        
+        datallll <- data.frame()
+        
         d <-tabla[!(tabla$Freq == 0),]
        
-        datallll <- data.frame()
-        nrow(d)
         for(i in 1: nrow(d)){
           llll_fila <- d[i,]
           llll<-d[i,1]
@@ -4555,6 +4534,7 @@ server <- function(input, output, session) {
           replacementString <- ''
           sentenceString = sub(searchString,replacementString,sentenceString)
           sentenceString
+          
           w <- dataset06[[6]] %>% attr('labels')
           for(j in 1: 336){
             
@@ -4565,15 +4545,9 @@ server <- function(input, output, session) {
             if(sentenceString==vv){
               llll_fila <- cbind(llll_fila,w[[j]])
               llll_fila <- cbind(llll_fila,"2006")
-              
+              datallll <-rbind(datallll,llll_fila)
             }
-            
-            
-            
-            
           }
-          datallll <-rbind(datallll,llll_fila)
-          
         }
         ###########################################################################################################
         return(datallll)
@@ -4583,21 +4557,53 @@ server <- function(input, output, session) {
     
     output$tabla_d_c_generalizada_pon_2006<-renderPrint({
         
-        d <- input$p2006_primerav
-        e <- input$p2006_segundav
-        f <- input$p2006_tercerav
-        g <- input$p2006_cuartav
-        
-        ab <- dataset2006
-        
-        a <- ab[,d]
-        b <- ab[,e] 
-        c <- ab[,f] 
-        d <- ab[,g] 
+      w <- dataset06[[6]] %>% attr('labels')
+     
+      d <- input$p2006_primerav
+      e <- input$p2006_segundav
+      f <- input$p2006_tercerav
+      g <- input$p2006_cuartav
+      
+      ab <-  dataset2006
+     
+      a <- ab[,d]
+      b <- ab[,e] 
+      c <- ab[,f] 
+      d <- ab[,g] 
+      
         
         cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+        tabla <- as.data.frame(cross_tab)
         
-        return(cross_tab)
+        datallll <- data.frame()
+        
+        d <-tabla[!(tabla$Freq == 0),]
+        
+        for(i in 1: nrow(d)){
+          llll_fila <- d[i,]
+          llll<-d[i,1]
+          sentenceString <- toString(llll)
+          searchString <- ' '
+          replacementString <- ''
+          sentenceString = sub(searchString,replacementString,sentenceString)
+          sentenceString
+          
+          w <- dataset06[[6]] %>% attr('labels')
+          for(j in 1: 336){
+            
+            
+            ww<-names(w[j])
+            vv<-tolower(ww)
+            
+            if(sentenceString==vv){
+              llll_fila <- cbind(llll_fila,w[[j]])
+              llll_fila <- cbind(llll_fila,"2006")
+              datallll <-rbind(datallll,llll_fila)
+            }
+          }
+        }
+        ###########################################################################################################
+        return(datallll)
     })
     
     
@@ -4663,66 +4669,62 @@ server <- function(input, output, session) {
             },
             content = function(file) {
                 
-              # w <- dataset06[[6]] %>% attr('labels')
-              # head(w,4)
-              # #### Aqui se obtienen los nombres de las comunas
-              # a <- names(w) 
-              # head(a,4)
-              # b<-w[[4]]
-              # #//////////////////////////////////////////// 
-              # 
-              # d <- input$p2006_primerav
-              # e <- input$p2006_segundav
-              # f <- input$p2006_tercerav
-              # g <- input$p2006_cuartav
-              # 
-              # ab <-  dataset2006
-              # #  ab <- dataset2006_react()
-              # 
-              # a <- ab[,d]
-              # b <- ab[,e] 
-              # c <- ab[,f] 
-              # d <- ab[,g] 
-              # 
-              # cross_tab = table(a, b, c, d)
-              # 
-              # #/////////////////////////////////////////////////////////
-              # tabla <- as.data.frame(cross_tab)
-              # ppp <- data_frame()
-              # 
-              # for( i in 1: nrow(tabla))
-              # {
-              #   
-              #   if(tabla[i,5]!=0) 
-              #   {
-              #     lll<-tabla[i,]
-              #     lll
-              #     llll<-lll[,1]
-              #     llll
-              #     
-              #     sentenceString <- toString(llll)
-              #     searchString <- ' '
-              #     replacementString <- ''
-              #     sentenceString = sub(searchString,replacementString,sentenceString)
-              #     sentenceString
-              #     
-              #     
-              #     for(j in 1: 336){
-              #       w <- dataset06[[6]] %>% attr('labels')
-              #       ww<-names(w[j])
-              #       vv<-tolower(ww)
-              #       if(sentenceString==vv){
-              #         lll <- cbind(lll,w[[j]])
-              #         lll <- cbind(lll,"2006")
-              #         
-              #       }
-              #     }
-              #     ppp <-rbind(ppp,lll)
-              #   }
-              #   
-              # }
-              # 
-              #   write.csv(ppp, file)
+              w <- dataset06[[6]] %>% attr('labels')
+              head(w,4)
+              #### Aqui se obtienen los nombres de las comunas
+              a <- names(w) 
+              head(a,4)
+              b<-w[[4]]
+              #//////////////////////////////////////////// 
+              
+              d <- input$p2006_primerav
+              e <- input$p2006_segundav
+              f <- input$p2006_tercerav
+              g <- input$p2006_cuartav
+              
+              ab <-  dataset2006
+              #  ab <- dataset2006_react()
+              
+              a <- ab[,d]
+              b <- ab[,e] 
+              c <- ab[,f] 
+              d <- ab[,g] 
+              
+              cross_tab = table(a, b, c, d)
+              
+              #/////////////////////////////////////////////////////////
+              tabla <- as.data.frame(cross_tab)
+              
+              ######################################################################################################
+              
+              datallll <- data.frame()
+              
+              d <-tabla[!(tabla$Freq == 0),]
+              
+              for(i in 1: nrow(d)){
+                llll_fila <- d[i,]
+                llll<-d[i,1]
+                sentenceString <- toString(llll)
+                searchString <- ' '
+                replacementString <- ''
+                sentenceString = sub(searchString,replacementString,sentenceString)
+                sentenceString
+                
+                w <- dataset06[[6]] %>% attr('labels')
+                for(j in 1: 336){
+                  
+                  
+                  ww<-names(w[j])
+                  vv<-tolower(ww)
+                  
+                  if(sentenceString==vv){
+                    llll_fila <- cbind(llll_fila,w[[j]])
+                    llll_fila <- cbind(llll_fila,"2006")
+                    datallll <-rbind(datallll,llll_fila)
+                  }
+                }
+              }
+                write.csv(datallll, file)
             }
         )
         
@@ -4732,23 +4734,53 @@ server <- function(input, output, session) {
             },
             content = function(file) {
                 
+              w <- dataset06[[6]] %>% attr('labels')
+              
+              d <- input$p2006_primerav
+              e <- input$p2006_segundav
+              f <- input$p2006_tercerav
+              g <- input$p2006_cuartav
+              
+              ab <-  dataset2006
+              
+              a <- ab[,d]
+              b <- ab[,e] 
+              c <- ab[,f] 
+              d <- ab[,g] 
+              
+              
+              cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+              tabla <- as.data.frame(cross_tab)
+              
+              datallll <- data.frame()
+              
+              d <-tabla[!(tabla$Freq == 0),]
+              
+              for(i in 1: nrow(d)){
+                llll_fila <- d[i,]
+                llll<-d[i,1]
+                sentenceString <- toString(llll)
+                searchString <- ' '
+                replacementString <- ''
+                sentenceString = sub(searchString,replacementString,sentenceString)
+                sentenceString
                 
-                d <- input$p2006_primerav
-                e <- input$p2006_segundav
-                f <- input$p2006_tercerav
-                g <- input$p2006_cuartav
+                w <- dataset06[[6]] %>% attr('labels')
+                for(j in 1: 336){
+                  
+                  
+                  ww<-names(w[j])
+                  vv<-tolower(ww)
+                  
+                  if(sentenceString==vv){
+                    llll_fila <- cbind(llll_fila,w[[j]])
+                    llll_fila <- cbind(llll_fila,"2006")
+                    datallll <-rbind(datallll,llll_fila)
+                  }
+                }
+              }
                 
-                ab <- dataset2006
-                
-                a <- ab[,d]
-                b <- ab[,e] 
-                c <- ab[,f] 
-                d <- ab[,g] 
-                
-                cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
-                
-                
-                write.csv(cross_tab, file)
+                write.csv(datallll, file)
                 
             }
         )
