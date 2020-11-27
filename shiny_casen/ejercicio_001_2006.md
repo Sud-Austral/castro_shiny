@@ -42,4 +42,8 @@ Seleccionemos como:
 Obtenemos que hay 16 hombres mapuches en Panguipulli que no saben leer ni escribir. La operación tarda 3' 9''. Verifiquémoslo con un cálculo local sobre la base de datos original. Los cálculos coinciden.
 </span>
 
+<span style="color: red;">
+Para 1000 registros los calculos tardan 10''
+</span>
+
 Ahora vamos a verificar que la operación con el factor de expansión comunal funcione correctamente.

@@ -50,41 +50,107 @@ library(WriteXLS)
 ```{r , echo=FALSE, cache=FALSE, results=FALSE, warning=FALSE, comment=FALSE, warning=FALSE}
 
 
-dataset2006 <- read_sav('casen2006.sav')
+dataset06 <- read.dta('casen2006.dta')
 
 
 ```
+
+```{r}
+nrow(dataset06)
+```
+
+
+```{r}
+#dataset2006_sub <- dataset06[1:100000,]
+dataset2006_sub <- dataset06
+write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+```
+
+```{r}
+dataset2006 <- read_sav('casen2006.sav')
+
+```
+
 
 ```{r}
 w <- dataset2006[[6]] %>% attr('labels')
-head(w,4)
-#### Aqui se obtienen los nombres de las comunas
-a <- names(w) 
-head(a,4)
-b<-w[[4]]
-b
-# head(a,5)
+# head(w,4)
+# #### Aqui se obtienen los nombres de las comunas
+# a <- names(w) 
+# head(a,4)
+# b<-w[[4]]
+# b
+# # head(a,5)
+#length(a)
+```
+```{r}
+#length(a)
+```
+```{r}
+
+dataset06 <- read.csv('mydata2006_sub.csv')
+colnames(dataset06)
 ```
 
-
-
 ```{r}
-dataset06 <- read.csv('mydata2006_sub.csv')
+#dataset06 <- read.csv('mydata2006_sub.csv')
 
         a <- dataset06$comuna
         b <- dataset06$t4
         c <- dataset06$e1
         d <- dataset06$sexo
         cross_tab= table(a, b, c, d)
-        cross_tab
-    
+       # cross_tab
+      tabla <- as.data.frame(cross_tab)
+      tabla
+      #write.csv(datallll,"muestra_m_Patricio_2006.csv", row.names = FALSE)
+      
 ```
 
 ```{r}
-tabla <- as.data.frame(cross_tab)
-#head(tabla,10)
-head(tabla,10)
+# tabla <- as.data.frame(cross_tab)
+# #head(tabla,10)
+# head(tabla,10)
 ```
+
+```{r}
+d <-tabla[!(tabla$Freq == 0),]
+
+datallll <- data.frame()
+
+ for(i in 1: nrow(d)){
+   llll_fila <- d[i,]
+    llll<-d[i,1]
+    sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+
+             w <- dataset2006[[6]] %>% attr('labels')
+             for(j in 1: 336){
+
+
+               ww<-names(w[j])
+              vv<-tolower(ww)
+
+               if(sentenceString==vv){
+                 llll_fila <- cbind(llll_fila,w[[j]])
+                 llll_fila <- cbind(llll_fila,"2006")
+                 datallll <-rbind(datallll,llll_fila)
+               }
+              }
+  }
+
+```
+
+```{r}
+datallll
+write.csv(datallll,"muestra_Patricio_2006.csv", row.names = FALSE)
+```
+
+33 desde aqui para abajo todo se puede eliminar
+
 
 ```{r}
 ppp <- data_frame()
@@ -108,7 +174,7 @@ ppp <- data_frame()
        sentenceString
        
        
-        for(j in 1: 300){
+        for(j in 1: 336){
           w <- dataset2006[[6]] %>% attr('labels')
            ww<-names(w[j])
            vv<-tolower(ww)
@@ -128,3 +194,91 @@ ppp <- data_frame()
 ppp 
 
 ```
+
+```{r}
+d <-tabla[!(tabla$Freq == 0),]
+d
+llll<-d[,1]
+llll
+
+nrow(d)
+```
+
+```{r}
+
+dataset2006 <- read_sav('casen2006.sav')
+
+
+```
+
+```{r}
+d <-tabla[!(tabla$Freq == 0),]
+# d
+# llll<-d[,1]
+# llll
+datallll <- data.frame()
+nrow(d)
+ for(i in 1: nrow(d)){
+   llll_fila <- d[i,]
+    llll<-d[i,1]
+    sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+    #print(sentenceString)
+             w <- dataset2006[[6]] %>% attr('labels')
+             for(j in 1: 336){
+               
+               
+               ww<-names(w[j])
+              vv<-tolower(ww)
+              
+               if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2006")
+                
+              }
+            
+                
+                
+            
+             }
+             datallll <-rbind(datallll,llll_fila)
+             
+ }
+
+```
+
+```{r}
+ datallll
+```
+
+```{r}
+d <-tabla[!(tabla$Freq == 0),]
+        for(i in 1: nrow(d)){
+          llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              #w <- dataset06[[6]] %>% attr('labels')
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              if(sentenceString==vv){
+                llll <- cbind(llll,w[[j]])
+                llll <- cbind(llll,"2006")
+                
+              }
+            
+        }
+           ppp <-rbind(ppp,llll)
+        }
+            ppp 
+            
+         
+```
+
