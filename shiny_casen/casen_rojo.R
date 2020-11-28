@@ -34,8 +34,8 @@ library(DescTools)
 library(roperators)
 library(shinycssloaders)
 library(writexl)
-
-
+library(vroom)
+library(shinyWidgets)
 
 oldw <- getOption("warn")
 options(warn = -1)
@@ -44,16 +44,32 @@ options(warn = -1)
 
 ##################################### 2006 #######################################
 
-####con esta linea de codigo funciona 
-#dataset2006 <- read.csv('mydata2006_sub.csv')
-################
+
+
+
+
+# esto guardarlo en un binario:
+
+
+# prueba:
+
+dataset2006  <- read.dta('casen2006.dta')
+
+
+
+
+# lo que funciona:
 
 # dataset06 <- read.dta('casen2006.dta')
-# 
 # dataset2006_sub <- dataset06
 # write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+# dataset2006 <- read_table('mydata2006_sub.csv')
 
-dataset2006 <- read.csv('mydata2006_sub.csv')
+# dataset2006 <- read.csv('mydata2006_sub.csv')
+
+
+
+
 
 dataset2006_col <- colnames(dataset2006)
 
@@ -67,7 +83,7 @@ data_2006_5_348_colnames <- colnames(data_2006_5_348)
 #dataset06 <- read_sav('casen2006.sav')
 
 
-  dataset06 <- read_sav('casen2006.sav')
+dataset06 <- read_sav('casen2006.sav')
 
 
 
@@ -246,7 +262,12 @@ datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
 
 
 
-ui <- fluidPage(theme = shinytheme("cerulean"),
+ui <- fluidPage(                setBackgroundColor(color = "Silver",
+                                                   gradient = "radial",
+                                                   direction = "left"),
+                                
+                                theme = shinytheme("flatly"),
+
                 
                 br(), 
                 br(),
@@ -265,7 +286,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                               "Casen 2017" = "2017"
                               
                             )),       
-                titlePanel(h1("HIVGIE: Herramienta para la interpretación de variables y generación de informes estadísticos de la CASEN")),
+                titlePanel(h1("IVGIE: Herramienta para la interpretación de variables y generación de informes estadísticos de la CASEN")),
                 br(),
 
                 
@@ -4507,8 +4528,8 @@ server <- function(input, output, session) {
         f <- input$p2006_tercerav
         g <- input$p2006_cuartav
         
-        ab <-  dataset2006
-      #  ab <- dataset2006_react()
+        #ab <-  dataset2006
+        ab <- dataset2006_react()
     
         a <- ab[,d]
         b <- ab[,e] 
@@ -4518,6 +4539,7 @@ server <- function(input, output, session) {
         cross_tab = table(a, b, c, d)
         
         #/////////////////////////////////////////////////////////
+        
         tabla <- as.data.frame(cross_tab)
         
         ######################################################################################################
@@ -4525,23 +4547,33 @@ server <- function(input, output, session) {
         datallll <- data.frame()
         
         d <-tabla[!(tabla$Freq == 0),]
-       
+        
+        
+        
+        ##############################
+        
+        ##############################
+        
+        # este bloque funciona bien
+        # 
+        
         for(i in 1: nrow(d)){
+
           llll_fila <- d[i,]
-          llll<-d[i,1]
+
+          llll <- d[i,1]
+
           sentenceString <- toString(llll)
           searchString <- ' '
           replacementString <- ''
           sentenceString = sub(searchString,replacementString,sentenceString)
           sentenceString
-          
-          w <- dataset06[[6]] %>% attr('labels')
+
           for(j in 1: 336){
-            
-            
+
             ww<-names(w[j])
             vv<-tolower(ww)
-            
+
             if(sentenceString==vv){
               llll_fila <- cbind(llll_fila,w[[j]])
               llll_fila <- cbind(llll_fila,"2006")
@@ -4549,10 +4581,15 @@ server <- function(input, output, session) {
             }
           }
         }
+        
+        # 
+        
         ###########################################################################################################
-        return(datallll)
+        
+        
+       # return(required_df)
 
-        #return(cross_tab)
+        return(datallll)
     })
     
     output$tabla_d_c_generalizada_pon_2006<-renderPrint({
@@ -4564,8 +4601,8 @@ server <- function(input, output, session) {
       f <- input$p2006_tercerav
       g <- input$p2006_cuartav
       
-      ab <-  dataset2006
-     
+      #ab <-  dataset2006
+      ab <- dataset2006_react()
       a <- ab[,d]
       b <- ab[,e] 
       c <- ab[,f] 
@@ -4588,7 +4625,7 @@ server <- function(input, output, session) {
           sentenceString = sub(searchString,replacementString,sentenceString)
           sentenceString
           
-          w <- dataset06[[6]] %>% attr('labels')
+       #   w <- dataset06[[6]] %>% attr('labels')
           for(j in 1: 336){
             
             

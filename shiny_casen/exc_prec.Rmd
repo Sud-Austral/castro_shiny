@@ -63,7 +63,14 @@ nrow(dataset06)
 ```{r}
 #dataset2006_sub <- dataset06[1:100000,]
 dataset2006_sub <- dataset06
-write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+#write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
+
+save(dataset2006_sub, file = "dataset2006_sub.rda")
+
+
+```
+```{r}
+da2006 <- readRDS('dataset2006_sub.rda')
 ```
 
 ```{r}
