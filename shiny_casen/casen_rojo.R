@@ -2867,19 +2867,53 @@ server <- function(input, output, session) {
             paste("tabla_ttcc.csv", "csv", sep=".")
         },
         content = function(file) {
-            d <- input$ptabla2017_primeravx
-            e <- input$ptabla2017_segundavx
-            f <- input$ptabla2017_terceravx
-            g <- input$ptabla2017_cuartavx
-
-            preguntaseternas2001_ab <- mydata_2017_1()
+          w <- dataset06[[6]] %>% attr('labels')
+          
+          d <- input$tabla2017_1
+          e <- input$tabla2017_2
+          f <- input$tabla2017_3
+          g <- input$tabla2017_4
+          
+          ab <- dataset2017_react()
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          
+          cross_tab = table(a, b, c, d)
+          
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          
+          # 
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
             
-            primera_variable <- preguntaseternas2001_ab[,d]
-            segunda_variable <- preguntaseternas2001_ab[,e] 
-            tercera_variable <- preguntaseternas2001_ab[,f] 
-            cuarta_variable <- preguntaseternas2001_ab[,g] 
-            cross_tab = table(primera_variable, segunda_variable, tercera_variable, cuarta_variable)
-            write.csv(cross_tab, file)
+            for(j in 1: 336){
+              #     
+              ww<-names(w[j])
+              #     vv<-tolower(ww)
+              #     
+              if(sentenceString==ww){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2017")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+            write.csv(datallll, file)
         }
     )
     
@@ -2888,21 +2922,51 @@ server <- function(input, output, session) {
             paste("tabla_ttcc_pon.csv", "csv", sep=".")
         },
         content = function(file) {
-            d <- input$ptabla2017_primeravx
-            e <- input$ptabla2017_segundavx
-            f <- input$ptabla2017_terceravx
-            g <- input$ptabla2017_cuartavx
+          w <- dataset06[[6]] %>% attr('labels')
+          
+          d <- input$tabla2017_1
+          e <- input$tabla2017_2
+          f <- input$tabla2017_3
+          g <- input$tabla2017_4
+          
+          ab <- dataset2017_react()
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          
+          cross_tab = xtabs(ab[,10] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,10] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
             
-            preguntaseternas2001_ab_pon <- mydata_2017_1()
-            
-            primera_variable <- preguntaseternas2001_ab_pon[,d]
-            segunda_variable <- preguntaseternas2001_ab_pon[,e] 
-            tercera_variable <- preguntaseternas2001_ab_pon[,f] 
-            cuarta_variable <- preguntaseternas2001_ab_pon[,g] 
-            
-            #       cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
-            cross_tab_pon = table(preguntaseternas2001_ab$expc ~ unlist(primera_variable)+unlist(segunda_variable)+unlist(tercera_variable)+unlist(cuarta_variable))
-            write.csv(cross_tab_pon, file)
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              # vv<-tolower(ww)
+              
+              if(sentenceString == ww){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2017")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          write.csv(datallll, file)
             
         }
     )
@@ -5269,12 +5333,15 @@ server <- function(input, output, session) {
           },
           content = function(file) {
             
+            w <- dataset06[[6]] %>% attr('labels')
+            
             d <- input$p2011_primerav
             e <- input$p2011_segundav
             f <- input$p2011_tercerav
             g <- input$p2011_cuartav
             
-            ab <-  dataset2011_react()
+            # ab <- dataset2011
+            ab <- dataset2011_react()
             
             a <- ab[,d]
             b <- ab[,e] 
@@ -5283,7 +5350,35 @@ server <- function(input, output, session) {
             
             cross_tab = table(a, b, c, d)
             
-            write.csv(cross_tab, file)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2011")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            
+            write.csv(datallll, file)
           }
         )
         
@@ -5293,6 +5388,7 @@ server <- function(input, output, session) {
           },
           content = function(file) {
             
+            w <- dataset06[[6]] %>% attr('labels')
             
             d <- input$p2011_primerav
             e <- input$p2011_segundav
@@ -5306,10 +5402,38 @@ server <- function(input, output, session) {
             c <- ab[,f] 
             d <- ab[,g] 
             
-            cross_tab = xtabs(ab[,16]  ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16]  ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            # el factor de expansión comunal para la tabla .dat de la casen 2011 es expc_full, la columna 11. 
             
+            cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
             
-            write.csv(cross_tab, file)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2011")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            write.csv(datallll, file)
             
           }
         )
@@ -5459,7 +5583,52 @@ server <- function(input, output, session) {
             
             cross_tab = table(a, b, c, d)
             
-            write.csv(cross_tab, file)
+            w <- dataset06[[6]] %>% attr('labels')
+            
+            d <- input$ptabla2013_primeravx
+            e <- input$ptabla2013_segundavx
+            f <- input$ptabla2013_terceravx
+            g <- input$ptabla2013_cuartavx
+            
+            ab <- dataset2013_react()
+            
+            
+            a <- ab[,d]
+            b <- ab[,e] 
+            c <- ab[,f] 
+            d <- ab[,g] 
+            
+            cross_tab = table(a, b, c, d)
+            
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2013")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            
+            write.csv(datallll, file)
           }
         )
         
@@ -5469,6 +5638,7 @@ server <- function(input, output, session) {
           },
           content = function(file) {
             
+            w <- dataset06[[6]] %>% attr('labels')
             
             d <- input$ptabla2013_primeravx
             e <- input$ptabla2013_segundavx
@@ -5477,14 +5647,42 @@ server <- function(input, output, session) {
             
             ab <- dataset2013_react()
             
+            
             a <- ab[,d]
             b <- ab[,e] 
             c <- ab[,f] 
             d <- ab[,g] 
             
-            cross_tab = xtabs(ab[,578] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578]  ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            cross_tab = table(a, b, c, d)
             
-            write.csv(cross_tab, file)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2013")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            write.csv(datallll, file)
             
           }
         )
@@ -5662,6 +5860,8 @@ server <- function(input, output, session) {
           },
           content = function(file) {
             
+            w <- dataset06[[6]] %>% attr('labels')
+            
             d <- input$ptabla2015_primeravx
             e <- input$ptabla2015_segundavx
             f <- input$ptabla2015_terceravx
@@ -5676,7 +5876,34 @@ server <- function(input, output, session) {
             
             cross_tab = table(a, b, c, d)
             
-            write.csv(cross_tab, file)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2015")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            write.csv(datallll, file)
           }
         )
         
@@ -5686,6 +5913,7 @@ server <- function(input, output, session) {
           },
           content = function(file) {
             
+            w <- dataset06[[6]] %>% attr('labels')
             
             d <- input$ptabla2015_primeravx
             e <- input$ptabla2015_segundavx
@@ -5699,9 +5927,36 @@ server <- function(input, output, session) {
             c <- ab[,f] 
             d <- ab[,g] 
             
-            cross_tab = xtabs(ab[,578] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578]  ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            cross_tab = xtabs(ab[,736] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,736] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
             
-            write.csv(cross_tab, file)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2015")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            write.csv(datallll, file)
             
           }
         )
