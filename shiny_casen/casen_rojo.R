@@ -51,8 +51,7 @@ options(warn = -1)
 
 dataset2006  <- readRDS("dataset2006.rds")
 
-
-# dataset2006  <- dataset2006[1:100,]
+dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
@@ -133,10 +132,13 @@ data_2011_5_348_colnames <- colnames(data_2011_5_348)
 
 ###################################### 2013 ############################################
 
-dataset2013 <- read.csv('mydata2013_sub.csv')
-dataset2013_col <- colnames(dataset2013)
+# dataset2013  <- read.dta('casen_2013.dta')
 
-# extraccion de las cabeceras para la carga de los filtros por categoria
+dataset2013  <- readRDS("dataset2013.rds")
+
+
+dataset2013  <- dataset2013[1:100,]
+dataset2013_col <- colnames(dataset2013)
 
 data_2013_3_5 <- dataset2013[, c(4,6)]
 data_2013_1_2_colnames <- colnames(data_2013_3_5)
@@ -219,9 +221,10 @@ dataset2015_col_VIII <- colnames(dataset2015_sub_VIII)
 # dataset2011_col <- colnames(dataset2011)
 
 ##################   2017 ##############################
-
-dataset2017 <-  read.csv('mydata2017_sub.csv')
-datos_df_exp <- colnames(dataset2017)
+dataset2017  <- readRDS("dataset2017.rds")
+dataset2017  <- dataset2017[1:100,]
+# dataset2017 <-  read.csv('mydata2017_sub.csv')
+dataset2017_col <- colnames(dataset2017)
 
 ########################################################
 
@@ -1595,20 +1598,20 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
-                                                                                   selectInput("ptabla2013_primeravx_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2013_segundavx_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2013_terceravx_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2013_primeravx_prom", "ingrese primera variable:", c(dataset2013_col)),
+                                                                                   selectInput("ptabla2013_segundavx_prom", "ingrese segunda variable:", c(dataset2013_col)),
+                                                                                   selectInput("ptabla2013_terceravx_prom", "ingrese tercera variable:", c(dataset2013_col)),
                                                                                    
-                                                                                   selectInput("ptabla2013_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2013_cuartavx", "ingrese cuarta variable:", c(dataset2013_col)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_23_prom", "Descargar"),
                                                                                    
                                                                                    verbatimTextOutput("tabla3_d_c_generalizada_prom")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
-                                                                              selectInput("ptabla2013_primerav_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2013_segundav_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2013_tercerav_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2013_primerav_prom", "ingrese primera variable:", c(dataset2013_col)),
+                                                                              selectInput("ptabla2013_segundav_prom", "ingrese segunda variable:", c(dataset2013_col)),
+                                                                              selectInput("ptabla2013_tercerav_prom", "ingrese tercera variable:", c(dataset2013_col)),
                                                                               verbatimTextOutput("tabla3_chi_generalizada_prom"))))
                 ),
                 
@@ -2176,20 +2179,20 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
-                                                                                   selectInput("ptabla2015_primeravx_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2015_segundavx_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2015_terceravx_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2015_primeravx_prom", "ingrese primera variable:", c(dataset2015_col)),
+                                                                                   selectInput("ptabla2015_segundavx_prom", "ingrese segunda variable:", c(dataset2015_col)),
+                                                                                   selectInput("ptabla2015_terceravx_prom", "ingrese tercera variable:", c(dataset2015_col)),
                                                                                    
-                                                                                   selectInput("ptabla2015_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2015_cuartavx", "ingrese cuarta variable:", c(dataset2015_col)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2_prom_2015", "Descargar"),
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada_prom_2015")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
-                                                                              selectInput("ptabla2015_primerav_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2015_segundav_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2015_tercerav_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2015_primerav_prom", "ingrese primera variable:", c(dataset2015_col)),
+                                                                              selectInput("ptabla2015_segundav_prom", "ingrese segunda variable:", c(dataset2015_col)),
+                                                                              selectInput("ptabla2015_tercerav_prom", "ingrese tercera variable:", c(dataset2015_col)),
                                                                               verbatimTextOutput("tabla_chi_generalizada_prom_2015"))))
                 ),
                 
@@ -2721,8 +2724,8 @@ server <- function(input, output, session) {
                                  column(12, includeMarkdown("info_ponderacion.md")),
                                
                                column(12,
-                                                                                    selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                    selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                    selectInput("ptabla2017_primerav", "ingrese primera variable:", c(dataset2017_col)),
+                                                                                    selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(dataset2017_col)),
                                                                                     verbatimTextOutput("tabla_d_c"),
                                                                                     verbatimTextOutput("tabla_d_c_ponderadas")
                                                                                     ))
@@ -2732,8 +2735,8 @@ server <- function(input, output, session) {
                            tabPanel("Pearson's Chi-squared test",fluidRow(
                                column(12, includeMarkdown("info_Chi-squared.md")),
                                column(12,
-                                                                                 selectInput("ptabla2017_primerav_chi", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                 selectInput("ptabla2017_segundav_chi", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                 selectInput("ptabla2017_primerav_chi", "ingrese primera variable:", c(dataset2017_col)),
+                                                                                 selectInput("ptabla2017_segundav_chi", "ingrese segunda variable:", c(dataset2017_col)),
                                                                                  verbatimTextOutput("tabla_chi"))))
                 ) ,
                 
@@ -2753,23 +2756,23 @@ server <- function(input, output, session) {
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
                                selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
                                column(7,
-                                                                                   selectInput("ptabla2017_primeravx", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2017_segundavx", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2017_terceravx", "ingrese tercera variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   selectInput("tabla2017_1", "ingrese primera variable:", c(dataset2017_col)),
+                                                                                   selectInput("tabla2017_2", "ingrese segunda variable:", c(dataset2017_col)),
+                                                                                   selectInput("tabla2017_3", "ingrese tercera variable:", c(dataset2017_col)),
+                                                                                   selectInput("tabla2017_4", "ingrese cuarta variable:", c(dataset2017_col)),
                                                                                    downloadButton("boton_ttcc_mayor_2", "Descargar"),
-                                                                                   verbatimTextOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1"),
+                                                                                   verbatimTextOutput("tabla_d_c_generalizada_2017") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5),
                                    
                                    downloadButton("boton_ttcc_mayor_2_pon", "Descargar"),
                                    #   tableOutput("tabla_d_c_generalizada") %>% withSpinner(color="#0dc5c1")))),
-                                   verbatimTextOutput("tabla_d_c_generalizada_pon") %>% withSpinner(color="#0dc5c1")
+                                   verbatimTextOutput("tabla_d_c_generalizada_pon_2017_pon") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
                                    )
                                )),
 
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
-                                                                              selectInput("ptabla2017_primerav", "ingrese primera variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2017_primerav", "ingrese primera variable:", c(dataset2017_col)),
+                                                                              selectInput("ptabla2017_segundav", "ingrese segunda variable:", c(dataset2017_col)),
+                                                                              selectInput("ptabla2017_tercerav", "ingrese tercera variable:", c(dataset2017_col)),
                                                                               verbatimTextOutput("tabla_chi_generalizada"))))
                 ),
                 
@@ -2784,20 +2787,20 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(column(7,
-                                                                                   selectInput("ptabla2017_primeravx_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2017_segundavx_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                                   selectInput("ptabla2017_terceravx_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2017_primeravx_prom", "ingrese primera variable:", c(dataset2017_col)),
+                                                                                   selectInput("ptabla2017_segundavx_prom", "ingrese segunda variable:", c(dataset2017_col)),
+                                                                                   selectInput("ptabla2017_terceravx_prom", "ingrese tercera variable:", c(dataset2017_col)),
                                                                                    
-                                                                                   selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(datos_df_exp)),
+                                                                                   selectInput("ptabla2017_cuartavx", "ingrese cuarta variable:", c(dataset2017_col)),
                                                                                    
                                                                                    downloadButton("boton_ttcc_mayor_2_prom", "Descargar"),
                                                                                    
                                                                                    verbatimTextOutput("tabla_d_c_generalizada_prom")))),
                            
                            tabPanel("Cochran–Mantel–Haenszel",fluidRow(column(12,
-                                                                              selectInput("ptabla2017_primerav_prom", "ingrese primera variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2017_segundav_prom", "ingrese segunda variable:", c(datos_df_exp)),
-                                                                              selectInput("ptabla2017_tercerav_prom", "ingrese tercera variable:", c(datos_df_exp)),
+                                                                              selectInput("ptabla2017_primerav_prom", "ingrese primera variable:", c(dataset2017_col)),
+                                                                              selectInput("ptabla2017_segundav_prom", "ingrese segunda variable:", c(dataset2017_col)),
+                                                                              selectInput("ptabla2017_tercerav_prom", "ingrese tercera variable:", c(dataset2017_col)),
                                                                               verbatimTextOutput("tabla_chi_generalizada_prom"))))
                 ),
                 
@@ -2816,8 +2819,8 @@ server <- function(input, output, session) {
                            
                            tabPanel("Promedios agrupados por categoría",fluidRow(column(12, includeMarkdown("info_papc.md")),
                                                                                  column(12,
-                                                                                   selectInput("primero_papc_2017", "ingrese primera variable:", c(datos_df_exp)),
-                                                                                   selectInput("segundo_papc_2017", "ingrese segunda variable:", c(datos_df_exp)),
+                                                                                   selectInput("primero_papc_2017", "ingrese primera variable:", c(dataset2017_col)),
+                                                                                   selectInput("segundo_papc_2017", "ingrese segunda variable:", c(dataset2017_col)),
 
                                                                                    downloadButton("boton_tabla_papc_2017", "Descargar"),
                                                                                    
@@ -3975,7 +3978,7 @@ server <- function(input, output, session) {
     
     #la base de datos total:
     dataset2017_react <- reactive({
-      data <- dataset2017
+      data <- dataset2017[, 1:804]
       return(data)
     })
     
@@ -5332,7 +5335,10 @@ server <- function(input, output, session) {
         
         ############################################## 2013 ###############################################
         
+
         output$tabla_d_c_generalizada_2013<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
           
           d <- input$ptabla2013_primeravx
           e <- input$ptabla2013_segundavx
@@ -5349,13 +5355,43 @@ server <- function(input, output, session) {
           
           cross_tab = table(a, b, c, d)
           
-          return(cross_tab)
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2013")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
+          
         })
         
         
         
         
         output$tabla_d_c_generalizada_2013_pon<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
           
           d <- input$ptabla2013_primeravx
           e <- input$ptabla2013_segundavx
@@ -5369,12 +5405,40 @@ server <- function(input, output, session) {
           c <- ab[,f] 
           d <- ab[,g] 
           
-          cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+
+          cross_tab = xtabs(ab[,578]  ~  unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578] ~   unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
-          return(cross_tab)
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2013")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
         })
         
-        
+           
         output$tabla_2013_csv <- downloadHandler(
           filename = function() {
             paste("ttcc_2013.csv", "csv", sep=".")
@@ -5559,7 +5623,7 @@ server <- function(input, output, session) {
           c <- ab[,f] 
           d <- ab[,g] 
           
-          cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          cross_tab = xtabs(ab[,736] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,736] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
           tabla <- as.data.frame(cross_tab)
           
@@ -5793,112 +5857,110 @@ server <- function(input, output, session) {
     
     ########################################################################## 2017  ##########################################################################  
 
-    output$tabla_d_c_generalizada<-renderPrint({
-        #output$tabla_d_c_generalizada<-renderTable({
-        d <- input$ptabla2017_primeravx
-        e <- input$ptabla2017_segundavx
-        f <- input$ptabla2017_terceravx
-        g <- input$ptabla2017_cuartavx
-        
-        
-        preguntaseternas2001_ab <- mydata_educacion_exp()
-        
-        
-        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
-        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
-        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
-        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
+    
+    
+    output$tabla_d_c_generalizada_2017<-renderPrint({
+      
+      w <- dataset06[[6]] %>% attr('labels')
+      
+      d <- input$tabla2017_1
+      e <- input$tabla2017_2
+      f <- input$tabla2017_3
+      g <- input$tabla2017_4
+      
+      ab <- dataset2017_react()
+      
+      a <- ab[,d]
+      b <- ab[,e] 
+      c <- ab[,f] 
+      d <- ab[,g] 
+      
+      
+      cross_tab = table(a, b, c, d)
+      
+      tabla <- as.data.frame(cross_tab)
+      
+      datallll <- data.frame()
+      
+      d <-tabla[!(tabla$Freq == 0),]
+      
 
-         cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-        
-        return(cross_tab)
+      # 
+       for(i in 1: nrow(d)){
+         llll_fila <- d[i,]
+         llll<-d[i,1]
+         sentenceString <- toString(llll)
+         searchString <- ' '
+         replacementString <- ''
+        sentenceString = sub(searchString,replacementString,sentenceString)
+         sentenceString
+         
+        for(j in 1: 336){
+      #     
+           ww<-names(w[j])
+      #     vv<-tolower(ww)
+      #     
+          if(sentenceString==ww){
+             llll_fila <- cbind(llll_fila,w[[j]])
+             llll_fila <- cbind(llll_fila,"2017")
+             datallll <-rbind(datallll,llll_fila)
+           }
+         }
+       }
+
+      
+      return(datallll)
     })
     
+
     
-    
-    output$tabla_d_c_generalizada_pon<-renderPrint({
-
-        d <- input$ptabla2017_primeravx
-        e <- input$ptabla2017_segundavx
-        f <- input$ptabla2017_terceravx
-        g <- input$ptabla2017_cuartavx
-
+    output$tabla_d_c_generalizada_pon_2017_pon<-renderPrint({
+      
+      w <- dataset06[[6]] %>% attr('labels')
+      
+      d <- input$tabla2017_1
+      e <- input$tabla2017_2
+      f <- input$tabla2017_3
+      g <- input$tabla2017_4
+      
+      ab <- dataset2017_react()
+      
+      a <- ab[,d]
+      b <- ab[,e] 
+      c <- ab[,f] 
+      d <- ab[,g] 
+      
+      
+      cross_tab = xtabs(ab[,10] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,10] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      
+      tabla <- as.data.frame(cross_tab)
+      
+      datallll <- data.frame()
+      
+      d <-tabla[!(tabla$Freq == 0),]
+      
+      for(i in 1: nrow(d)){
+        llll_fila <- d[i,]
+        llll<-d[i,1]
+        sentenceString <- toString(llll)
+        searchString <- ' '
+        replacementString <- ''
+        sentenceString = sub(searchString,replacementString,sentenceString)
+        sentenceString
         
-        preguntaseternas2001_ab <- mydata_educacion_exp()
-        
-        
-        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
-        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
-        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
-        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
-        
-
-          cross_tab = xtabs(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),aggregate(preguntaseternas2001_ab$expc ~ unlist(preguntaseternas_sub2001_a)+unlist(preguntaseternas_sub2001_b)+unlist(preguntaseternas_sub2001_c)+unlist(preguntaseternas_sub2001_d),preguntaseternas2001_ab,mean))
+        for(j in 1: 336){
           
+          ww<-names(w[j])
+         # vv<-tolower(ww)
           
-          return(cross_tab)
-    })
-    
-    
-    
-    # 
-    # output$tabla_d_c_generalizada<-renderPrint({
-    #     d <- input$ptabla2017_primeravx
-    #     e <- input$ptabla2017_segundavx
-    #     f <- input$ptabla2017_terceravx
-    #     g <- input$ptabla2017_cuartavx
-    #     
-    # 
-    #     preguntaseternas2001_ab <- mydata_educacion_exp()
-    #     
-    #     
-    #     preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
-    #     preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
-    #     preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
-    #     preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
-    #     
-    #     
-    #     # cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
-    #     
-    #     cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-    #     
-    # 
-    #     return(cross_tab)
-    # })
-    
-    output$exptabla_d_c_generalizada<-renderTable({
-        d <- input$expptabla2017_primeravx
-        e <- input$expptabla2017_segundavx
-        f <- input$expptabla2017_terceravx
-        g <- input$expptabla2017_cuartavx
-        
-        preguntaseternas2001_ab <- mydata_educacion_exp2()
-        
-
-       # tabla_cro <- cro(alerta$Sexo, alerta$"Estado civil")
-        
-        preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,d]
-        preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,e] 
-        preguntaseternas_sub2001_c <- preguntaseternas2001_ab[,f] 
-        preguntaseternas_sub2001_d <- preguntaseternas2001_ab[,g] 
-        
-        preguntaseternas_sub2001_a  <-  data.frame( preguntaseternas_sub2001_a )
-
-        preguntaseternas_sub2001_b  <-  data.frame( preguntaseternas_sub2001_b )
-        #fff <- table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b)
-        
-        # *** buena
-       fff <- cro(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b)
-       # fff <- cro(preguntaseternas_sub2001_a, list(total(), preguntaseternas_sub2001_b %nest% preguntaseternas_sub2001_c))
-        
-        #fff = xtabs(unlist(preguntaseternas_sub2001_a) ~ unlist(preguntaseternas_sub2001_b) + unlist(preguntaseternas_sub2001_c))
-        
-        #tabla_cro <- cro_cpct(preguntaseternas_sub2001_a, list(total(), preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d))
-        
-        # aca debe venir la tabla para consumo de Patricio:
-        # cross_tab = table(preguntaseternas_sub2001_a, preguntaseternas_sub2001_b, preguntaseternas_sub2001_c, preguntaseternas_sub2001_d)
-        
-        return(fff)
+          if(sentenceString == ww){
+            llll_fila <- cbind(llll_fila,w[[j]])
+            llll_fila <- cbind(llll_fila,"2017")
+            datallll <-rbind(datallll,llll_fila)
+          }
+        }
+      }
+      return(datallll)
     })
     
     
