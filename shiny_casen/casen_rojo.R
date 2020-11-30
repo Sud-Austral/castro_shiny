@@ -262,7 +262,7 @@ datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
 
 
 
-ui <- fluidPage(                setBackgroundColor(color = "Silver",
+ui <- fluidPage(                setBackgroundColor(color = "Chartreuse",
                                                    gradient = "radial",
                                                    direction = "left"),
                                 
