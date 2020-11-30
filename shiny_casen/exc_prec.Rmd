@@ -51,9 +51,33 @@ library(readstata13)
 
 ```{r}
 
-dataset2006  <- read.dta13('casen2006.dta')
+dataset2006  <- readRDS("dataset2006.rds")
+dim(dataset2006) + dim(dataset2009)  + dim(dataset2011) + dim(dataset2013) + dim(dataset2015) + dim(dataset2017)
 ```
 
+
+```{r}
+dataset2009  <- readRDS("dataset2009.rds")
+dim(dataset2009)
+```
+
+```{r}
+dataset2011  <- readRDS("dataset2011.rds")
+dim(dataset2011)
+```
+```{r}
+dataset2013 <- readRDS("dataset2013.rds")
+dim(dataset2013)
+```
+```{r}
+dataset2015 <- readRDS("dataset2015.rds")
+dim(dataset2015)
+```
+
+```{r}
+dataset2017 <- readRDS("dataset2017.rds")
+dim(dataset2017)
+```
 
 
 ```{r}
@@ -70,10 +94,38 @@ saveRDS(dataset2009, "dataset2009.rds")
 ```
 
 
+
 ```{r}
-dataset06 <- read_sav('casen2006.sav')
-saveRDS(dataset06, "dataset06.rds")
+dataset2013  <- read.dta('casen_2013_mn_b_principal.dta')
+saveRDS(dataset2013, "dataset2013.rds")
 ```
+
+
+
+```{r}
+dataset2017 <- read.dta('Casen 2017.dta')
+saveRDS(dataset2017, "dataset2017.rds")
+```
+
+```{r}
+dataset2017
+```
+
+```{r}
+      ab <- dataset2017
+      
+      a <- ab$comuna
+      b <- ab$ecivil
+      c <- ab$e1
+      d <- ab$sexo
+      
+      cross_tab = table(a, b, c, d)
+      
+      cross_tab = xtabs(ab[,10] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,10] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      cross_tab
+```
+
+
 
 ```{r}
 dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
