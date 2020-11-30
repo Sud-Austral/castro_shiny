@@ -1,8 +1,9 @@
 
 # Casen
 # Victor Enamorado - Christian Castro
-# 25 de Noviembre del 2020
-# version 15:40 am
+# 30 de Noviembre del 2020
+# version 16:21 pm
+# xxx
   
 library(ggplot2)
 library(ggpubr)
@@ -45,8 +46,13 @@ options(warn = -1)
 ##################################### 2006 #######################################
 
 
-dataset2006  <- read.dta('casen2006.dta')
-dataset2006  <- dataset2006[1:100,]
+#dataset2006  <- read.dta('casen2006.dta')
+
+
+dataset2006  <- readRDS("dataset2006.rds")
+
+
+# dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
@@ -54,13 +60,14 @@ data_2006_1_2_colnames <- colnames(dataset2006_col[2])
 # los .sav nos sirve para asociar los codigos a las comunas, 
 # por lo que en teoría necesitaríamos la lectura solo de uno.
 
-dataset06 <- read_sav('casen2006.sav')
-
 # lo siguiente es importante porque carga data para un ddl especifico:
 
 
 ################################ lectura de un sav por unica vez para poder asignar los codigos a las comunas:
-dataset06 <- read_sav('casen2006.sav')
+# dataset06 <- read_sav('casen2006.sav')
+
+dataset06  <- readRDS("dataset06.rds")
+
 ################################
 
 
@@ -82,9 +89,12 @@ dataset06 <- read_sav('casen2006.sav')
 ###################################### 2009 ############################################
 
 
-# dataset2009 <- read.csv('mydata2009_sub.csv')
 
-dataset2009  <- read.dta('casen2009stata.dta')
+
+# dataset2009  <- read.dta('casen2009stata.dta')
+
+dataset2009  <- readRDS("dataset2009.rds")
+
 dataset2009  <- dataset2009[1:100,]
 dataset2009_col <- colnames(dataset2009)
 
@@ -102,7 +112,11 @@ data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
 # dataset2011 <- read.csv('mydata2011_sub.csv')
 
-dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
+# dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
+
+dataset2011  <- readRDS("dataset2011.rds")
+
+
 dataset2011  <- dataset2011[1:100,]
 dataset2011_col <- colnames(dataset2011)
 
@@ -160,8 +174,14 @@ dataset2013_col_VIII <- colnames(dataset2013_sub_VIII)
 # dataset2015_col <- colnames(dataset2015)
 
 
-dataset2015  <- read.dta('casen 2015.dta')
-dataset2015  <- dataset2011[1:100,]
+# dataset2015  <- read.dta('casen 2015.dta')
+
+dataset2015  <- readRDS("dataset2015.rds")
+
+
+
+
+dataset2015  <- dataset2015[1:100,]
 dataset2015_col <- colnames(dataset2015)
 
 
@@ -4514,6 +4534,22 @@ server <- function(input, output, session) {
     
     ###################################################################################################################################################  
     
+    
+    ################################################################################
+    ################# funciones genericas#####################
+    ################################################################################
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     ################################################################################
     ################# Set de funciones para las bases de datos #####################
     ################################################################################
@@ -4692,12 +4728,6 @@ server <- function(input, output, session) {
             content = function(file) {
                 
               w <- dataset06[[6]] %>% attr('labels')
-              head(w,4)
-              #### Aqui se obtienen los nombres de las comunas
-              a <- names(w) 
-              head(a,4)
-              b<-w[[4]]
-              #//////////////////////////////////////////// 
               
               d <- input$p2006_primerav
               e <- input$p2006_segundav
@@ -4713,11 +4743,8 @@ server <- function(input, output, session) {
               d <- ab[,g] 
               
               cross_tab = table(a, b, c, d)
-              
-              #/////////////////////////////////////////////////////////
+
               tabla <- as.data.frame(cross_tab)
-              
-              ######################################################################################################
               
               datallll <- data.frame()
               
@@ -4770,7 +4797,6 @@ server <- function(input, output, session) {
               c <- ab[,f] 
               d <- ab[,g] 
               
-              
               cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
             
               tabla <- as.data.frame(cross_tab)
@@ -4790,7 +4816,6 @@ server <- function(input, output, session) {
                 
                 w <- dataset06[[6]] %>% attr('labels')
                 for(j in 1: 336){
-                  
                   
                   ww<-names(w[j])
                   vv<-tolower(ww)
@@ -4964,57 +4989,118 @@ server <- function(input, output, session) {
             promedios_grupales <-aggregate(d, by=list(c), FUN = mean , na.rm = TRUE)
         }) 
         
-
         output$boton_ttcc_2009 <- downloadHandler(
-            filename = function() {
-                paste("ttcc_2009.csv", "csv", sep=".")
-            },
-            content = function(file) {
+          filename = function() {
+            paste("ttcc_2009.csv", "csv", sep=".")
+          },
+          content = function(file) {
+            
+            w <- dataset06[[6]] %>% attr('labels')
+            
+            d <- input$p2009_primerav
+            e <- input$p2009_segundav
+            f <- input$p2009_tercerav
+            g <- input$p2009_cuartav
+            
+            ab <- dataset2009_react()
+            
+            a <- ab[,d]
+            b <- ab[,e] 
+            c <- ab[,f] 
+            d <- ab[,g] 
+            
+            cross_tab = table(a, b, c, d)
+            
+            tabla <- as.data.frame(cross_tab)
+
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
                 
-                d <- input$p2009_primerav
-                e <- input$p2009_segundav
-                f <- input$p2009_tercerav
-                g <- input$p2009_cuartav
+                ww<-names(w[j])
+                vv<-tolower(ww)
                 
-                ab <-  dataset2009
-                
-                a <- ab[,d]
-                b <- ab[,e] 
-                c <- ab[,f] 
-                d <- ab[,g] 
-                
-                cross_tab = table(a, b, c, d)
-                
-                write.csv(cross_tab, file)
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2009")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
             }
+            write.csv(datallll, file)
+          }
         )
         
         output$boton_ttcc_2009_pon <- downloadHandler(
-            filename = function() {
-                paste("ttcc_2009_pon.csv", "csv", sep=".")
-            },
-            content = function(file) {
+          filename = function() {
+            paste("ttcc_2009_pon.csv", "csv", sep=".")
+          },
+          content = function(file) {
+            
+            w <- dataset06[[6]] %>% attr('labels')
+            
+            d <- input$p2009_primerav
+            e <- input$p2009_segundav
+            f <- input$p2009_tercerav
+            g <- input$p2009_cuartav
+            
+            ab <- dataset2009_react()
+            
+            a <- ab[,d]
+            b <- ab[,e] 
+            c <- ab[,f] 
+            d <- ab[,g] 
+            
+            
+            cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              w <- dataset06[[6]] %>% attr('labels')
+              for(j in 1: 336){
                 
                 
-                d <- input$p2009_primerav
-                e <- input$p2009_segundav
-                f <- input$p2009_tercerav
-                g <- input$p2009_cuartav
+                ww<-names(w[j])
+                vv<-tolower(ww)
                 
-                ab <- dataset2009
-                
-                a <- ab[,d]
-                b <- ab[,e] 
-                c <- ab[,f] 
-                d <- ab[,g] 
-                
-                cross_tab = xtabs(ab[,16]  ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16]  ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
-                
-                
-                write.csv(cross_tab, file)
-                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2009")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
             }
+            
+            write.csv(datallll, file)
+            
+          }
         )
+        
+        
         
         plot2009 <- reactive({
             df <- dataset2009_react()
@@ -5185,7 +5271,7 @@ server <- function(input, output, session) {
             f <- input$p2011_tercerav
             g <- input$p2011_cuartav
             
-            ab <-  dataset2011
+            ab <-  dataset2011_react()
             
             a <- ab[,d]
             b <- ab[,e] 
@@ -5210,7 +5296,7 @@ server <- function(input, output, session) {
             f <- input$p2011_tercerav
             g <- input$p2011_cuartav
             
-            ab <- dataset2011
+            ab <- dataset2011_react()
             
             a <- ab[,d]
             b <- ab[,e] 
