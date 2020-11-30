@@ -47,7 +47,7 @@ options(warn = -1)
 
 dataset2006  <- read.dta('casen2006.dta')
 dataset2006  <- dataset2006[1:100,]
-
+dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
 
@@ -103,15 +103,16 @@ data_2009_5_348_colnames <- colnames(data_2009_5_348)
 # dataset2011 <- read.csv('mydata2011_sub.csv')
 
 dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
+dataset2011  <- dataset2011[1:100,]
 dataset2011_col <- colnames(dataset2011)
 
 ############ esto no esta haciendo nada. verificar y borrar! ################
 
-# data_2011_3_5 <- dataset2011[, 1:6]
-# data_2011_1_2_colnames <- colnames(data_2011_3_5)
-# 
-# data_2011_5_348 <- dataset2011[, 7:348]
-# data_2011_5_348_colnames <- colnames(data_2011_5_348)
+data_2011_3_5 <- dataset2011[, 1:6]
+data_2011_1_2_colnames <- colnames(data_2011_3_5)
+
+data_2011_5_348 <- dataset2011[, 7:348]
+data_2011_5_348_colnames <- colnames(data_2011_5_348)
 
 #############################################################################
 
@@ -155,8 +156,14 @@ dataset2013_col_VIII <- colnames(dataset2013_sub_VIII)
 
 ###################################### 2015 ############################################
 
-dataset2015 <- read.csv('mydata2015_sub.csv')
+# dataset2015 <- read.csv('mydata2015_sub.csv')
+# dataset2015_col <- colnames(dataset2015)
+
+
+dataset2015  <- read.dta('casen 2015.dta')
+dataset2015  <- dataset2011[1:100,]
 dataset2015_col <- colnames(dataset2015)
+
 
 # extraccion de las cabeceras para la carga de los filtros por categoria
 
@@ -261,7 +268,7 @@ datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
 
 
 
-ui <- fluidPage(                setBackgroundColor(color = "celedon",
+ui <- fluidPage(                setBackgroundColor(color = "GhostWhite",
                                                    gradient = "radial",
                                                    direction = "left"),
                                 
@@ -5095,8 +5102,9 @@ server <- function(input, output, session) {
           c <- ab[,f] 
           d <- ab[,g] 
           
+          # el factor de expansión comunal para la tabla .dat de la casen 2011 es expc_full, la columna 11. 
           
-          cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
           tabla <- as.data.frame(cross_tab)
           
@@ -5399,13 +5407,14 @@ server <- function(input, output, session) {
         
         output$tabla_d_c_generalizada_2015<-renderPrint({
           
+          w <- dataset06[[6]] %>% attr('labels')
+          
           d <- input$ptabla2015_primeravx
           e <- input$ptabla2015_segundavx
           f <- input$ptabla2015_terceravx
           g <- input$ptabla2015_cuartavx
           
           ab <- dataset2015_react()
-          
           
           a <- ab[,d]
           b <- ab[,e] 
@@ -5414,7 +5423,34 @@ server <- function(input, output, session) {
           
           cross_tab = table(a, b, c, d)
           
-          return(cross_tab)
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2015")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
         })
         
         
@@ -5422,6 +5458,8 @@ server <- function(input, output, session) {
         
         
         output$tabla_d_c_generalizada_2015_pon<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
           
           d <- input$ptabla2015_primeravx
           e <- input$ptabla2015_segundavx
@@ -5435,9 +5473,36 @@ server <- function(input, output, session) {
           c <- ab[,f] 
           d <- ab[,g] 
           
-          cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
-          return(cross_tab)
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2015")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
         })
         
         

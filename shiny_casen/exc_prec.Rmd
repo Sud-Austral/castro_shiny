@@ -55,6 +55,19 @@ data_2006_3_5 <- dataset2006[, c(4,6)]
 data_2006_3_5[2]
 ```
 
+
+```{r}
+dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
+dataset2011
+```
+
+```{r}
+dataset2011
+```
+
+
+
+
 ```{r , echo=FALSE, cache=FALSE, results=FALSE, warning=FALSE, comment=FALSE, warning=FALSE}
 
 
