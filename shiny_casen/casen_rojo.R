@@ -44,32 +44,8 @@ options(warn = -1)
 
 ##################################### 2006 #######################################
 
-
-
-
-
-# esto guardarlo en un binario:
-
-
-# prueba:
-
 dataset2006  <- read.dta('casen2006.dta')
-
-
-
-
-# lo que funciona:
-
-# dataset06 <- read.dta('casen2006.dta')
-# dataset2006_sub <- dataset06
-# write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
-# dataset2006 <- read_table('mydata2006_sub.csv')
-
-# dataset2006 <- read.csv('mydata2006_sub.csv')
-
-
-
-
+dataset2006  <- dataset2006[1:100,]
 
 dataset2006_col <- colnames(dataset2006)
 
@@ -80,11 +56,9 @@ data_2006_5_348 <- dataset2006[, 7:348]
 data_2006_5_348_colnames <- colnames(data_2006_5_348)
 
 
-#dataset06 <- read_sav('casen2006.sav')
-
-
+################################ lectura de un sav por unica vez para poder asignar los codigos a las comunas:
 dataset06 <- read_sav('casen2006.sav')
-
+################################
 
 
 
@@ -93,9 +67,12 @@ dataset06 <- read_sav('casen2006.sav')
 
 ###################################### 2009 ############################################
 
-dataset2009 <- read.csv('mydata2009_sub.csv')
+# dataset2009 <- read.csv('mydata2009_sub.csv')
 
+dataset2009  <- read.dta('casen2009stata.dta')
+dataset2009  <- dataset2009[1:100,]
 dataset2009_col <- colnames(dataset2009)
+
 
 data_2009_3_5 <- dataset2009[, c(4,6)]
 data_2009_1_2_colnames <- colnames(data_2009_3_5)
@@ -262,7 +239,7 @@ datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
 
 
 
-ui <- fluidPage(                setBackgroundColor(color = "Chartreuse",
+ui <- fluidPage(                setBackgroundColor(color = "celedon",
                                                    gradient = "radial",
                                                    direction = "left"),
                                 
@@ -4516,12 +4493,6 @@ server <- function(input, output, session) {
     output$tabla_d_c_generalizada_2006<-renderPrint({
       
       w <- dataset06[[6]] %>% attr('labels')
-      # head(w,4)
-      # #### Aqui se obtienen los nombres de las comunas
-      # a <- names(w) 
-      # head(a,4)
-      # b<-w[[4]]
-      #//////////////////////////////////////////// 
 
         d <- input$p2006_primerav
         e <- input$p2006_segundav
@@ -4537,26 +4508,13 @@ server <- function(input, output, session) {
         d <- ab[,g] 
         
         cross_tab = table(a, b, c, d)
-        
-        #/////////////////////////////////////////////////////////
-        
+
         tabla <- as.data.frame(cross_tab)
-        
-        ######################################################################################################
-        
+
         datallll <- data.frame()
         
         d <-tabla[!(tabla$Freq == 0),]
-        
-        
-        
-        ##############################
-        
-        ##############################
-        
-        # este bloque funciona bien
-        # 
-        
+
         for(i in 1: nrow(d)){
 
           llll_fila <- d[i,]
@@ -4581,13 +4539,6 @@ server <- function(input, output, session) {
             }
           }
         }
-        
-        # 
-        
-        ###########################################################################################################
-        
-        
-       # return(required_df)
 
         return(datallll)
     })
@@ -4603,6 +4554,7 @@ server <- function(input, output, session) {
       
       #ab <-  dataset2006
       ab <- dataset2006_react()
+      
       a <- ab[,d]
       b <- ab[,e] 
       c <- ab[,f] 
@@ -4639,7 +4591,7 @@ server <- function(input, output, session) {
             }
           }
         }
-        ###########################################################################################################
+
         return(datallll)
     })
     
@@ -4787,6 +4739,7 @@ server <- function(input, output, session) {
               
               
               cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            
               tabla <- as.data.frame(cross_tab)
               
               datallll <- data.frame()
@@ -4830,43 +4783,108 @@ server <- function(input, output, session) {
 ########################################################################## 2009  ##########################################################################  
         
         output$tabla_d_c_generalizada_2009<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
+          
+          d <- input$p2009_primerav
+          e <- input$p2009_segundav
+          f <- input$p2009_tercerav
+          g <- input$p2009_cuartav
+          
+          #ab <-  dataset2006
+          ab <- dataset2009_react()
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          cross_tab = table(a, b, c, d)
+          
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
             
-            d <- input$p2009_primerav
-            e <- input$p2009_segundav
-            f <- input$p2009_tercerav
-            g <- input$p2009_cuartav
+            llll_fila <- d[i,]
             
-            ab <-  dataset2009
+            llll <- d[i,1]
             
-            a <- ab[,d]
-            b <- ab[,e] 
-            c <- ab[,f] 
-            d <- ab[,g] 
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
             
-            cross_tab = table(a, b, c, d)
-            #/////////////////////////////////////////////////
-           
-            return(cross_tab)
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2009")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          
+          return(datallll)
         })
         
         
         output$tabla_d_c_generalizada_pon_2009<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
             
             d <- input$p2009_primerav
             e <- input$p2009_segundav
             f <- input$p2009_tercerav
             g <- input$p2009_cuartav
             
-            ab <- dataset2009
+            ab <- dataset2009_react()
             
             a <- ab[,d]
             b <- ab[,e] 
             c <- ab[,f] 
             d <- ab[,g] 
             
-            cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          
+            tabla <- as.data.frame(cross_tab)
             
-            return(cross_tab)
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              #   w <- dataset06[[6]] %>% attr('labels')
+              for(j in 1: 336){
+                
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2006")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            
+            return(datallll)
         }) 
         
         output$promedios_2009<-renderPrint({
