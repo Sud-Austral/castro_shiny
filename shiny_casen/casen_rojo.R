@@ -2864,7 +2864,7 @@ server <- function(input, output, session) {
     
     output$boton_ttcc_mayor_2 <- downloadHandler(
         filename = function() {
-            paste("tabla_ttcc.csv", "csv", sep=".")
+            paste("ttcc_2017.csv", "csv", sep=".")
         },
         content = function(file) {
           w <- dataset06[[6]] %>% attr('labels')
@@ -2919,7 +2919,7 @@ server <- function(input, output, session) {
     
     output$boton_ttcc_mayor_2_pon <- downloadHandler(
         filename = function() {
-            paste("tabla_ttcc_pon.csv", "csv", sep=".")
+            paste("ttcc_2017_pon.csv", "csv", sep=".")
         },
         content = function(file) {
           w <- dataset06[[6]] %>% attr('labels')
@@ -5009,7 +5009,7 @@ server <- function(input, output, session) {
                 
                 if(sentenceString==vv){
                   llll_fila <- cbind(llll_fila,w[[j]])
-                  llll_fila <- cbind(llll_fila,"2006")
+                  llll_fila <- cbind(llll_fila,"2009")
                   datallll <-rbind(datallll,llll_fila)
                 }
               }
@@ -5653,7 +5653,9 @@ server <- function(input, output, session) {
             c <- ab[,f] 
             d <- ab[,g] 
             
-            cross_tab = table(a, b, c, d)
+            
+            cross_tab = xtabs(ab[,578]  ~  unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578] ~   unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            
             
             tabla <- as.data.frame(cross_tab)
             
