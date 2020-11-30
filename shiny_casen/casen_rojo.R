@@ -1,8 +1,9 @@
 
 # Casen
 # Victor Enamorado - Christian Castro
-# 25 de Noviembre del 2020
-# version 15:40 am
+# 30 de Noviembre del 2020
+# version 16:21 pm
+# xxx
   
 library(ggplot2)
 library(ggpubr)
@@ -51,7 +52,7 @@ options(warn = -1)
 dataset2006  <- readRDS("dataset2006.rds")
 
 
-dataset2006  <- dataset2006[1:100,]
+# dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
@@ -113,7 +114,7 @@ data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
 # dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
 
-dataset2009  <- readRDS("dataset2011.rds")
+dataset2011  <- readRDS("dataset2011.rds")
 
 
 dataset2011  <- dataset2011[1:100,]
@@ -5270,7 +5271,7 @@ server <- function(input, output, session) {
             f <- input$p2011_tercerav
             g <- input$p2011_cuartav
             
-            ab <-  dataset2011
+            ab <-  dataset2011_react()
             
             a <- ab[,d]
             b <- ab[,e] 
@@ -5295,7 +5296,7 @@ server <- function(input, output, session) {
             f <- input$p2011_tercerav
             g <- input$p2011_cuartav
             
-            ab <- dataset2011
+            ab <- dataset2011_react()
             
             a <- ab[,d]
             b <- ab[,e] 
