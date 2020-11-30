@@ -40,23 +40,46 @@ library(shinyWidgets)
 oldw <- getOption("warn")
 options(warn = -1)
 
-####################### consumo de tablas excel ##################################
+####################### consumo de la data ##################################
 
 ##################################### 2006 #######################################
 
 
-
-
-
-# esto guardarlo en un binario:
-
-
-# prueba:
-
 dataset2006  <- read.dta('casen2006.dta')
 
 
+dataset2006 <- dataset2006[1:100,]
+# write.csv(dataset2006,"data2006.csv", row.names = FALSE)
 
+# dataset2006 <- read_table('data2006.csv')
+
+# dataset2006 <- read.csv('mydata2006_sub.csv')
+
+
+
+
+dataset2006_col <- colnames(dataset2006)
+
+
+
+data_2006_1_2_colnames <- colnames(dataset2006_col[2])
+
+# los .sav nos sirve para asociar los codigos a las comunas, 
+# por lo que en teoría necesitaríamos la lectura solo de uno.
+
+dataset06 <- read_sav('casen2006.sav')
+
+# lo siguiente es importante porque carga data para un ddl especifico:
+
+
+
+
+
+############ esto no esta haciendo nada. verificar y borrar! ################
+# data_2006_5_348 <- dataset2006[, 7:348]
+# data_2006_5_348_colnames <- colnames(data_2006_5_348)
+
+#############################################################################
 
 # lo que funciona:
 
@@ -67,35 +90,15 @@ dataset2006  <- read.dta('casen2006.dta')
 
 # dataset2006 <- read.csv('mydata2006_sub.csv')
 
-
-
-
-
-dataset2006_col <- colnames(dataset2006)
-
-data_2006_3_5 <- dataset2006[, c(4,6)]
-data_2006_1_2_colnames <- colnames(data_2006_3_5)
-
-data_2006_5_348 <- dataset2006[, 7:348]
-data_2006_5_348_colnames <- colnames(data_2006_5_348)
-
-
-#dataset06 <- read_sav('casen2006.sav')
-
-
-dataset06 <- read_sav('casen2006.sav')
-
-
-
-
-
-
-
 ###################################### 2009 ############################################
 
-dataset2009 <- read.csv('mydata2009_sub.csv')
+dataset2009  <- read.dta('casen2009stata.dta')
+
+# dataset2009 <- read.csv('mydata2009_sub.csv')
 
 dataset2009_col <- colnames(dataset2009)
+
+############ esto no esta haciendo nada. verificar y borrar! ################
 
 data_2009_3_5 <- dataset2009[, c(4,6)]
 data_2009_1_2_colnames <- colnames(data_2009_3_5)
@@ -103,18 +106,24 @@ data_2009_1_2_colnames <- colnames(data_2009_3_5)
 data_2009_5_348 <- dataset2009[, 7:348]
 data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
+################################################################################
 
-######################### 2011 pendiente ###############################################
+######################### 2011 ###############################################
 
-dataset2011 <- read.csv('mydata2011_sub.csv')
+# dataset2011 <- read.csv('mydata2011_sub.csv')
 
+dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
 dataset2011_col <- colnames(dataset2011)
 
-data_2011_3_5 <- dataset2011[, 1:6]
-data_2011_1_2_colnames <- colnames(data_2011_3_5)
+############ esto no esta haciendo nada. verificar y borrar! ################
 
-data_2011_5_348 <- dataset2011[, 7:348]
-data_2011_5_348_colnames <- colnames(data_2011_5_348)
+# data_2011_3_5 <- dataset2011[, 1:6]
+# data_2011_1_2_colnames <- colnames(data_2011_3_5)
+# 
+# data_2011_5_348 <- dataset2011[, 7:348]
+# data_2011_5_348_colnames <- colnames(data_2011_5_348)
+
+#############################################################################
 
 
 ###################################### 2013 ############################################
@@ -188,8 +197,8 @@ dataset2015_col_VIII <- colnames(dataset2015_sub_VIII)
 
 ########################################################################################
 
-dataset2011 <- read.csv('mydata2011_sub.csv')
-dataset2011 <- dataset2011[1:1000,]
+# dataset2011 <- read.csv('mydata2011_sub.csv')
+# dataset2011 <- dataset2011[1:1000,]
 # dataset2011_col <- colnames(dataset2011)
 
 ##################   2017 ##############################
@@ -515,7 +524,7 @@ server <- function(input, output, session) {
                            tabPanel("Seleccione variable que funga como grupo:", fluidRow(
                                column(12, includeMarkdown("info_2006_prom.md")),
                                selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_1_2_colnames)),
-                               selectInput("categoria_filtro", "Seleccione atributo:", c(data_2006_5_348_colnames)),
+                               selectInput("categoria_filtro", "Seleccione atributo:", c(dataset2009_col)),
                                column(12, tableOutput("promedios_filtros_2006"))
                            ))),
                 
@@ -4505,6 +4514,7 @@ server <- function(input, output, session) {
     output$modulo_34_2017 <- renderDataTable(dataset2017_react_34())
     output$modulo_35_2017 <- renderDataTable(dataset2017_react_35())
     output$modulo_36_2017 <- renderDataTable(dataset2017_react_36())
+    
     ###################################################################################################################################################  
     
     ################################################################################
@@ -4513,15 +4523,11 @@ server <- function(input, output, session) {
     
     ########################################################################## 2006  ##########################################################################  
   
+    ################# tablas de contingencia 2006 inicio ###################################
+    
     output$tabla_d_c_generalizada_2006<-renderPrint({
       
       w <- dataset06[[6]] %>% attr('labels')
-      # head(w,4)
-      # #### Aqui se obtienen los nombres de las comunas
-      # a <- names(w) 
-      # head(a,4)
-      # b<-w[[4]]
-      #//////////////////////////////////////////// 
 
         d <- input$p2006_primerav
         e <- input$p2006_segundav
@@ -4538,24 +4544,13 @@ server <- function(input, output, session) {
         
         cross_tab = table(a, b, c, d)
         
-        #/////////////////////////////////////////////////////////
-        
         tabla <- as.data.frame(cross_tab)
         
-        ######################################################################################################
+        # ---
         
         datallll <- data.frame()
         
         d <-tabla[!(tabla$Freq == 0),]
-        
-        
-        
-        ##############################
-        
-        ##############################
-        
-        # este bloque funciona bien
-        # 
         
         for(i in 1: nrow(d)){
 
@@ -4581,13 +4576,6 @@ server <- function(input, output, session) {
             }
           }
         }
-        
-        # 
-        
-        ###########################################################################################################
-        
-        
-       # return(required_df)
 
         return(datallll)
     })
@@ -4608,8 +4596,8 @@ server <- function(input, output, session) {
       c <- ab[,f] 
       d <- ab[,g] 
       
-        
         cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+
         tabla <- as.data.frame(cross_tab)
         
         datallll <- data.frame()
@@ -4625,9 +4613,7 @@ server <- function(input, output, session) {
           sentenceString = sub(searchString,replacementString,sentenceString)
           sentenceString
           
-       #   w <- dataset06[[6]] %>% attr('labels')
           for(j in 1: 336){
-            
             
             ww<-names(w[j])
             vv<-tolower(ww)
@@ -4639,10 +4625,10 @@ server <- function(input, output, session) {
             }
           }
         }
-        ###########################################################################################################
         return(datallll)
     })
     
+    ################# tablas de contingencia 2006 fin ###################################
     
     output$cyb_2006 <- renderPlot({
         
@@ -4828,15 +4814,17 @@ server <- function(input, output, session) {
         
         
 ########################################################################## 2009  ##########################################################################  
-        
+      
         output$tabla_d_c_generalizada_2009<-renderPrint({
             
+          w <- dataset06[[6]] %>% attr('labels')
+          
             d <- input$p2009_primerav
             e <- input$p2009_segundav
             f <- input$p2009_tercerav
             g <- input$p2009_cuartav
             
-            ab <-  dataset2009
+            ab <- dataset2009_react()
             
             a <- ab[,d]
             b <- ab[,e] 
@@ -4844,20 +4832,54 @@ server <- function(input, output, session) {
             d <- ab[,g] 
             
             cross_tab = table(a, b, c, d)
-            #/////////////////////////////////////////////////
-           
-            return(cross_tab)
+
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              
+              llll_fila <- d[i,]
+              
+              llll <- d[i,1]
+              
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2009")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            
+            return(datallll)
+            
         })
-        
-        
+
         output$tabla_d_c_generalizada_pon_2009<-renderPrint({
             
+          w <- dataset06[[6]] %>% attr('labels')
+          
             d <- input$p2009_primerav
             e <- input$p2009_segundav
             f <- input$p2009_tercerav
             g <- input$p2009_cuartav
             
-            ab <- dataset2009
+            # ab <- dataset2009
+            
+            ab <- dataset2009_react()
             
             a <- ab[,d]
             b <- ab[,e] 
@@ -4866,7 +4888,34 @@ server <- function(input, output, session) {
             
             cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
             
-            return(cross_tab)
+            tabla <- as.data.frame(cross_tab)
+            
+            datallll <- data.frame()
+            
+            d <-tabla[!(tabla$Freq == 0),]
+            
+            for(i in 1: nrow(d)){
+              llll_fila <- d[i,]
+              llll<-d[i,1]
+              sentenceString <- toString(llll)
+              searchString <- ' '
+              replacementString <- ''
+              sentenceString = sub(searchString,replacementString,sentenceString)
+              sentenceString
+              
+              for(j in 1: 336){
+                
+                ww<-names(w[j])
+                vv<-tolower(ww)
+                
+                if(sentenceString==vv){
+                  llll_fila <- cbind(llll_fila,w[[j]])
+                  llll_fila <- cbind(llll_fila,"2009")
+                  datallll <-rbind(datallll,llll_fila)
+                }
+              }
+            }
+            return(datallll)
         }) 
         
         output$promedios_2009<-renderPrint({
@@ -4975,36 +5024,20 @@ server <- function(input, output, session) {
 
         
 
-        ########################################################################## 2013  ######################################################################
+        ########################################################################## 2011  ######################################################################
         
-        output$tabla_d_c_generalizada_2013<-renderPrint({
-          
-          d <- input$ptabla2013_primeravx
-          e <- input$ptabla2013_segundavx
-          f <- input$ptabla2013_terceravx
-          g <- input$ptabla2013_cuartavx
-          
-          ab <- dataset2013_react()
-          
-          
-          a <- ab[,d]
-          b <- ab[,e] 
-          c <- ab[,f] 
-          d <- ab[,g] 
-          
-          cross_tab = table(a, b, c, d)
-          
-          return(cross_tab)
-        })
-        
+       
         output$tabla_d_c_generalizada_2011<-renderPrint({
+          
+          w <- dataset06[[6]] %>% attr('labels')
           
           d <- input$p2011_primerav
           e <- input$p2011_segundav
           f <- input$p2011_tercerav
           g <- input$p2011_cuartav
           
-          ab <- dataset2011
+         # ab <- dataset2011
+          ab <- dataset2011_react()
           
           a <- ab[,d]
           b <- ab[,e] 
@@ -5013,27 +5046,84 @@ server <- function(input, output, session) {
           
           cross_tab = table(a, b, c, d)
           
-          return(cross_tab)
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2011")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
           
         }) 
         
         output$tabla_d_c_generalizada_pon_2011<-renderPrint({
           
+          w <- dataset06[[6]] %>% attr('labels')
+          
           d <- input$p2011_primerav
           e <- input$p2011_segundav
           f <- input$p2011_tercerav
           g <- input$p2011_cuartav
           
-          ab <- dataset2011
+          ab <- dataset2011_react()
           
           a <- ab[,d]
           b <- ab[,e] 
           c <- ab[,f] 
           d <- ab[,g] 
           
-          cross_tab = xtabs(ab[,11] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,11] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
           
-          return(cross_tab)
+          cross_tab = xtabs(ab[,16] ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,16] ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+          
+          tabla <- as.data.frame(cross_tab)
+          
+          datallll <- data.frame()
+          
+          d <-tabla[!(tabla$Freq == 0),]
+          
+          for(i in 1: nrow(d)){
+            llll_fila <- d[i,]
+            llll<-d[i,1]
+            sentenceString <- toString(llll)
+            searchString <- ' '
+            replacementString <- ''
+            sentenceString = sub(searchString,replacementString,sentenceString)
+            sentenceString
+            
+            for(j in 1: 336){
+              
+              ww<-names(w[j])
+              vv<-tolower(ww)
+              
+              if(sentenceString==vv){
+                llll_fila <- cbind(llll_fila,w[[j]])
+                llll_fila <- cbind(llll_fila,"2011")
+                datallll <-rbind(datallll,llll_fila)
+              }
+            }
+          }
+          return(datallll)
         }) 
         
         output$promedios_2011<-renderPrint({
@@ -5139,6 +5229,32 @@ server <- function(input, output, session) {
           }
         )
         
+        
+        
+  
+        
+        
+        ############################################## 2013 ###############################################
+        
+        output$tabla_d_c_generalizada_2013<-renderPrint({
+          
+          d <- input$ptabla2013_primeravx
+          e <- input$ptabla2013_segundavx
+          f <- input$ptabla2013_terceravx
+          g <- input$ptabla2013_cuartavx
+          
+          ab <- dataset2013_react()
+          
+          
+          a <- ab[,d]
+          b <- ab[,e] 
+          c <- ab[,f] 
+          d <- ab[,g] 
+          
+          cross_tab = table(a, b, c, d)
+          
+          return(cross_tab)
+        })
         
         
         
@@ -5273,6 +5389,9 @@ server <- function(input, output, session) {
         }) 
         
         
+        
+        
+        ####################################################################################################
         
         ########################################################################## 2015  ######################################################################
         

@@ -46,6 +46,14 @@ library(sjmisc)
 library(WriteXLS)
 
 ```
+```{r}
+dataset2006  <- read.dta('casen2006.dta')
+write.csv(dataset2006,"data2006.csv", row.names = FALSE)
+```
+```{r}
+data_2006_3_5 <- dataset2006[, c(4,6)]
+data_2006_3_5[2]
+```
 
 ```{r , echo=FALSE, cache=FALSE, results=FALSE, warning=FALSE, comment=FALSE, warning=FALSE}
 
