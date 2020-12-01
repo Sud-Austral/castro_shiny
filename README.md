@@ -1,3 +1,2 @@
-# Shiny
 
 ![Screenshot](shiny.jpeg)
