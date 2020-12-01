@@ -41,254 +41,68 @@ library(shinyWidgets)
 oldw <- getOption("warn")
 options(warn = -1)
 
-####################### consumo de la data ##################################
-
-##################################### 2006 #######################################
-
-
-#dataset2006  <- read.dta('casen2006.dta')
-
-
 dataset2006  <- readRDS("dataset2006.rds")
 
-dataset2006  <- dataset2006[1:100,]
+# dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
 
-# los .sav nos sirve para asociar los codigos a las comunas, 
-# por lo que en teoría necesitaríamos la lectura solo de uno.
-
-# lo siguiente es importante porque carga data para un ddl especifico:
-
-
-################################ lectura de un sav por unica vez para poder asignar los codigos a las comunas:
-# dataset06 <- read_sav('casen2006.sav')
-
 dataset06  <- readRDS("dataset06.rds")
-
-################################
-
-
-############ esto no esta haciendo nada. verificar y borrar! ################
-# data_2006_5_348 <- dataset2006[, 7:348]
-# data_2006_5_348_colnames <- colnames(data_2006_5_348)
-
-#############################################################################
-
-# lo que funciona:
-
-# dataset06 <- read.dta('casen2006.dta')
-# dataset2006_sub <- dataset06
-# write.csv(dataset2006_sub,"mydata2006_sub.csv", row.names = FALSE)
-# dataset2006 <- read_table('mydata2006_sub.csv')
-
-# dataset2006 <- read.csv('mydata2006_sub.csv')
-
-###################################### 2009 ############################################
-
-
-
-
-# dataset2009  <- read.dta('casen2009stata.dta')
 
 dataset2009  <- readRDS("dataset2009.rds")
 
 dataset2009  <- dataset2009[1:100,]
 dataset2009_col <- colnames(dataset2009)
 
-
+# extraccion de las cabeceras para la carga de los filtros por categoria
 
 data_2009_3_5 <- dataset2009[, c(4,6)]
 data_2009_1_2_colnames <- colnames(data_2009_3_5)
-
 data_2009_5_348 <- dataset2009[, 7:348]
 data_2009_5_348_colnames <- colnames(data_2009_5_348)
 
-################################################################################
-
-######################### 2011 ###############################################
-
-# dataset2011 <- read.csv('mydata2011_sub.csv')
-
-# dataset2011  <- read.dta('casen2011_octubre2011_enero2012_principal_08032013stata.dta')
-
 dataset2011  <- readRDS("dataset2011.rds")
-
 
 dataset2011  <- dataset2011[1:100,]
 dataset2011_col <- colnames(dataset2011)
 
-############ esto no esta haciendo nada. verificar y borrar! ################
+# extraccion de las cabeceras para la carga de los filtros por categoria
 
 data_2011_3_5 <- dataset2011[, 1:6]
 data_2011_1_2_colnames <- colnames(data_2011_3_5)
-
 data_2011_5_348 <- dataset2011[, 7:348]
 data_2011_5_348_colnames <- colnames(data_2011_5_348)
 
-#############################################################################
-
-
-###################################### 2013 ############################################
-
-# dataset2013  <- read.dta('casen_2013.dta')
-
 dataset2013  <- readRDS("dataset2013.rds")
 
-
-dataset2013  <- dataset2013[1:100,]
+# dataset2013  <- dataset2013[1:100,]
 dataset2013_col <- colnames(dataset2013)
+
+# extraccion de las cabeceras para la carga de los filtros por categoria
 
 data_2013_3_5 <- dataset2013[, c(4,6)]
 data_2013_1_2_colnames <- colnames(data_2013_3_5)
-
 data_2013_5_348 <- dataset2013[, 7:348]
 data_2013_5_348_colnames <- colnames(data_2013_5_348)
 
-# extraccion de las cabeceras para la carga de los ddl para frecuencias por modulo
-###################################### ###################################### ###################################### 
-###################################### Esto sera borral al desplegar un dropdownlist para todas las columnas ###################################### 
-###################################### ###################################### ###################################### 
-dataset2013_sub_I <- dataset2013[,1:10]
-dataset2013_col_I <- colnames(dataset2013_sub_I)
-dataset2013_sub_II <- dataset2013[,11:20]
-dataset2013_col_II <- colnames(dataset2013_sub_II)
-dataset2013_sub_III <- dataset2013[,21:30]
-dataset2013_col_III <- colnames(dataset2013_sub_III)
-dataset2013_sub_IV <- dataset2013[,31:40]
-dataset2013_col_IV <- colnames(dataset2013_sub_IV)
-dataset2013_sub_V <- dataset2013[,41:50]
-dataset2013_col_V <- colnames(dataset2013_sub_V)
-dataset2013_sub_VI <- dataset2013[,51:60]
-dataset2013_col_VI <- colnames(dataset2013_sub_VI)
-dataset2013_sub_VII <- dataset2013[,61:70]
-dataset2013_col_VII <- colnames(dataset2013_sub_VII)
-dataset2013_sub_VIII <- dataset2013[,71:80]
-dataset2013_col_VIII <- colnames(dataset2013_sub_VIII)
-###################################### ###################################### ###################################### 
-###################################### ###################################### ###################################### 
-###################################### ###################################### ###################################### 
-
-###################################### 2015 ############################################
-
-# dataset2015 <- read.csv('mydata2015_sub.csv')
-# dataset2015_col <- colnames(dataset2015)
-
-
-# dataset2015  <- read.dta('casen 2015.dta')
-
 dataset2015  <- readRDS("dataset2015.rds")
-
-
-
 
 dataset2015  <- dataset2015[1:100,]
 dataset2015_col <- colnames(dataset2015)
-
 
 # extraccion de las cabeceras para la carga de los filtros por categoria
 
 data_2015_3_5 <- dataset2015[, c(4,6)]
 data_2015_1_2_colnames <- colnames(data_2015_3_5)
-
 data_2015_5_348 <- dataset2015[, 7:348]
 data_2015_5_348_colnames <- colnames(data_2015_5_348)
 
-# extraccion de las cabeceras para la carga de los ddl para frecuencias por modulo
-
-dataset2015_sub_I <- dataset2015[,1:10]
-dataset2015_col_I <- colnames(dataset2015_sub_I)
-dataset2015_sub_II <- dataset2015[,11:20]
-dataset2015_col_II <- colnames(dataset2015_sub_II)
-dataset2015_sub_III <- dataset2015[,21:30]
-dataset2015_col_III <- colnames(dataset2015_sub_III)
-dataset2015_sub_IV <- dataset2015[,31:40]
-dataset2015_col_IV <- colnames(dataset2015_sub_IV)
-dataset2015_sub_V <- dataset2015[,41:50]
-dataset2015_col_V <- colnames(dataset2015_sub_V)
-dataset2015_sub_VI <- dataset2015[,51:60]
-dataset2015_col_VI <- colnames(dataset2015_sub_VI)
-dataset2015_sub_VII <- dataset2015[,61:70]
-dataset2015_col_VII <- colnames(dataset2015_sub_VII)
-dataset2015_sub_VIII <- dataset2015[,71:80]
-dataset2015_col_VIII <- colnames(dataset2015_sub_VIII)
-
-########################################################################################
-
-# dataset2011 <- read.csv('mydata2011_sub.csv')
-# dataset2011 <- dataset2011[1:1000,]
-# dataset2011_col <- colnames(dataset2011)
-
 ##################   2017 ##############################
 dataset2017  <- readRDS("dataset2017.rds")
+
 dataset2017  <- dataset2017[1:100,]
-# dataset2017 <-  read.csv('mydata2017_sub.csv')
 dataset2017_col <- colnames(dataset2017)
-
-########################################################
-
-
-data_2017 <- read_xlsx("casen_2017_mil.xlsx")
-data_2017_colnames <- colnames(data_2017)
-
-data_2017_modulo_I <- data_2017[,1:42]
-data_2017_modulo_I_colnames <- colnames(data_2017_modulo_I)
-data_2017_modulo_II <- data_2017[,43:102]
-data_2017_modulo_II_colnames <- colnames(data_2017_modulo_II)
-data_2017_modulo_III <- data_2017[,103:151]
-data_2017_modulo_III_colnames <- colnames(data_2017_modulo_III)
-data_2017_modulo_IV <- data_2017[,152:304]
-data_2017_modulo_IV_colnames <- colnames(data_2017_modulo_IV)
-
-datos_df_1000  <- read_xlsx("casen_2006_mil.xlsx")
-datos_df_educacion <- datos_df_1000[, 1:32]
-datos_df_educacion_preg <- colnames(datos_df_educacion)
-
-datos_df_2000 <- read_xlsx("casen_2009_mil_ymt.xlsx")
-datos_df_2009_ymt <- datos_df_2000[, 1:5]
-datos_df_2009_ymt_preg <- colnames(datos_df_2009_ymt)
-
-datos_df_casen_2009_mil_mn <- read_xlsx("casen_2009_mil_mn.xlsx")
-datos_df_casen_2009_mil_mn <- datos_df_casen_2009_mil_mn[, 1:34]
-datos_df_casen_2009_mil_mn_preg <- colnames(datos_df_casen_2009_mil_mn)
-
-data_2009_filtros_terr <- datos_df_casen_2009_mil_mn[, 1:2]
-data_2009_filtros_terr_ddl <- colnames(data_2009_filtros_terr)
-data_2009_filtros_cat <- datos_df_casen_2009_mil_mn[, 9:32]
-data_2009_filtros_cat_ddl <- colnames(data_2009_filtros_cat)
-
-datos_df_casen_2011_mil_mn <- read_xlsx("casen_2011_mil_mn.xlsx")
-datos_df_casen_2011_mil_mn <- datos_df_casen_2011_mil_mn[, 1:34]
-datos_df_casen_2011_mil_mn_preg <- colnames(datos_df_casen_2011_mil_mn)
-
-data_2011_filtros_terr <- datos_df_casen_2011_mil_mn[, 1:2]
-data_2011_filtros_terr_ddl <- colnames(data_2011_filtros_terr)
-data_2011_filtros_cat <- datos_df_casen_2011_mil_mn[, 9:32]
-data_201_filtros_cat_ddl <- colnames(data_2011_filtros_cat)
-
-datos_df_casen_2011_mil_ymt <- read_xlsx("casen_2011_mil_ymt.xlsx")
-datos_df_casen_2011_mil_ymt  <- datos_df_casen_2011_mil_ymt [, 1:24]
-datos_df_casen_2011_mil_ymt_preg <- colnames(datos_df_casen_2011_mil_ymt )
-
-###################
-
-datos_df_casen_2013_mil <- read_xlsx("casen_2013_mil.xlsx")
-datos_df_casen_2013_mil <- datos_df_casen_2013_mil[, 1:600]
-datos_df_casen_2013_mil_preg <- colnames(datos_df_casen_2013_mil)
-
-datos_df_casen_2015_mil <- read_xlsx("casen_2015_mil.xlsx")
-datos_df_casen_2015_mil <- datos_df_casen_2015_mil[, 1:776]
-datos_df_casen_2015_mil_preg <- colnames(datos_df_casen_2015_mil)
-
-datos_df_casen_2017_mil <- read_xlsx("casen_2017_mil.xlsx")
-datos_df_casen_2017_mil <- datos_df_casen_2017_mil[, 1:808]
-datos_df_casen_2017_mil_preg <- colnames(datos_df_casen_2017_mil)
-
-datos_df_casen_2017_miledu <- read_xlsx("casen_2017_mil.xlsx")
-datos_df_casen_2017_miledu <- datos_df_casen_2017_miledu[, 43:102]
-datos_df_casen_2017_mil_pregedu <- colnames(datos_df_casen_2017_miledu)
-
 
 
 ui <- fluidPage(                setBackgroundColor(color = "GhostWhite",
@@ -308,8 +122,6 @@ ui <- fluidPage(                setBackgroundColor(color = "GhostWhite",
                               "Casen 2006" = "2006",
                               "Casen 2009" = "2009",
                               "Casen 2011" = "2011",
-                              # "Casen 2011 ymt" = "20110",
-                              # "Casen 2011 mn" = "20111",
                               "Casen 2013" = "2013",
                               "Casen 2015" = "2015",
                               "Casen 2017" = "2017"
@@ -1492,30 +1304,8 @@ server <- function(input, output, session) {
                            
                     tabPanel("Frecuencias por módulo I: Registro de residentes.", fluidRow(
                     column(12, includeMarkdown("info_2006_frec.md")),
-                    selectInput("ptabla_2013_I", "Seleccione pregunta:", c(dataset2013_col_I)),
-                    column(12, dataTableOutput("frecuencias_I")))),
-                
-                
-                
-                tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
-                  column(12, includeMarkdown("info_2006_frec.md")),
-                  selectInput("ptabla_2013_II", "Seleccione pregunta:", c(dataset2013_col_II)),
-                  column(12, dataTableOutput("frecuencias_II")))),
-                
-                
-                
-                tabPanel("Frecuencias por módulo III: Registro de residentes.", fluidRow(
-                  column(12, includeMarkdown("info_2006_frec.md")),
-                  selectInput("ptabla_2013_III", "Seleccione pregunta:", c(dataset2013_col_III)),
-                  column(12, dataTableOutput("frecuencias_III"))
-                )),
-                
-                tabPanel("Frecuencias por módulo IV: Registro de residentes.", fluidRow(
-                  column(12, includeMarkdown("info_2006_frec.md")),
-                  selectInput("ptabla_2013_IV", "Seleccione pregunta:", c(dataset2013_col_IV)),
-                  column(12, dataTableOutput("frecuencias_IV"))
-                ))
-                
+                    selectInput("ptabla_2013", "Seleccione pregunta:", c(dataset2013_col)),
+                    column(12, dataTableOutput("frecuencias_I"))))
                 
                 ),
 
@@ -1571,7 +1361,7 @@ server <- function(input, output, session) {
                            
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
-                             selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                            # selectInput("nada", "Identifique la variable:", c(dataset2017_col)),
                              column(12,
                                     selectInput("ptabla2013_primeravx", "ingrese primera variable:", c(dataset2013_col)),
                                     selectInput("ptabla2013_segundavx", "ingrese segunda variable:", c(dataset2013_col)),
@@ -2073,29 +1863,8 @@ server <- function(input, output, session) {
                            
                            tabPanel("Frecuencias por módulo I: Registro de residentes.", fluidRow(
                              column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla_2015_I", "Seleccione pregunta:", c(dataset2015_col_I)),
-                             column(12, dataTableOutput("frecuencias_2015_I")))),
-                           
-                           
-                           
-                           tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla_2015_II", "Seleccione pregunta:", c(dataset2015_col_II)),
-                             column(12, dataTableOutput("frecuencias_2015_II")))),
-                           
-                           
-                           
-                           tabPanel("Frecuencias por módulo III: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla_2015_III", "Seleccione pregunta:", c(dataset2015_col_III)),
-                             column(12, dataTableOutput("frecuencias_2015_III"))
-                           )),
-                           
-                           tabPanel("Frecuencias por módulo IV: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla_2015_IV", "Seleccione pregunta:", c(dataset2015_col_IV)),
-                             column(12, dataTableOutput("frecuencias_2015_IV"))
-                           ))
+                             selectInput("ptabla_2015", "Seleccione pregunta:", c(dataset2015_col)),
+                             column(12, dataTableOutput("frecuencias_2015_I"))))
                            
                            
                 ),
@@ -2152,7 +1921,7 @@ server <- function(input, output, session) {
                            
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
-                             selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                            # selectInput("nada", "Identifique la variable:", c(dataset2017_col)),
                              column(12,
                                     selectInput("ptabla2015_primeravx", "ingrese primera variable:", c(dataset2015_col)),
                                     selectInput("ptabla2015_segundavx", "ingrese segunda variable:", c(dataset2015_col)),
@@ -2654,41 +2423,16 @@ server <- function(input, output, session) {
                                column(12, includeMarkdown("info_2006_frec.md")),
                                
                                # debe cargarse el ddl con las cabeceras del rango I:
-                               selectInput("ptabla", "Seleccione pregunta:", c(data_2017_modulo_I_colnames)),
+                               selectInput("ptabla_2017", "Seleccione pregunta:", c(dataset2017_col)),
                                column(12, dataTableOutput("prueba_tabla"))
                            )),  
                            
-                           tabPanel("Frecuencias por módulo II: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla2", "Seleccione pregunta:", c(data_2017_modulo_II_colnames)),
-                             column(12, dataTableOutput("prueba_tabla2"))
-                           )),
-                           
-                           tabPanel("Frecuencias por módulo III: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla3", "Seleccione pregunta:", c(data_2017_modulo_III_colnames)),
-                             column(12, dataTableOutput("prueba_tabla3"))
-                           )),
-                           
-                           tabPanel("Frecuencias por módulo IV: Registro de residentes.", fluidRow(
-                             column(12, includeMarkdown("info_2006_frec.md")),
-                             selectInput("ptabla4", "Seleccione pregunta:", c(data_2017_modulo_IV_colnames)),
-                             column(12, dataTableOutput("prueba_tabla4"))
-                           )),
-                           
-                           
 
-                           tabPanel("Frecuencias por módulo III: Registro de residentes.", tableOutput("modulo_III_2017")),
-                           tabPanel("Frecuencias por módulo IV: Registro de residentes.", tableOutput("modulo_IV_2017")),
-                           tabPanel("Frecuencias por módulo V: Registro de residentes.", tableOutput("modulo_V_2017")),
-                           tabPanel("Frecuencias por módulo VI: Registro de residentes.", tableOutput("modulo_VI_2017")),
-                           tabPanel("Frecuencias por módulo VII: Registro de residentes.", tableOutput("modulo_VII_2017")),
-                           tabPanel("Frecuencias por módulo VIII: Registro de residentes.", tableOutput("modulo_VIII_2017")),
                         
-                           tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
-                           "----",
-                           "",
-                           tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
+                           # tabPanel("Tabla trabajo", tableOutput("contents_trabajo")),
+                           # "----",
+                           # "",
+                           # tabPanel("Diagramas de Caja y bigotes y de Densidad para la variable Edad", plotOutput("plot1")),
                            tabPanel("  ")),
                 
                 
@@ -2696,7 +2440,7 @@ server <- function(input, output, session) {
                 navbarMenu("Estadísticas y gráficas",
                            tabPanel("Promedios", fluidRow(
                              column(12, includeMarkdown("info_2006_prom.md")),
-                             selectInput("ptabla_promedios_2015", "Seleccione variable:", c(dataset2015_col)),
+                             selectInput("ptabla_promedios_2015", "Seleccione variable:", c(dataset2017_col)),
                              column(12, verbatimTextOutput("promedios_2015"))
                            )),
                            
@@ -2706,7 +2450,7 @@ server <- function(input, output, session) {
                              
                              column(12, includeMarkdown("info_2006_cyb.md")),
                              
-                             selectInput("ptabla_cyb_2015", "Seleccione la variable:", c(dataset2015_col)),
+                             selectInput("ptabla_cyb_2015", "Seleccione la variable:", c(dataset2017_col)),
                              
                              downloadButton("plot_cyb_2015", "Descargar"),
                              
@@ -2754,7 +2498,7 @@ server <- function(input, output, session) {
                            #    tabPanel("Tabla residentes", tableOutput("table_educacion_1000")),
                            
                            tabPanel("Tablas de contingencia > 2x2",fluidRow(
-                               selectInput("nada", "Identifique la variable:", c(data_2017_colnames)),
+                              # selectInput("nada", "Identifique la variable:", c(dataset2017_col)),
                                column(7,
                                                                                    selectInput("tabla2017_1", "ingrese primera variable:", c(dataset2017_col)),
                                                                                    selectInput("tabla2017_2", "ingrese segunda variable:", c(dataset2017_col)),
@@ -2858,9 +2602,6 @@ server <- function(input, output, session) {
     ####################### descargas de ttcc hacia csv: ##################################
     
     ################ 2006 #################
-    
-    
-    ##############################
     
     output$boton_ttcc_mayor_2 <- downloadHandler(
         filename = function() {
@@ -3019,23 +2760,6 @@ server <- function(input, output, session) {
       }
     )
     
-    
-
-    
-    
-    
-    
-    
-    #################################################################
-    #################################################################
-    ###########################   ahora!   ##########################
-    #################################################################
-    #################################################################
-    
-    
-    
-
-    
     output$boton_tabla_papc_2017 <- downloadHandler(
         filename = function() {
             paste("tabla", "csv", sep=".")
@@ -3054,7 +2778,6 @@ server <- function(input, output, session) {
             base_del_2006_cat <- base_del_2006[,a]
             
             promedios <- aggregate(list(base_del_2006_terr), list(base_del_2006_cat), mean)
-            
 
             write.csv(promedios, file)
             
@@ -3079,7 +2802,6 @@ server <- function(input, output, session) {
         
         promedios <- aggregate(list(base_del_2006_terr), list(base_del_2006_cat), mean)
     })
-    #################################################
     
     output$promedios_filtros_mn<-renderTable({
       
@@ -3131,73 +2853,7 @@ server <- function(input, output, session) {
       
     })
     
-    ################################   2017  #######################
-    
-    #### base de datos total:
-    
-    mydata_educacion_exp <- reactive({
-        data <- dataset2017[, 1:804]
-        return(data)
-    })    
-    
-    ################################   2017  #######################
-    
-    
-    
-    # mydata_educacion_exp2 <- reactive({
-    #     data <- alerta
-    #     return(data)
-    # })
-    # 
-    # 
-    # mydata_2017_1 <- reactive({
-    #     data <- dataset
-    #     return(data)
-    # })
-    # 
-    
-    
-    # mydata_educacion_1000 <- reactive({
-    #     datos_dfe <- datos_df_1000[, 1:32]
-    #     datos_dfe
-    #     return(datos_dfe)
-    # })
-    
-    
-    
-    
-    
-    
-    mydata_educacion_2000 <- reactive({
-        datos_dfe <- datos_df_2000[, 1:5]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
-    mydata_educacion_3000 <- reactive({
-        datos_dfe <- datos_df_casen_2009_mil_mn[, 1:34]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
-    mydata_educacion_4000 <- reactive({
-        datos_dfe <- datos_df_casen_2011_mil_mn[, 1:34]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
-    mydata_educacion_5000 <- reactive({
-        datos_dfe <- datos_df_casen_2011_mil_ymt[, 1:24]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
-    mydata_educacion_6000 <- reactive({
-      datos_dfe <- datos_df_casen_2013_mil[, 1:600]
-      datos_dfe 
-      return(datos_dfe)
-    })
-    
+
     
     ###############################################   2006 #################################
     
@@ -3359,11 +3015,7 @@ server <- function(input, output, session) {
       return(data)
     })
     
-    
-    # dataset2009_react_3 <- reactive({
-    #     data <- dataset2009[, 25:50]#trabajo
-    #     return(data)
-    # })
+
     
     
     dataset2009_react_4 <- reactive({
@@ -4234,104 +3886,93 @@ server <- function(input, output, session) {
     
     
     
-    mydata_educacion_7000 <- reactive({
-        datos_dfe <- datos_df_casen_2015_mil[, 1:776]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
-    mydata_educacion_8000 <- reactive({
-       # datos_dfe <- datos_df_casen_2017_mil[, 1:16]
-        datos_dfe <- datos_df_casen_2017_mil
-        return(datos_dfe)
-    })
-    
-    table2017_I <- reactive({
-      data <- datos_df_casen_2017_mil[, 1:16]
-      return(data)
-    })
-    
-    table2017_Iedu <- reactive({
-      data <- datos_df_casen_2017_mil[, 43:102]
-      return(data)
-    })
-    
-    table2017_Itrab <- reactive({
-      data <- datos_df_casen_2017_mil[, 102:152]
-      return(data)
-    })
-    
-    table2017_Iing <- reactive({
-      data <- datos_df_casen_2017_mil[, 152:305]
-      return(data)
-    })
-    
-    table2017_Isal <- reactive({
-      data <- datos_df_casen_2017_mil[, 305:398]
-      return(data)
-    })
-    
-    table2017_Iid <- reactive({
-      data <- datos_df_casen_2017_mil[, 398:499]
-      return(data)
-    })
-    
-    table2017_Iviv <- reactive({
-      data <- datos_df_casen_2017_mil[, 500:808]
-      return(data)
-    })
-    
-    prueba_tablaedu <- reactive({
-        datos_dfe <- datos_df_casen_2017_miledu[, 43:102]
-        datos_dfe 
-        return(datos_dfe)
-    })
-    
+    # mydata_educacion_7000 <- reactive({
+    #     datos_dfe <- datos_df_casen_2015_mil[, 1:776]
+    #     datos_dfe 
+    #     return(datos_dfe)
+    # })
+    # 
+    # mydata_educacion_8000 <- reactive({
+    #    # datos_dfe <- datos_df_casen_2017_mil[, 1:16]
+    #     datos_dfe <- datos_df_casen_2017_mil
+    #     return(datos_dfe)
+    # })
+    # 
+    # table2017_I <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 1:16]
+    #   return(data)
+    # })
+    # 
+    # table2017_Iedu <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 43:102]
+    #   return(data)
+    # })
+    # 
+    # table2017_Itrab <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 102:152]
+    #   return(data)
+    # })
+    # 
+    # table2017_Iing <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 152:305]
+    #   return(data)
+    # })
+    # 
+    # table2017_Isal <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 305:398]
+    #   return(data)
+    # })
+    # 
+    # table2017_Iid <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 398:499]
+    #   return(data)
+    # })
+    # 
+    # table2017_Iviv <- reactive({
+    #   data <- datos_df_casen_2017_mil[, 500:808]
+    #   return(data)
+    # })
+    # 
+    # prueba_tablaedu <- reactive({
+    #     datos_dfe <- datos_df_casen_2017_miledu[, 43:102]
+    #     datos_dfe 
+    #     return(datos_dfe)
+    # })
+    # 
 
     
     ###################### carga de las tablas en su totalidad ################################
-    ###########################################################################################
-    
-    ###################### despliegue total de la tabla 2006 ##################################
 
     output$table_2006 <- renderDataTable(dataset2006_react())
     
-    ###########################################################################################
-    
     output$table_2009 <- renderDataTable(dataset2009_react())
-    
-    ###########################################################################################
     
     output$table_2011 <- renderDataTable(dataset2011_react())
     
-    ###########################################################################################
-    
     output$table_2013 <- renderDataTable(dataset2013_react())
-    
-    ###########################################################################################
     
     output$table_2015 <- renderDataTable(dataset2015_react())
     
     ###########################################################################################
     
     
-    output$table2009mn <- renderDataTable(mydata_educacion_3000())
-    output$table2011mn <- renderDataTable(mydata_educacion_4000())
-    output$table20ymt <- renderDataTable(mydata_educacion_5000())
-    output$table2013 <- renderDataTable(mydata_educacion_6000())
-    output$table2015 <- renderDataTable(mydata_educacion_7000())
-    output$table2017 <- renderDataTable(mydata_educacion_8000())
-    
-    
-    output$table2017_I <- renderDataTable(table2017_I())
-    output$table2017_Iedu <- renderDataTable(table2017_Iedu())
-    output$table2017_Itrab <- renderDataTable(table2017_Itrab())
-    output$table2017_Iing <- renderDataTable(table2017_Iing())
-    output$table2017_Isal <- renderDataTable(table2017_Isal())
-    output$table2017_Iid <- renderDataTable(table2017_Iid())
-    output$table2017_Iviv <- renderDataTable(table2017_Iviv())
-    
-    output$prueba_tablaedu <- renderDataTable(prueba_tablaedu())
+    # output$table2009mn <- renderDataTable(mydata_educacion_3000())
+    # output$table2011mn <- renderDataTable(mydata_educacion_4000())
+    # output$table20ymt <- renderDataTable(mydata_educacion_5000())
+    # output$table2013 <- renderDataTable(mydata_educacion_6000())
+    # output$table2015 <- renderDataTable(mydata_educacion_7000())
+    # output$table2017 <- renderDataTable(mydata_educacion_8000())
+    # 
+    # 
+    # output$table2017_I <- renderDataTable(table2017_I())
+    # output$table2017_Iedu <- renderDataTable(table2017_Iedu())
+    # output$table2017_Itrab <- renderDataTable(table2017_Itrab())
+    # output$table2017_Iing <- renderDataTable(table2017_Iing())
+    # output$table2017_Isal <- renderDataTable(table2017_Isal())
+    # output$table2017_Iid <- renderDataTable(table2017_Iid())
+    # output$table2017_Iviv <- renderDataTable(table2017_Iviv())
+    # 
+    # output$prueba_tablaedu <- renderDataTable(prueba_tablaedu())
     
     
     ########################################################################## 2006 modulos  ##########################################################################  
@@ -4636,48 +4277,65 @@ server <- function(input, output, session) {
         
         #ab <-  dataset2006
         ab <- dataset2006_react()
+        
+
     
         a <- ab[,d]
         b <- ab[,e] 
         c <- ab[,f] 
         d <- ab[,g] 
-        
+
         cross_tab = table(a, b, c, d)
-
-
+      
+        # 1 tabla de contingencia:
         tabla <- as.data.frame(cross_tab)
-
-        datallll <- data.frame()
         
         d <-tabla[!(tabla$Freq == 0),]
+        
+        # tiene que ser unico
+        data_code <- ab[  , c("seg", "comuna")]
 
+        names(data_code)[2] <- "a"
+        
+        data_code <- data_code %>% unique()
 
-        for(i in 1: nrow(d)){
+        # 3 funcion R que ya debe existior para hacer el merge de una
+        total <- merge(data_code, d, by = "a")
+        
+###################           
 
-          llll_fila <- d[i,]
+        # datallll <- data.frame()
+        # 
+        # d <-tabla[!(tabla$Freq == 0),]
+        # 
+        # 
+        # for(i in 1: nrow(d)){
+        # 
+        #   llll_fila <- d[i,]
+        # 
+        #   llll <- d[i,1]
+        # 
+        #   sentenceString <- toString(llll)
+        #   searchString <- ' '
+        #   replacementString <- ''
+        #   sentenceString = sub(searchString,replacementString,sentenceString)
+        #   sentenceString
+        # 
+        #   for(j in 1: 336){
+        # 
+        #     ww<-names(w[j])
+        #     vv<-tolower(ww)
+        # 
+        #     if(sentenceString==vv){
+        #       llll_fila <- cbind(llll_fila,w[[j]])
+        #       llll_fila <- cbind(llll_fila,"2006")
+        #       datallll <-rbind(datallll,llll_fila)
+        #       break
+        #     }
+        #   }
+        # }
 
-          llll <- d[i,1]
-
-          sentenceString <- toString(llll)
-          searchString <- ' '
-          replacementString <- ''
-          sentenceString = sub(searchString,replacementString,sentenceString)
-          sentenceString
-
-          for(j in 1: 336){
-
-            ww<-names(w[j])
-            vv<-tolower(ww)
-
-            if(sentenceString==vv){
-              llll_fila <- cbind(llll_fila,w[[j]])
-              llll_fila <- cbind(llll_fila,"2006")
-              datallll <-rbind(datallll,llll_fila)
-            }
-          }
-        }
-
-        return(datallll)
+        return(total)
     })
     
     output$tabla_d_c_generalizada_pon_2006<-renderPrint({
@@ -4697,37 +4355,65 @@ server <- function(input, output, session) {
       c <- ab[,f] 
       d <- ab[,g] 
       
-        cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      
+      
+      
+      
+      cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      
+      # 1 tabla de contingencia:
+      tabla <- as.data.frame(cross_tab)
+      
+       d <-tabla[!(tabla$Freq == 0),]
+      # 
+      # # tiene que ser unico
+       data_code <- ab[  , c("seg", "comuna")]
+      # 
+       names(data_code)[2] <- "unlist.a."
+      # 
+       data_code <- data_code %>% unique()
+      # 
+      # # 3 funcion R que ya debe existior para hacer el merge de una
+       total <- merge(data_code, d, by = "unlist.a.")
+      
+      ####################
 
-        tabla <- as.data.frame(cross_tab)
-        
-        datallll <- data.frame()
-        
-        d <-tabla[!(tabla$Freq == 0),]
-        
-        for(i in 1: nrow(d)){
-          llll_fila <- d[i,]
-          llll<-d[i,1]
-          sentenceString <- toString(llll)
-          searchString <- ' '
-          replacementString <- ''
-          sentenceString = sub(searchString,replacementString,sentenceString)
-          sentenceString
-          
-          for(j in 1: 336){
-            
-            ww<-names(w[j])
-            vv<-tolower(ww)
-            
-            if(sentenceString==vv){
-              llll_fila <- cbind(llll_fila,w[[j]])
-              llll_fila <- cbind(llll_fila,"2006")
-              datallll <-rbind(datallll,llll_fila)
-            }
-          }
-        }
+      ####################################
+      
+        # 
+        # 
+        # cross_tab =
+        # 
+        # tabla <- as.data.frame(cross_tab)
+        # 
+        # datallll <- data.frame()
+        # 
+        # d <-tabla[!(tabla$Freq == 0),]
+        # 
+        # for(i in 1: nrow(d)){
+        #   llll_fila <- d[i,]
+        #   llll<-d[i,1]
+        #   sentenceString <- toString(llll)
+        #   searchString <- ' '
+        #   replacementString <- ''
+        #   sentenceString = sub(searchString,replacementString,sentenceString)
+        #   sentenceString
+        #   
+        #   for(j in 1: 336){
+        #     
+        #     ww<-names(w[j])
+        #     vv<-tolower(ww)
+        #     
+        #     if(sentenceString==vv){
+        #       llll_fila <- cbind(llll_fila,w[[j]])
+        #       llll_fila <- cbind(llll_fila,"2006")
+        #       datallll <-rbind(datallll,llll_fila)
+        #       break
+        #     }
+        #   }
+        # }
 
-        return(datallll)
+        return(total)
     })
     
     ################# tablas de contingencia 2006 fin ###################################
@@ -6266,7 +5952,7 @@ server <- function(input, output, session) {
         
         
         #dataset2013_react
-        preguntaseternas2001_ab <- mydata_educacion_exp()
+        preguntaseternas2001_ab <- dataset2017_react()
         preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
         preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
         cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
@@ -6289,7 +5975,7 @@ server <- function(input, output, session) {
     output$tabla_chi<-renderPrint({
         a <- input$ptabla2017_primerav_chi
         b <- input$ptabla2017_segundav_chi
-        preguntaseternas2001_ab <- mydata_educacion_exp()
+        preguntaseternas2001_ab <- dataset2017_react()
         preguntaseternas_sub2001_a <- preguntaseternas2001_ab[,a]
         preguntaseternas_sub2001_b <- preguntaseternas2001_ab[,b] 
         cross_tab = xtabs(~ unlist(preguntaseternas_sub2001_a) + unlist(preguntaseternas_sub2001_b), preguntaseternas2001_ab)
@@ -6384,33 +6070,27 @@ server <- function(input, output, session) {
         t = as.data.frame(c)
       } 
       
-        else if(input$variable_anio == 20111)
-        {
-            preguntaseternas20111<- mydata_educacion_5000()
-            preguntaseternas_sub20111 <- preguntaseternas20111[,input$ptabla20111]
-            w2005 = table(preguntaseternas_sub20111)
-            t = as.data.frame(w2005)
-        } 
+
         else if(input$variable_anio == 2013)
         {
-            preguntaseternas2013<- mydata_educacion_6000()
-            preguntaseternas_sub2013 <- preguntaseternas2013[,input$ptabla2013]
-            w2006 = table(preguntaseternas_sub2013)
-            t = as.data.frame(w2006)
+          a <- dataset2013_react()
+          b <- a[,input$ptabla_2013]
+          c = table(b)
+          t = as.data.frame(c)
         } 
         else if(input$variable_anio == 2015)
         {
-            preguntaseternas2015<- mydata_educacion_7000()
-            preguntaseternas_sub2015 <- preguntaseternas2015[,input$ptabla2015]
-            w2006 = table(preguntaseternas_sub2015)
-            t = as.data.frame(w2006)
+          a <- dataset2015_react()
+          b <- a[,input$ptabla_2015]
+          c = table(b)
+          t = as.data.frame(c)
         } 
         else if(input$variable_anio == 2017)
         {
-            preguntaseternas2017<- mydata_educacion_8000()
-            preguntaseternas_sub2017 <- preguntaseternas2017[,input$ptabla]
-            w2017 = table(preguntaseternas_sub2017)
-            t = as.data.frame(w2017)
+          a <- dataset2017_react()
+          b <- a[,input$ptabla_2017]
+          c = table(b)
+          t = as.data.frame(c)
             
             
             
@@ -6418,7 +6098,11 @@ server <- function(input, output, session) {
         } 
     })
     ################################################################################################################################3
-    output$prueba_tabla2 <- renderDataTable({
+   ### probablemente hay que borrar de aqui para abajo
+    
+    
+    
+     output$prueba_tabla2 <- renderDataTable({
       
       if(input$variable_anio == 2017)
       {
@@ -6437,45 +6121,14 @@ server <- function(input, output, session) {
       
       if(input$variable_anio == 2013)
       {
-        a <- dataset2013_react_1()
+        a <- dataset2013_react()
         b <- a[,input$ptabla_2013_I]
         c = table(b)
         t = as.data.frame(c)
       } 
     })
     
-    output$frecuencias_II <- renderDataTable({
-      
-      if(input$variable_anio == 2013)
-      {
-        a <- dataset2013_react_2()
-        b <- a[,input$ptabla_2013_II]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
-    
-    output$frecuencias_III <- renderDataTable({
-      
-      if(input$variable_anio == 2013)
-      {
-        a <- dataset2013_react_3()
-        b <- a[,input$ptabla_2013_III]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
-    
-    output$frecuencias_IV <- renderDataTable({
-      
-      if(input$variable_anio == 2013)
-      {
-        a <- dataset2013_react_4()
-        b <- a[,input$ptabla_2013_IV]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
+
     
     ###################################################2015
     
@@ -6483,50 +6136,14 @@ server <- function(input, output, session) {
       
       if(input$variable_anio == 2015)
       {
-        a <- dataset2015_react_1()
+        a <- dataset2015_react()
         b <- a[,input$ptabla_2015_I]
         c = table(b)
         t = as.data.frame(c)
       } 
     })
     
-    output$frecuencias_2015_II <- renderDataTable({
-      
-      if(input$variable_anio == 2015)
-      {
-        a <- dataset2015_react_2()
-        b <- a[,input$ptabla_2015_II]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
-    
-    output$frecuencias_2015_III <- renderDataTable({
-      
-      if(input$variable_anio == 2015)
-      {
-        a <- dataset2015_react_3()
-        b <- a[,input$ptabla_2015_III]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
-    
-    output$frecuencias_2015_IV <- renderDataTable({
-      
-      if(input$variable_anio == 2015)
-      {
-        a <- dataset2015_react_4()
-        b <- a[,input$ptabla_2015_IV]
-        c = table(b)
-        t = as.data.frame(c)
-      } 
-    })
-    
-    
-    
-    ############################################
-    ############################################
+
     ############################################
     
     
