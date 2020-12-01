@@ -43,7 +43,7 @@ options(warn = -1)
 
 dataset2006  <- readRDS("dataset2006.rds")
 
-dataset2006  <- dataset2006[1:100,]
+# dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
@@ -76,7 +76,7 @@ data_2011_5_348_colnames <- colnames(data_2011_5_348)
 
 dataset2013  <- readRDS("dataset2013.rds")
 
-dataset2013  <- dataset2013[1:100,]
+# dataset2013  <- dataset2013[1:100,]
 dataset2013_col <- colnames(dataset2013)
 
 # extraccion de las cabeceras para la carga de los filtros por categoria
@@ -4277,48 +4277,65 @@ server <- function(input, output, session) {
         
         #ab <-  dataset2006
         ab <- dataset2006_react()
+        
+
     
         a <- ab[,d]
         b <- ab[,e] 
         c <- ab[,f] 
         d <- ab[,g] 
-        
+
         cross_tab = table(a, b, c, d)
-
-
+      
+        # 1 tabla de contingencia:
         tabla <- as.data.frame(cross_tab)
-
-        datallll <- data.frame()
         
         d <-tabla[!(tabla$Freq == 0),]
+        
+        # tiene que ser unico
+        data_code <- ab[  , c("seg", "comuna")]
 
+        names(data_code)[2] <- "a"
+        
+        data_code <- data_code %>% unique()
 
-        for(i in 1: nrow(d)){
+        # 3 funcion R que ya debe existior para hacer el merge de una
+        total <- merge(data_code, d, by = "a")
+        
+###################           
 
-          llll_fila <- d[i,]
+        # datallll <- data.frame()
+        # 
+        # d <-tabla[!(tabla$Freq == 0),]
+        # 
+        # 
+        # for(i in 1: nrow(d)){
+        # 
+        #   llll_fila <- d[i,]
+        # 
+        #   llll <- d[i,1]
+        # 
+        #   sentenceString <- toString(llll)
+        #   searchString <- ' '
+        #   replacementString <- ''
+        #   sentenceString = sub(searchString,replacementString,sentenceString)
+        #   sentenceString
+        # 
+        #   for(j in 1: 336){
+        # 
+        #     ww<-names(w[j])
+        #     vv<-tolower(ww)
+        # 
+        #     if(sentenceString==vv){
+        #       llll_fila <- cbind(llll_fila,w[[j]])
+        #       llll_fila <- cbind(llll_fila,"2006")
+        #       datallll <-rbind(datallll,llll_fila)
+        #       break
+        #     }
+        #   }
+        # }
 
-          llll <- d[i,1]
-
-          sentenceString <- toString(llll)
-          searchString <- ' '
-          replacementString <- ''
-          sentenceString = sub(searchString,replacementString,sentenceString)
-          sentenceString
-
-          for(j in 1: 336){
-
-            ww<-names(w[j])
-            vv<-tolower(ww)
-
-            if(sentenceString==vv){
-              llll_fila <- cbind(llll_fila,w[[j]])
-              llll_fila <- cbind(llll_fila,"2006")
-              datallll <-rbind(datallll,llll_fila)
-            }
-          }
-        }
-
-        return(datallll)
+        return(total)
     })
     
     output$tabla_d_c_generalizada_pon_2006<-renderPrint({
@@ -4338,37 +4355,65 @@ server <- function(input, output, session) {
       c <- ab[,f] 
       d <- ab[,g] 
       
-        cross_tab = xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      
+      
+      
+      
+      cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+      
+      # 1 tabla de contingencia:
+      tabla <- as.data.frame(cross_tab)
+      
+       d <-tabla[!(tabla$Freq == 0),]
+      # 
+      # # tiene que ser unico
+       data_code <- ab[  , c("seg", "comuna")]
+      # 
+       names(data_code)[2] <- "unlist.a."
+      # 
+       data_code <- data_code %>% unique()
+      # 
+      # # 3 funcion R que ya debe existior para hacer el merge de una
+       total <- merge(data_code, d, by = "unlist.a.")
+      
+      ####################
 
-        tabla <- as.data.frame(cross_tab)
-        
-        datallll <- data.frame()
-        
-        d <-tabla[!(tabla$Freq == 0),]
-        
-        for(i in 1: nrow(d)){
-          llll_fila <- d[i,]
-          llll<-d[i,1]
-          sentenceString <- toString(llll)
-          searchString <- ' '
-          replacementString <- ''
-          sentenceString = sub(searchString,replacementString,sentenceString)
-          sentenceString
-          
-          for(j in 1: 336){
-            
-            ww<-names(w[j])
-            vv<-tolower(ww)
-            
-            if(sentenceString==vv){
-              llll_fila <- cbind(llll_fila,w[[j]])
-              llll_fila <- cbind(llll_fila,"2006")
-              datallll <-rbind(datallll,llll_fila)
-            }
-          }
-        }
+      ####################################
+      
+        # 
+        # 
+        # cross_tab =
+        # 
+        # tabla <- as.data.frame(cross_tab)
+        # 
+        # datallll <- data.frame()
+        # 
+        # d <-tabla[!(tabla$Freq == 0),]
+        # 
+        # for(i in 1: nrow(d)){
+        #   llll_fila <- d[i,]
+        #   llll<-d[i,1]
+        #   sentenceString <- toString(llll)
+        #   searchString <- ' '
+        #   replacementString <- ''
+        #   sentenceString = sub(searchString,replacementString,sentenceString)
+        #   sentenceString
+        #   
+        #   for(j in 1: 336){
+        #     
+        #     ww<-names(w[j])
+        #     vv<-tolower(ww)
+        #     
+        #     if(sentenceString==vv){
+        #       llll_fila <- cbind(llll_fila,w[[j]])
+        #       llll_fila <- cbind(llll_fila,"2006")
+        #       datallll <-rbind(datallll,llll_fila)
+        #       break
+        #     }
+        #   }
+        # }
 
-        return(datallll)
+        return(total)
     })
     
     ################# tablas de contingencia 2006 fin ###################################
