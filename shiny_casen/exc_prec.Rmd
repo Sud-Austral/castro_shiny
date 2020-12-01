@@ -52,7 +52,7 @@ library(readstata13)
 ```{r}
 
 dataset2006  <- readRDS("dataset2006.rds")
-dim(dataset2006) + dim(dataset2009)  + dim(dataset2011) + dim(dataset2013) + dim(dataset2015) + dim(dataset2017)
+dataset2006
 ```
 
 
