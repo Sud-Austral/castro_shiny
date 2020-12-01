@@ -4373,7 +4373,7 @@ server <- function(input, output, session) {
       # 
        data_code <- data_code %>% unique()
       # 
-      # # 3 funcion R que ya debe existior para hacer el merge de una
+      # # 3 funcion R que ya debe existir para hacer el merge de una
        total <- merge(data_code, d, by = "unlist.a.")
       
       ####################
