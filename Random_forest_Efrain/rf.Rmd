@@ -1,0 +1,76 @@
+---
+title: "Random forest para determinar las variables relevantes obtenidas con un análisis de regresión entrenado asimismo con random forest"
+author: "DI"
+date: "01-12-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Random forest para extraer las variables mas importantes dentro de un conjunto de datos.
+
+
+
+```{r cars}
+
+library("readxl")
+library(randomForest)
+library(reshape)
+
+my_data <- read_excel("data_e.xlsx", sheet = 2, col_names = TRUE, col_types = NULL, na = "", skip = 0)
+head(my_data, 10)
+```
+```{r}
+my_data <- my_data[,c(1:24)]
+head(my_data, 10)
+```
+
+```{r}
+
+
+modelo1 <- randomForest(SOC_Modelado~.,data=my_data,
+              na.action=na.exclude, ntree=500,importance=TRUE,maxnodes=10,mtry=15)
+
+#Creamos un objeto con las "importancias" de las variables
+importancia=data.frame(importance(modelo1))
+
+importancia
+#importancia<-sort_df(importancia,vars='MeanDecreaseGini')
+importancia <- importancia[order(-importancia$X.IncMSE),] 
+importancia
+```
+
+
+```{r}
+varImpPlot(modelo1)
+```
+
+
+```{r}
+dotchart(sort(importancia[,1]), xlim=c(0,90), xlab="%IncMSE")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
