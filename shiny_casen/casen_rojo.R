@@ -1,9 +1,9 @@
 
 # Casen
 # Victor Enamorado - Christian Castro
-# 30 de Noviembre del 2020
-# version 16:21 pm
-# xxx
+# 3 de Diciembre del 2020
+# version 10:30 am
+
   
 library(ggplot2)
 library(ggpubr)
@@ -44,19 +44,23 @@ oldw <- getOption("warn")
 options(warn = -1)
 
 dataset2006  <- readRDS("dataset2006.rds")
-
-
 data_codigos_comunales_2006 <- dataset2006
 
 
-#dataset2006  <- dataset2006[1:50000,]
+
+dataset2006  <- dataset2006[1:100,]
 dataset2006_col <- colnames(dataset2006)
 
 data_2006_1_2_colnames <- colnames(dataset2006_col[2])
 
 dataset06  <- readRDS("dataset06.rds")
 
+
+
 dataset2009  <- readRDS("dataset2009.rds")
+data_codigos_comunales_2009  <- dataset2009
+
+
 
  dataset2009  <- dataset2009[1:100,]
 dataset2009_col <- colnames(dataset2009)
@@ -4276,31 +4280,7 @@ server <- function(input, output, session) {
         
         data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
                                                                  , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 101 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 102 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 103 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 104 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 111 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 112 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 113 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 114 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 121 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 122 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 123 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 124 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 131 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 132 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 133 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 134 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 135 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 136 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 141 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 142 ~ as.integer(seg / 1000)
-                                                                # , as.integer(seg / 100000) == 151 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 152 ~ as.integer(seg / 1000)
-                                                                # , as.integer(seg / 100000) == 161 ~ as.integer(seg / 1000) 
-                                                                # , as.integer(seg / 100000) == 162 ~ as.integer(seg / 1000)
-                                                                # , as.integer(seg / 100000) == 163 ~ as.integer(seg / 1000)
+
         ))
         
         data_code <- subset( data_code, select = -seg )
@@ -4559,43 +4539,21 @@ server <- function(input, output, session) {
           g <- input$p2009_cuartav
           
           #ab <- dataset2006_react()
-          ab <- data_codigos_comunales_2006
+          ab <- data_codigos_comunales_2009
           
-          
-          data_code <- ab[  , c("seg", "comuna")]
+          data_code <- ab[  , c("segmento", "comuna")]
           
           names(data_code)[2] <- "a"
           data_code <- distinct(data_code , a, .keep_all = TRUE)
-          
           data_code <- data_code %>% mutate(a = str_squish(a))
           
           
-          # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-          
-          data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
-                                                                  , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)                                                    
-                                                                  # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100) 
+          data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(segmento / 10000000) == 0 ~ as.integer(segmento/ 1000)
+                                                                  , as.integer(segmento / 10000000) == 1 ~ as.integer(segmento / 1000)                                                    
+
           ))
           
-          data_code <- subset( data_code, select = -seg )
+          data_code <- subset( data_code, select = -segmento )
           
           ab <- dataset2009
           
@@ -4630,10 +4588,10 @@ server <- function(input, output, session) {
           g <- input$p2009_cuartav
           
           #ab <- dataset2006_react()
-          ab <- data_codigos_comunales_2006
+          ab <- data_codigos_comunales_2009
           
           
-          data_code <- ab[  , c("seg", "comuna")]
+          data_code <- ab[  , c("segmento", "comuna")]
           
           names(data_code)[2] <- "unlist.a."
           data_code <- distinct(data_code , unlist.a., .keep_all = TRUE)
@@ -4643,30 +4601,12 @@ server <- function(input, output, session) {
           
           # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
           
-          data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
-                                                                  , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)                                    
-                                                                  # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100) 
-                                                                  # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100) 
+          data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(segmento / 10000000) == 0 ~ as.integer(segmento  / 1000)
+                                                                  , as.integer(segmento  / 10000000) == 1 ~ as.integer(segmento / 1000)                                    
+
           ))
           
-          data_code <- subset( data_code, select = -seg )
+          data_code <- subset( data_code, select = -segmento )
           
           ab <- dataset2009
           
@@ -4705,43 +4645,31 @@ server <- function(input, output, session) {
             f <- input$p2009_tercerav
             g <- input$p2009_cuartav
             
-            #  ab <- dataset2006_react()
+            #ab <- dataset2006_react()
+            ab <- data_codigos_comunales_2009
+            
+            data_code <- ab[  , c("segmento", "comuna")]
+            
+            names(data_code)[2] <- "a"
+            data_code <- distinct(data_code , a, .keep_all = TRUE)
+            data_code <- data_code %>% mutate(a = str_squish(a))
+            
+            
+            data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(segmento / 10000000) == 0 ~ as.integer(segmento/ 1000)
+                                                                    , as.integer(segmento / 10000000) == 1 ~ as.integer(segmento / 1000)                                                    
+                                                                    
+            ))
+            
+            data_code <- subset( data_code, select = -segmento )
+            
+            ab <- dataset2009
             
             a <- ab[,d]
             b <- ab[,e] 
             c <- ab[,f] 
             d <- ab[,g] 
             
-            names(data_code)[2] <- "a"
             
-            data_code <- distinct(data_code , a, .keep_all = TRUE)
-            
-            # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-            
-            data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 1000) > 0 ~ as.integer(seg / 1000), as.integer(seg / 10000) == 141 ~ as.integer(seg / 100) 
-                                                                    
-                                                                    , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100) 
-            ))
-            
-            data_code <- subset( data_code, select = -seg )
             
             cross_tab = table(a, b, c, d)
             
@@ -4751,9 +4679,8 @@ server <- function(input, output, session) {
             
             d$anio <- "2009"
             
+            #df1 = merge( x = d1, y = data_code1, by = "a")  
             df = merge( x = d, y = data_code, by = "a", all.x = TRUE)  
-            
-            
             
             
             write.csv(df, file)
@@ -4773,46 +4700,38 @@ server <- function(input, output, session) {
             f <- input$p2009_tercerav
             g <- input$p2009_cuartav
             
-            #  ab <- dataset2006_react()
+            #ab <- dataset2006_react()
+            ab <- data_codigos_comunales_2009
+            
+            
+            data_code <- ab[  , c("segmento", "comuna")]
+            
+            names(data_code)[2] <- "unlist.a."
+            data_code <- distinct(data_code , unlist.a., .keep_all = TRUE)
+            
+            data_code <- data_code %>% mutate(unlist.a. = str_squish(unlist.a.))
+            
+            
+            # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
+            
+            data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(segmento / 10000000) == 0 ~ as.integer(segmento  / 1000)
+                                                                    , as.integer(segmento  / 10000000) == 1 ~ as.integer(segmento / 1000)                                    
+                                                                    
+            ))
+            
+            data_code <- subset( data_code, select = -segmento )
+            
+            ab <- dataset2009
             
             a <- ab[,d]
             b <- ab[,e] 
             c <- ab[,f] 
             d <- ab[,g] 
             
-            names(data_code)[2] <- "unlist.a."
-            
-            data_code <- distinct(data_code , unlist.a., .keep_all = TRUE)
-            
-            # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-            
-            data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 1000) > 0 ~ as.integer(seg / 1000), as.integer(seg / 10000) == 141 ~ as.integer(seg / 100) 
-                                                                    
-                                                                    , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100) 
-                                                                    , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100) 
-            ))
-            
-            data_code <- subset( data_code, select = -seg )
             
             
             cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+            
             
             tabla <- as.data.frame(cross_tab)
             
@@ -4821,7 +4740,6 @@ server <- function(input, output, session) {
             d$anio <- "2009"
             
             df = merge( x = d, y = data_code, by = "unlist.a.", all.x = TRUE)  
-            
             
             
             write.csv(df, file)
@@ -5279,25 +5197,7 @@ server <- function(input, output, session) {
           #
           data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
                                                                   , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)
-                                                                  # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
-                                                                  # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
+
           ))
 
           data_code <- subset( data_code, select = -seg )
