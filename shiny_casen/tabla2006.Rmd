@@ -1,0 +1,221 @@
+---
+title: "tablas"
+author: "Victor"
+date: "02 de diciembre de 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(expss)
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+library(shinycssloaders)
+library(writexl)
+library(vroom)
+library(shinyWidgets)
+library(BBmisc)
+
+
+oldw <- getOption("warn")
+options(warn = -1)
+
+dataset2006  <- readRDS("dataset2006.rds")
+
+
+data_codigos_comunales <- dataset2006
+
+
+#dataset2006  <- dataset2006[1:100,]
+dataset2006_col <- colnames(dataset2006)
+
+data_2006_1_2_colnames <- colnames(dataset2006_col[2])
+
+dataset06  <- readRDS("dataset06.rds")
+
+dataset2009  <- readRDS("dataset2009.rds")
+
+ dataset2009  <- dataset2009[1:100,]
+dataset2009_col <- colnames(dataset2009)
+
+# extraccion de las cabeceras para la carga de los filtros por categoria
+
+data_2009_3_5 <- dataset2009[, c(4,6)]
+data_2009_1_2_colnames <- colnames(data_2009_3_5)
+data_2009_5_348 <- dataset2009[, 7:348]
+data_2009_5_348_colnames <- colnames(data_2009_5_348)
+
+dataset2011  <- readRDS("dataset2011.rds")
+
+dataset2011  <- dataset2011[1:100,]
+dataset2011_col <- colnames(dataset2011)
+
+# extraccion de las cabeceras para la carga de los filtros por categoria
+
+data_2011_3_5 <- dataset2011[, 1:6]
+data_2011_1_2_colnames <- colnames(data_2011_3_5)
+data_2011_5_348 <- dataset2011[, 7:348]
+data_2011_5_348_colnames <- colnames(data_2011_5_348)
+
+dataset2013  <- readRDS("dataset2013.rds")
+
+# dataset2013  <- dataset2013[1:100,]
+dataset2013_col <- colnames(dataset2013)
+
+# extraccion de las cabeceras para la carga de los filtros por categoria
+
+data_2013_3_5 <- dataset2013[, c(4,6)]
+data_2013_1_2_colnames <- colnames(data_2013_3_5)
+data_2013_5_348 <- dataset2013[, 7:348]
+data_2013_5_348_colnames <- colnames(data_2013_5_348)
+
+dataset2015  <- readRDS("dataset2015.rds")
+
+dataset2015  <- dataset2015[1:100,]
+dataset2015_col <- colnames(dataset2015)
+
+# extraccion de las cabeceras para la carga de los filtros por categoria
+
+data_2015_3_5 <- dataset2015[, c(4,6)]
+data_2015_1_2_colnames <- colnames(data_2015_3_5)
+data_2015_5_348 <- dataset2015[, 7:348]
+data_2015_5_348_colnames <- colnames(data_2015_5_348)
+
+##################   2017 ##############################
+dataset2017  <- readRDS("dataset2017.rds")
+
+dataset2017  <- dataset2017[1:100,]
+dataset2017_col <- colnames(dataset2017)
+```
+
+```{r}
+  
+          
+          
+          ab <- dataset2013
+          
+          a <- ab$comuna
+          b <- ab$e1
+          c <- ab$sexo 
+          d <- ab$ecivil 
+        
+          cross_tab = table(a, b, c, d)
+         
+          # 
+          tabla <- as.data.frame(cross_tab)
+         
+          ab <- data_codigos_comunales
+         
+           data_code <- ab[  , c("seg", "comuna")]
+          # 
+           names(data_code)[2] <- "a"
+           data_code <- distinct(data_code , a, .keep_all = TRUE)
+          # 
+          data_code <- data_code %>% mutate(a = str_squish(a))
+         
+          # 
+          # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
+          # 
+          data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 1000) > 0 ~ as.integer(seg / 1000), as.integer(seg / 10000) == 141 ~ as.integer(seg / 100)
+
+                                                                  , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
+                                                                  , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
+          ))
+
+          data_code <- subset( data_code, select = -seg )
+          data_code
+          
+          d <-tabla[!(tabla$Freq == 0),]
+
+          d$anio <- "2013"
+          d
+           df = merge( x = d, y = data_code, by = "a", all.x = TRUE)
+            # df
+            
+          # return(tabla)
+```
+```{r}
+l <- colnames(dataset2013)
+l
+```
+```{r}
+l <- colnames(data_code)
+l
+```
+```{r}
+s <- dataset2015[,736]
+s
+```
+
+
+
+```{r}
+df
+```
+
+
+```{r}
+r0 <- data_code[4,1]
+
+r0
+```
+
+```{r}
+r1 <- d[5,1]
+r1 <- as.character(r1)
+
+r1
+```
+
+```{r}
+if(r0 != r1){
+  print("los registros son diferentes")
+}
+```
