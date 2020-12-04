@@ -85,7 +85,8 @@ dataset2013 <- readRDS("dataset2013.rds")
     c <- ab$sexo
     d <- ab$ecivil
     
-    cross_tab = table(a, b, c, d)
+   # cross_tab = table(a, b, c, d)
+        cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
     
     tabla <- as.data.frame(cross_tab)
     d <-tabla[!(tabla$Freq == 0),]

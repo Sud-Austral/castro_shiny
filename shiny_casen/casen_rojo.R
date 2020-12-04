@@ -4,6 +4,7 @@
 # 3 de Diciembre del 2020
 # version 10:30 am
 
+# X
 
 library(ggplot2)
 library(ggpubr)
@@ -12166,22 +12167,22 @@ server <- function(input, output, session) {
   output$tabla_d_c_generalizada_2013<-renderPrint({
     
     
-    # a <- input$ptabla2013_primeravx
-    #     b <- input$ptabla2013_segundavx
-    #     c <- input$ptabla2013_terceravx
-    #     d <- input$ptabla2013_cuartavx
-    #     
+    a <- input$ptabla2013_primeravx
+        b <- input$ptabla2013_segundavx
+        c <- input$ptabla2013_terceravx
+        d <- input$ptabla2013_cuartavx
+
     ab <- dataset2013
     #     
-    #     aa <- ab[,a]
-    #     bb <- ab[,b]
-    #     cc <- ab[,c]
-    #     dd <- ab[,d]
+        a <- ab[,a]
+        b <- ab[,b]
+        c <- ab[,c]
+        d <- ab[,d]
     
-    a <- ab$comuna
-    b <- ab$e1
-    c <- ab$sexo
-    d <- ab$ecivil
+    # a <- ab$comuna
+    # b <- ab$e1
+    # c <- ab$sexo
+    # d <- ab$ecivil
     
    # cross_tab = table(a, b, c, d)
     cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
@@ -12397,63 +12398,63 @@ server <- function(input, output, session) {
     }
   )
   
-  output$tabla_2013_csv_pon <- downloadHandler(
-    filename = function() {
-      paste("ttcc_2013_pon.csv", "csv", sep=".")
-    },
-    content = function(file) {
-      
-      w <- dataset06[[6]] %>% attr('labels')
-      
-      d <- input$ptabla2013_primeravx
-      e <- input$ptabla2013_segundavx
-      f <- input$ptabla2013_terceravx
-      g <- input$ptabla2013_cuartavx
-      
-      ab <- dataset2013_react()
-      
-      
-      a <- ab[,d]
-      b <- ab[,e] 
-      c <- ab[,f] 
-      d <- ab[,g] 
-      
-      
-      cross_tab = xtabs(ab[,578]  ~  unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578] ~   unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
-      
-      
-      tabla <- as.data.frame(cross_tab)
-      
-      datallll <- data.frame()
-      
-      d <-tabla[!(tabla$Freq == 0),]
-      
-      for(i in 1: nrow(d)){
-        llll_fila <- d[i,]
-        llll<-d[i,1]
-        sentenceString <- toString(llll)
-        searchString <- ' '
-        replacementString <- ''
-        sentenceString = sub(searchString,replacementString,sentenceString)
-        sentenceString
-        
-        for(j in 1: 336){
-          
-          ww<-names(w[j])
-          vv<-tolower(ww)
-          
-          if(sentenceString==vv){
-            llll_fila <- cbind(llll_fila,w[[j]])
-            llll_fila <- cbind(llll_fila,"2013")
-            datallll <-rbind(datallll,llll_fila)
-          }
-        }
-      }
-      write.csv(datallll, file)
-      
-    }
-  )
-  
+  # output$tabla_2013_csv_pon <- downloadHandler(
+  #   filename = function() {
+  #     paste("ttcc_2013_pon.csv", "csv", sep=".")
+  #   },
+  #   content = function(file) {
+  #     
+  #     w <- dataset06[[6]] %>% attr('labels')
+  #     
+  #     d <- input$ptabla2013_primeravx
+  #     e <- input$ptabla2013_segundavx
+  #     f <- input$ptabla2013_terceravx
+  #     g <- input$ptabla2013_cuartavx
+  #     
+  #     ab <- dataset2013_react()
+  #     
+  #     
+  #     a <- ab[,d]
+  #     b <- ab[,e] 
+  #     c <- ab[,f] 
+  #     d <- ab[,g] 
+  #     
+  #     
+  #     cross_tab = xtabs(ab[,578]  ~  unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab[,578] ~   unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+  #     
+  #     
+  #     tabla <- as.data.frame(cross_tab)
+  #     
+  #     datallll <- data.frame()
+  #     
+  #     d <-tabla[!(tabla$Freq == 0),]
+  #     
+  #     for(i in 1: nrow(d)){
+  #       llll_fila <- d[i,]
+  #       llll<-d[i,1]
+  #       sentenceString <- toString(llll)
+  #       searchString <- ' '
+  #       replacementString <- ''
+  #       sentenceString = sub(searchString,replacementString,sentenceString)
+  #       sentenceString
+  #       
+  #       for(j in 1: 336){
+  #         
+  #         ww<-names(w[j])
+  #         vv<-tolower(ww)
+  #         
+  #         if(sentenceString==vv){
+  #           llll_fila <- cbind(llll_fila,w[[j]])
+  #           llll_fila <- cbind(llll_fila,"2013")
+  #           datallll <-rbind(datallll,llll_fila)
+  #         }
+  #       }
+  #     }
+  #     write.csv(datallll, file)
+  #     
+  #   }
+  # )
+  # 
   
   
   output$promedios_2013<-renderPrint({
