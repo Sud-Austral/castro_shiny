@@ -145,9 +145,60 @@ df
 
 
 ```
+##################
+##### 2015 #######
+##################
+
 ```{r}
 dataset2015 <- readRDS("dataset2015.rds")
-dim(dataset2015)
+
+        # a <- input$ptabla2013_primeravx
+        # b <- input$ptabla2013_segundavx
+        # c <- input$ptabla2013_terceravx
+        # d <- input$ptabla2013_cuartavx
+
+    ab <- dataset2015
+  
+        # a <- ab[,a]
+        # b <- ab[,b]
+        # c <- ab[,c]
+        # d <- ab[,d]
+    
+    a <- ab$comuna
+    b <- ab$e1
+    c <- ab$sexo
+    d <- ab$ecivil
+    
+   # cross_tab = table(a, b, c, d)
+    cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+    
+    tabla <- as.data.frame(cross_tab)
+    d <-tabla[!(tabla$Freq == 0),]
+    d$anio <- "2015"
+
+    data_code <- ab[  , c("folio", "comuna")]
+
+    names(data_code)[2] <- "a"
+    data_code <- distinct(data_code , a, .keep_all = TRUE)
+    #
+    data_code <- data_code %>% mutate(a = str_squish(a))
+
+    data_code <- data_code %>% mutate(codigo = case_when(as.integer(folio / 10000000000) == 0 ~ as.integer(folio/ 10000000)
+                                                         , as.integer(folio / 10000000000) <17 ~ as.integer(folio / 10000000)
+                                                         
+    ))
+    
+    data_cod <- subset( data_code, select = -folio )
+
+    
+    names(d)[1] <- "a"
+    
+    df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
+    
+    
+df
+    
+
 ```
 
 ```{r}

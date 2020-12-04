@@ -4,7 +4,7 @@
 # 3 de Diciembre del 2020
 # version 10:30 am
 
-# X
+# XXx
 
 library(ggplot2)
 library(ggpubr)
@@ -1381,10 +1381,7 @@ server <- function(input, output, session) {
                             
                             downloadButton("tabla_2013_csv", "Descargar"),
                             verbatimTextOutput("tabla_d_c_generalizada_2013") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5)
-                            
-                        #    downloadButton("tabla_2013_csv_pon", "Descargar"),
-                        #    verbatimTextOutput("tabla_d_c_generalizada_2013_pon") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
-                            
+  
                      ))),
                    
                    
@@ -1940,11 +1937,9 @@ server <- function(input, output, session) {
                             selectInput("ptabla2015_cuartavx", "ingrese cuarta variable:", c(dataset2015_col)),
                             
                             downloadButton("tabla_2015_csv", "Descargar"),
-                            verbatimTextOutput("tabla_d_c_generalizada_2015") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5),
+                            verbatimTextOutput("tabla_d_c_generalizada_2015") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5)
                             
-                            downloadButton("tabla_2015_csv_pon", "Descargar"),
-                            verbatimTextOutput("tabla_d_c_generalizada_2015_pon") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
-                            
+
                      ))),
                    
                    
@@ -5508,19 +5503,7 @@ server <- function(input, output, session) {
     tabla <- as.data.frame(cross_tab)
     d <-tabla[!(tabla$Freq == 0),]
     d$anio <- "2013"
-    # return(d)
-    
-    # aa <- ab[,a]
-    # bb <- ab[,b] 
-    # cc <- ab[,c]
-    # dd <- ab[,d]
-    
-    #cross_tab = table(aa, bb, cc, dd)
-    
-    # #################################################################################
-    # #################################################################################
-    # tabla <- as.data.frame(cross_tab)
-    # 
+
     ab <- data_codigos_comunales_2006
     
     data_code <- ab[  , c("seg", "comuna")]
@@ -5530,9 +5513,6 @@ server <- function(input, output, session) {
     #
     data_code <- data_code %>% mutate(a = str_squish(a))
     
-    #
-    # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-    #
     data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
                                                             , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)
                                                             
@@ -8047,10 +8027,9 @@ server <- function(input, output, session) {
                             selectInput("ptabla2013_cuartavx", "ingrese cuarta variable:", c(dataset2013_col)),
                             
                             downloadButton("tabla_2013_csv", "Descargar"),
-                            verbatimTextOutput("tabla_d_c_generalizada_2013") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5),
+                            verbatimTextOutput("tabla_d_c_generalizada_2013") %>% withSpinner(type = 5, color = "#e6460b", size = 0.5)
                             
-                            downloadButton("tabla_2013_csv_pon", "Descargar"),
-                            verbatimTextOutput("tabla_d_c_generalizada_2013_pon") %>% withSpinner(type = 5, color = "#bd1c52", size = 0.5)
+
                             
                      ))),
                    
@@ -12173,7 +12152,7 @@ server <- function(input, output, session) {
         d <- input$ptabla2013_cuartavx
 
     ab <- dataset2013
-    #     
+  
         a <- ab[,a]
         b <- ab[,b]
         c <- ab[,c]
@@ -12190,20 +12169,14 @@ server <- function(input, output, session) {
     tabla <- as.data.frame(cross_tab)
     d <-tabla[!(tabla$Freq == 0),]
     d$anio <- "2013"
-    # return(d)
-    
-    
-    
+
     data_code <- ab[  , c("folio", "comuna")]
-    #
+
     names(data_code)[2] <- "a"
     data_code <- distinct(data_code , a, .keep_all = TRUE)
     #
     data_code <- data_code %>% mutate(a = str_squish(a))
-    
-    #
-    # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-    #
+
     data_code <- data_code %>% mutate(codigo = case_when(as.integer(folio / 10000000000) == 0 ~ as.integer(folio/ 10000000)
                                                          , as.integer(folio / 10000000000) <17 ~ as.integer(folio / 10000000)
                                                          
@@ -12231,6 +12204,7 @@ server <- function(input, output, session) {
     data_cod[189,2]<-16305
     data_cod[190,2]<-16207
     data_cod[191,2]<-16109
+    
     names(d)[1] <- "a"
     
     df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
@@ -12241,92 +12215,6 @@ server <- function(input, output, session) {
   })
   
   
-  # 
-  # 
-  # output$tabla_d_c_generalizada_2013_pon<-renderPrint({
-  #   
-  #   
-  #   a <- input$ptabla2013_primeravx
-  #   b <- input$ptabla2013_segundavx
-  #   c <- input$ptabla2013_terceravx
-  #   d <- input$ptabla2013_cuartavx
-  #   
-  #   ab <- dataset2013
-  #   
-  #   aa <- ab[,a]
-  #   bb <- ab[,b]
-  #   cc <- ab[,c]
-  #   dd <- ab[,d]
-  #   
-  #   # a <- ab$comuna
-  #   # b <- ab$e1
-  #   # c <- ab$sexo 
-  #   # d <- ab$ecivil 
-  #   
-  #   cross_tab = xtabs(ab[,578]  ~  unlist(aa) + unlist(bb)+unlist(cc)+unlist(dd),aggregate(ab[,578] ~   unlist(aa)+unlist(bb)+unlist(cc)+unlist(dd),ab,mean))
-  #   
-  #   tabla <- as.data.frame(cross_tab)
-  #   d <-tabla[!(tabla$Freq == 0),]
-  #   d$anio <- "2013"
-  #   # return(d)
-  #   
-  #   # aa <- ab[,a]
-  #   # bb <- ab[,b] 
-  #   # cc <- ab[,c]
-  #   # dd <- ab[,d]
-  #   
-  #   #cross_tab = table(aa, bb, cc, dd)
-  #   
-  #   # #################################################################################
-  #   # #################################################################################
-  #   # tabla <- as.data.frame(cross_tab)
-  #   # 
-  #   ab <- data_codigos_comunales_2006
-  #   
-  #   data_code <- ab[  , c("seg", "comuna")]
-  #   #
-  #   names(data_code)[2] <- "a"
-  #   data_code <- distinct(data_code , a, .keep_all = TRUE)
-  #   #
-  #   data_code <- data_code %>% mutate(a = str_squish(a))
-  #   
-  #   #
-  #   # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-  #   #
-  #   data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
-  #                                                           , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)                                                        
-  #                                                           # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
-  #                                                           # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
-  #   ))
-  #   
-  #   data_code <- subset( data_code, select = -seg )
-  #   
-  #   names(d)[1] <- "a"
-  #   
-  #   df = merge( x = d, y = data_code, by = "a", all.x = TRUE)
-  #   
-  #   
-  #   return(df)
-  #   
-  #   
-  # })
   
   
   output$tabla_2013_csv <- downloadHandler(
@@ -12335,66 +12223,78 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       
-      d <- input$ptabla2013_primeravx
-      e <- input$ptabla2013_segundavx
-      f <- input$ptabla2013_terceravx
-      g <- input$ptabla2013_cuartavx
       
-      ab <- dataset2013_react()
+      a <- input$ptabla2013_primeravx
+      b <- input$ptabla2013_segundavx
+      c <- input$ptabla2013_terceravx
+      d <- input$ptabla2013_cuartavx
       
-      a <- ab[,d]
-      b <- ab[,e] 
-      c <- ab[,f] 
-      d <- ab[,g] 
+      ab <- dataset2013
+      #     
+      a <- ab[,a]
+      b <- ab[,b]
+      c <- ab[,c]
+      d <- ab[,d]
       
-      cross_tab = table(a, b, c, d)
+      # a <- ab$comuna
+      # b <- ab$e1
+      # c <- ab$sexo
+      # d <- ab$ecivil
       
-      w <- dataset06[[6]] %>% attr('labels')
-      
-      d <- input$ptabla2013_primeravx
-      e <- input$ptabla2013_segundavx
-      f <- input$ptabla2013_terceravx
-      g <- input$ptabla2013_cuartavx
-      
-      ab <- dataset2013_react()
-      
-      
-      a <- ab[,d]
-      b <- ab[,e] 
-      c <- ab[,f] 
-      d <- ab[,g] 
-      
-      cross_tab = table(a, b, c, d)
+      # cross_tab = table(a, b, c, d)
+      cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
       
       tabla <- as.data.frame(cross_tab)
-      
-      datallll <- data.frame()
-      
       d <-tabla[!(tabla$Freq == 0),]
+      d$anio <- "2013"
       
-      for(i in 1: nrow(d)){
-        llll_fila <- d[i,]
-        llll<-d[i,1]
-        sentenceString <- toString(llll)
-        searchString <- ' '
-        replacementString <- ''
-        sentenceString = sub(searchString,replacementString,sentenceString)
-        sentenceString
-        
-        for(j in 1: 336){
-          
-          ww<-names(w[j])
-          vv<-tolower(ww)
-          
-          if(sentenceString==vv){
-            llll_fila <- cbind(llll_fila,w[[j]])
-            llll_fila <- cbind(llll_fila,"2013")
-            datallll <-rbind(datallll,llll_fila)
-          }
-        }
-      }
       
-      write.csv(datallll, file)
+      
+      data_code <- ab[  , c("folio", "comuna")]
+      
+      names(data_code)[2] <- "a"
+      data_code <- distinct(data_code , a, .keep_all = TRUE)
+      #
+      data_code <- data_code %>% mutate(a = str_squish(a))
+      
+      #
+      # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
+      #
+      data_code <- data_code %>% mutate(codigo = case_when(as.integer(folio / 10000000000) == 0 ~ as.integer(folio/ 10000000)
+                                                           , as.integer(folio / 10000000000) <17 ~ as.integer(folio / 10000000)
+                                                           
+      ))
+      
+      data_cod <- subset( data_code, select = -folio )
+      data_cod[171,2]<-16101
+      data_cod[172,2]<-16102
+      data_cod[173,2]<-16202
+      data_cod[174,2]<-16203
+      data_cod[175,2]<-16302
+      data_cod[176,2]<-16103
+      data_cod[177,2]<-16104
+      data_cod[178,2]<-16204
+      data_cod[179,2]<-16303
+      data_cod[180,2]<-16105
+      data_cod[181,2]<-16106
+      data_cod[182,2]<-16205
+      data_cod[183,2]<-16107
+      data_cod[184,2]<-16201
+      data_cod[185,2]<-16206
+      data_cod[186,2]<-16301
+      data_cod[187,2]<-16304
+      data_cod[188,2]<-16108
+      data_cod[189,2]<-16305
+      data_cod[190,2]<-16207
+      data_cod[191,2]<-16109
+      
+      names(d)[1] <- "a"
+      
+      df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
+      
+      write.csv(df, file)
+
+
     }
   )
   
@@ -12523,81 +12423,50 @@ server <- function(input, output, session) {
   
   output$tabla_d_c_generalizada_2015<-renderPrint({
     
+
     
-    a <- input$ptabla2015_primeravx
-    b <- input$ptabla2015_segundavx
-    c <- input$ptabla2015_terceravx
-    d <- input$ptabla2015_cuartavx
+    a <- input$ptabla2013_primeravx
+    b <- input$ptabla2013_segundavx
+    c <- input$ptabla2013_terceravx
+    d <- input$ptabla2013_cuartavx
     
     ab <- dataset2015
     
-    aa <- ab[,a]
-    bb <- ab[,b]
-    cc <- ab[,c]
-    dd <- ab[,d]
+    a <- ab[,a]
+    b <- ab[,b]
+    c <- ab[,c]
+    d <- ab[,d]
     
     # a <- ab$comuna
     # b <- ab$e1
-    # c <- ab$sexo 
-    # d <- ab$ecivil 
+    # c <- ab$sexo
+    # d <- ab$ecivil
     
-    cross_tab = table(aa, bb, cc, dd)
+    # cross_tab = table(a, b, c, d)
+    cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+    
     tabla <- as.data.frame(cross_tab)
     d <-tabla[!(tabla$Freq == 0),]
     d$anio <- "2015"
-    # return(d)
     
-    # aa <- ab[,a]
-    # bb <- ab[,b] 
-    # cc <- ab[,c]
-    # dd <- ab[,d]
+    data_code <- ab[  , c("folio", "comuna")]
     
-    #cross_tab = table(aa, bb, cc, dd)
-    
-    # #################################################################################
-    # #################################################################################
-    # tabla <- as.data.frame(cross_tab)
-    # 
-    ab <- data_codigos_comunales_2006
-    
-    data_code <- ab[  , c("seg", "comuna")]
-    #
     names(data_code)[2] <- "a"
     data_code <- distinct(data_code , a, .keep_all = TRUE)
     #
     data_code <- data_code %>% mutate(a = str_squish(a))
     
-    #
-    # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-    #
-    data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
-                                                            , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)                                                        
-                                                            # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
+    data_code <- data_code %>% mutate(codigo = case_when(as.integer(folio / 10000000000) == 0 ~ as.integer(folio/ 10000000)
+                                                         , as.integer(folio / 10000000000) <17 ~ as.integer(folio / 10000000)
+                                                         
     ))
     
-    data_code <- subset( data_code, select = -seg )
+    data_cod <- subset( data_code, select = -folio )
+    
     
     names(d)[1] <- "a"
     
-    df = merge( x = d, y = data_code, by = "a", all.x = TRUE)
+    df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
     
     
     return(df)
@@ -12605,89 +12474,89 @@ server <- function(input, output, session) {
   })
   
   ##########################################################################################
-  output$tabla_d_c_generalizada_2015_pon<-renderPrint({
-    
-    
-    a <- input$ptabla2015_primeravx
-    b <- input$ptabla2015_segundavx
-    c <- input$ptabla2015_terceravx
-    d <- input$ptabla2015_cuartavx
-    
-    ab <- dataset2015
-    
-    aa <- ab[,a]
-    bb <- ab[,b]
-    cc <- ab[,c]
-    dd <- ab[,d]
-    
-    # a <- ab$comuna
-    # b <- ab$e1
-    # c <- ab$sexo 
-    # d <- ab$ecivil 
-    
-    cross_tab = xtabs(ab[,736]  ~  unlist(aa) + unlist(bb)+unlist(cc)+unlist(dd),aggregate(ab[,736] ~   unlist(aa)+unlist(bb)+unlist(cc)+unlist(dd),ab,mean))
-    
-    tabla <- as.data.frame(cross_tab)
-    d <-tabla[!(tabla$Freq == 0),]
-    d$anio <- "2015"
-    # return(d)
-    
-    # aa <- ab[,a]
-    # bb <- ab[,b] 
-    # cc <- ab[,c]
-    # dd <- ab[,d]
-    
-    #cross_tab = table(aa, bb, cc, dd)
-    
-    # #################################################################################
-    # #################################################################################
-    # tabla <- as.data.frame(cross_tab)
-    # 
-    ab <- data_codigos_comunales_2006
-    
-    data_code <- ab[  , c("seg", "comuna")]
-    #
-    names(data_code)[2] <- "a"
-    data_code <- distinct(data_code , a, .keep_all = TRUE)
-    #
-    data_code <- data_code %>% mutate(a = str_squish(a))
-    
-    #
-    # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
-    #
-    data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
-                                                            , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000) 
-                                                            # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
-                                                            # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
-    ))
-    
-    data_code <- subset( data_code, select = -seg )
-    
-    names(d)[1] <- "a"
-    
-    df = merge( x = d, y = data_code, by = "a", all.x = TRUE)
-    
-    
-    return(df)
-    
-  })
+  # output$tabla_d_c_generalizada_2015_pon<-renderPrint({
+  #   
+  #   
+  #   a <- input$ptabla2015_primeravx
+  #   b <- input$ptabla2015_segundavx
+  #   c <- input$ptabla2015_terceravx
+  #   d <- input$ptabla2015_cuartavx
+  #   
+  #   ab <- dataset2015
+  #   
+  #   aa <- ab[,a]
+  #   bb <- ab[,b]
+  #   cc <- ab[,c]
+  #   dd <- ab[,d]
+  #   
+  #   # a <- ab$comuna
+  #   # b <- ab$e1
+  #   # c <- ab$sexo 
+  #   # d <- ab$ecivil 
+  #   
+  #   cross_tab = xtabs(ab[,736]  ~  unlist(aa) + unlist(bb)+unlist(cc)+unlist(dd),aggregate(ab[,736] ~   unlist(aa)+unlist(bb)+unlist(cc)+unlist(dd),ab,mean))
+  #   
+  #   tabla <- as.data.frame(cross_tab)
+  #   d <-tabla[!(tabla$Freq == 0),]
+  #   d$anio <- "2015"
+  #   # return(d)
+  #   
+  #   # aa <- ab[,a]
+  #   # bb <- ab[,b] 
+  #   # cc <- ab[,c]
+  #   # dd <- ab[,d]
+  #   
+  #   #cross_tab = table(aa, bb, cc, dd)
+  #   
+  #   # #################################################################################
+  #   # #################################################################################
+  #   # tabla <- as.data.frame(cross_tab)
+  #   # 
+  #   ab <- data_codigos_comunales_2006
+  #   
+  #   data_code <- ab[  , c("seg", "comuna")]
+  #   #
+  #   names(data_code)[2] <- "a"
+  #   data_code <- distinct(data_code , a, .keep_all = TRUE)
+  #   #
+  #   data_code <- data_code %>% mutate(a = str_squish(a))
+  #   
+  #   #
+  #   # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
+  #   #
+  #   data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
+  #                                                           , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000) 
+  #                                                           # , as.integer(seg / 10000) == 142 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 101 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 102 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 103 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 104 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 111 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 112 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 113 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 114 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 121 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 122 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 123 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 124 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 131 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 132 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 133 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 134 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 135 ~ as.integer(seg / 100)
+  #                                                           # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
+  #   ))
+  #   
+  #   data_code <- subset( data_code, select = -seg )
+  #   
+  #   names(d)[1] <- "a"
+  #   
+  #   df = merge( x = d, y = data_code, by = "a", all.x = TRUE)
+  #   
+  #   
+  #   return(df)
+  #   
+  # })
   
   
   output$tabla_2015_csv <- downloadHandler(
