@@ -117,6 +117,106 @@ dataset2017  <- readRDS("dataset2017.rds")
 dataset2017  <- dataset2017[1:100,]
 dataset2017_col <- colnames(dataset2017)
 ```
+```{r}
+dataset2017  <- readRDS("dataset2017.rds")
+
+#dataset2017  <- dataset2017[1:100,]
+dataset2017_col <- colnames(dataset2017)
+```
+
+
+```{r}
+ ab <- dataset2006
+    
+    data_code <- ab[  , c("seg", "comuna")]
+    #
+    names(data_code)[2] <- "a"
+    data_code <- distinct(data_code , a, .keep_all = TRUE)
+    #
+    data_code <- data_code %>% mutate(a = str_squish(a))
+    
+    #
+    # # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values/22337459
+    #
+    data_code  <-  data_code  %>% mutate(codigo = case_when(as.integer(seg / 10000000) == 0 ~ as.integer(seg / 1000)
+                                                            , as.integer(seg / 10000000) == 1 ~ as.integer(seg / 1000)                                                        
+                                                                                                                 # , as.integer(seg / 10000) == 136 ~ as.integer(seg / 100)
+    ))
+    
+    data_code <- subset( data_code, select = -seg )
+    
+    
+    
+    
+    
+    
+    data_code
+   
+```
+```{r}
+write.csv(data_code,"comunas_2006_nueva5.csv", row.names = FALSE)
+```
+
+```{r}
+data_code[270,2]<-11201
+    data_code[8,2]<-15101
+    data_code[178,2]<-16102
+    data_code[9,2]<-15102
+    data_code[2,2]<-1402
+    data_code[177,2]<-16101
+    data_code[182,2]<-16103
+    data_code[96,2]<-6303
+    data_code[179,2]<-16202
+    data_code[180,2]<-16203
+    data_code[181,2]<-16302
+    data_code[3,2]<-1403
+    data_code[287,2]<-13104
+    data_code[261,2]<-14102
+    data_code[183,2]<-16104
+    data_code[262,2]<-14202
+    data_code[11,2]<-15202
+    data_code[4,2]<-1404
+    data_code[292,2]<-13110
+    data_code[263,2]<-14201
+    data_code[264,2]<-14203
+    data_code[265,2]<-14103
+    data_code[66,2]<-5802
+    data_code[266,2]<-14104
+    data_code[267,2]<-14105
+    data_code[268,2]<-14106
+    data_code[89,2]<-6110
+    data_code[184,2]<-16204
+    data_code[185,2]<-16303
+    data_code[68,2]<-5803
+    data_code[271,2]<-14107
+    data_code[272,2]<-14108
+    data_code[186,2]<-16105
+    data_code[5,2]<-1405
+    data_code[187,2]<-16106
+    data_code[188,2]<-16205
+    data_code[6,2]<-1401
+    data_code[10,2]<-15201
+    data_code[246,2]<-16107
+    data_code[49,2]<-5801
+    data_code[92,2]<-6114
+    data_code[190,2]<-16201
+    data_code[191,2]<-16206
+    data_code[273,2]<-14204
+    data_code[192,2]<-16301
+    data_code[193,2]<-16304
+    data_code[194,2]<-16108
+    data_code[195,2]<-16305
+    data_code[286,2]<-13505
+    data_code[196,2]<-16207
+    data_code[260,2]<-14101
+    data_code[51,2]<-5804
+    data_code[197,2]<-16109
+    write.csv(data_code,"comunas_2006_nueva6.csv", row.names = FALSE)
+```
+
+
+
+
 
 ```{r}
   
