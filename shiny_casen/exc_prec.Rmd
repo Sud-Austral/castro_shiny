@@ -156,7 +156,64 @@ dim(dataset2009)
 
 ```{r}
 dataset2011  <- readRDS("dataset2011.rds")
-dim(dataset2011)
+ab  <- dataset2011
+    
+    data_code <- ab[ , c("segmento", "comuna")]
+    
+    names(data_code)[2] <- "a"
+    data_code <- distinct(data_code , a, .keep_all = TRUE)
+    data_code <- data_code %>% mutate(a = str_squish(a))
+    
+    
+    data_code <- data_code %>% mutate(codigo = case_when(as.integer(segmento / 10000000) == 0 ~ as.integer(segmento/ 10000)
+                                                         , as.integer(segmento / 10000000) <17 ~ as.integer(segmento / 10000)
+                                                         
+    ))
+    
+    data_code <- subset( data_code, select = -segmento )
+    data_code[171,2]<-16101
+    data_code[172,2]<-16102
+    data_code[173,2]<-16202
+    data_code[174,2]<-16203
+    data_code[175,2]<-16302
+    data_code[176,2]<-16103
+    data_code[177,2]<-16104
+    data_code[178,2]<-16204
+    data_code[179,2]<-16303
+    data_code[180,2]<-16105
+    data_code[181,2]<-16106
+    data_code[182,2]<-16205
+    data_code[183,2]<-16107
+    data_code[184,2]<-16201
+    data_code[185,2]<-16206
+    data_code[186,2]<-16301
+    data_code[187,2]<-16304
+    data_code[188,2]<-16108
+    data_code[189,2]<-16305
+    data_code[190,2]<-16207
+    data_code[191,2]<-16109
+    
+    a <- ab$comuna
+    b <- ab$ecivil
+    c <- ab$e1
+    d <- ab$sexo
+    
+    # a <- ab[,d]
+    # b <- ab[,e] 
+    # c <- ab[,f] 
+    # d <- ab[,g] 
+    # 
+    
+    cross_tab =  xtabs(ab$expc_full ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc_full ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+    
+    tabla <- as.data.frame(cross_tab)
+    
+    d <-tabla[!(tabla$Freq == 0),]
+    names(d)[1] <- "a"
+    d$anio <- "2011"
+    
+  df = merge( x = d, y = data_code, by = "a", all.x = TRUE)  
+    df
 ```
 ```{r}
 dataset2013 <- readRDS("dataset2013.rds")
@@ -283,14 +340,33 @@ dataset2017 <- readRDS("dataset2017.rds")
     
     data_cod <- subset( data_code, select = -folio )
 
-    
+    data_cod[172,2]<-16102
+data_cod[171,2]<-16101
+data_cod[176,2]<-16103
+data_cod[173,2]<-16202
+data_cod[174,2]<-16203
+data_cod[175,2]<-16302
+data_cod[177,2]<-16104
+data_cod[178,2]<-16204
+data_cod[179,2]<-16303
+data_cod[180,2]<-16105
+data_cod[181,2]<-16106
+data_cod[182,2]<-16205
+data_cod[183,2]<-16107
+data_cod[184,2]<-16201
+data_cod[185,2]<-16206
+data_cod[186,2]<-16301
+data_cod[187,2]<-16304
+data_cod[188,2]<-16108
+data_cod[189,2]<-16305
+data_cod[190,2]<-16207
+data_cod[191,2]<-16109
+
     names(d)[1] <- "a"
     
     df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
     
- write.csv(data_cod,"codigoscomunales2017.csv", row.names = FALSE)
-    
-data_cod
+df
 ```
 
 ```{r}
@@ -352,8 +428,71 @@ saveRDS(dataset2011, "dataset2011.rds")
 ```
 
 ```{r}
-dataset2015  <- read.dta('casen 2015.dta')
-saveRDS(dataset2015, "dataset2015.rds")
+dataset2015 <- readRDS("dataset2015.rds")
+ # a <- input$ptabla2013_primeravx
+ #    b <- input$ptabla2013_segundavx
+ #    c <- input$ptabla2013_terceravx
+ #    d <- input$ptabla2013_cuartavx
+    
+    ab <- dataset2015
+    
+          a <- ab$comuna
+      b <- ab$ecivil
+      c <- ab$e1
+      d <- ab$sexo
+    # a <- ab[,a]
+    # b <- ab[,b] 
+    # c <- ab[,c] 
+    # d <- ab[,d] 
+    
+    
+    cross_tab =  xtabs(ab$expc ~ unlist(a) + unlist(b)+unlist(c)+unlist(d),aggregate(ab$expc ~ unlist(a)+unlist(b)+unlist(c)+unlist(d),ab,mean))
+    
+    tabla <- as.data.frame(cross_tab)
+    d <-tabla[!(tabla$Freq == 0),]
+    d$anio <- "2015"
+    
+    data_code <- ab[  , c("folio", "comuna")]
+    
+    names(data_code)[2] <- "a"
+    data_code <- distinct(data_code , a, .keep_all = TRUE)
+    
+    data_code <- data_code %>% mutate(a = str_squish(a))
+    
+    data_code <- data_code %>% mutate(codigo = case_when(as.integer(folio / 10000000000) == 0 ~ as.integer(folio/ 10000000)
+                                                         , as.integer(folio / 10000000000) <17 ~ as.integer(folio / 10000000)
+                                                         
+    ))
+    
+    data_cod <- subset( data_code, select = -folio )
+data_cod[171,2]<-16101
+data_cod[172,2]<-16102
+data_cod[173,2]<-16202
+data_cod[174,2]<-16203
+data_cod[175,2]<-16302
+data_cod[176,2]<-16103
+data_cod[177,2]<-16104
+data_cod[178,2]<-16204
+data_cod[179,2]<-16303
+data_cod[180,2]<-16105
+data_cod[181,2]<-16106
+data_cod[182,2]<-16205
+data_cod[183,2]<-16107
+data_cod[184,2]<-16201
+data_cod[185,2]<-16206
+data_cod[186,2]<-16301
+data_cod[187,2]<-16304
+data_cod[188,2]<-16108
+data_cod[189,2]<-16305
+data_cod[190,2]<-16207
+data_cod[191,2]<-16109
+
+    names(d)[1] <- "a"
+    
+    df = merge( x = d, y = data_cod, by = "a", all.x = TRUE)
+    
+    
+    df
 
 
 ```
