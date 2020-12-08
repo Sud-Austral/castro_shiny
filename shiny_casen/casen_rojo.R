@@ -40,6 +40,10 @@ library(vroom)
 library(shinyWidgets)
 library(stringr)
 library(dplyr)
+library(gapminder)
+library(tidyverse)
+library(moderndive)
+library(skimr)
 
 oldw <- getOption("warn")
 options(warn = -1)
@@ -355,12 +359,20 @@ server <- function(input, output, session) {
         navbarMenu("Filtros agrupados por categorías",
                    tabPanel("Seleccione variable que funga como grupo:", fluidRow(
                      column(12, includeMarkdown("info_2006_prom.md")),
-                     selectInput("nivel_filtro", "Seleccione unidad social:", c(data_2006_1_2_colnames)),
-                     selectInput("categoria_filtro", "Seleccione atributo:", c(dataset2009_col)),
+                     selectInput("nivel_filtro", "Seleccione unidad social:", c(dataset2006_col)),
+                     selectInput("categoria_filtro", "Seleccione atributo:", c(dataset2006_col)),
                      column(12, tableOutput("promedios_filtros_2006"))
                    ))),
         
-        navbarMenu("Pobreza y exclusión social",
+        navbarMenu("Regresiones lineales",
+                   tabPanel("Seleccione variable que funga como grupo:", fluidRow(
+                     column(12, includeMarkdown("info_2006_prom.md")),
+                     selectInput("y_2006", "Seleccione unidad social:", c(dataset2006_col)),
+                     selectInput("x_2006", "Seleccione atributo:", c(dataset2006_col)),
+                     column(12, tableOutput("regresiones_lineales_2006"))
+                   ))),
+        
+        navbarMenu("Inequidad e Índice de Gini",
                    tabPanel("Seleccione variable que funga como grupo:", fluidRow(
                      column(12, includeMarkdown("info_2006_prom.md"))
                    )))
@@ -4762,7 +4774,7 @@ server <- function(input, output, session) {
   output$tabla_d_c_generalizada_2015<-renderPrint({
     
     a <- input$ptabla2015_primeravx
-       b <- input$ptabla2015_primeravx
+       b <- input$ptabla2015_segundavx
        c <- input$ptabla2015_terceravx
        d <- input$ptabla2015_cuartavx
     
@@ -4835,7 +4847,7 @@ server <- function(input, output, session) {
      
       
       a <- input$ptabla2015_primeravx
-      b <- input$ptabla2015_primeravx
+      b <- input$ptabla2015_segundavx
       c <- input$ptabla2015_terceravx
       d <- input$ptabla2015_cuartavx
       
@@ -5085,6 +5097,7 @@ server <- function(input, output, session) {
   
   
   output$promedios_filtros_2006<-renderTable({
+    
     a <- input$nivel_filtro
     b <- input$categoria_filtro
     
@@ -5093,16 +5106,30 @@ server <- function(input, output, session) {
     c <- data_2006[,a]
     d <- data_2006[,b]
     
-    # base_del_2006_terr <- base_del_2006[,b]
-    # base_del_2006_terr[is.na(base_del_2006_terr)] <- 0
-    # base_del_2006_cat <- base_del_2006[,a]
-    
     promedios_grupales <-aggregate(d, by=list(c), FUN = mean , na.rm = TRUE)
-    # promedios_grupales <- aggregate(b, by=list(a), FUN = mean , na.rm = TRUE)
+
   }) 
   
   
-  
+  output$regresiones_lineales_2006<-renderTable({
+    
+     a <- input$y_2006
+     b <- input$x_2006
+    # 
+    # data_2006 <- dataset2006_react()
+    # 
+    # c <- extract(data_2006[,a])
+    # d <- extract(data_2006[,b])
+    
+  #  gender_work <- lm(formula = a ~ b , data =data_2006 )
+    
+    dataset2006  <- readRDS("dataset2006.rds")
+    dataset2006 <- dataset2006[which(dataset2006$edad > 25),]
+    gender_work <- lm(dataset2006[,a] ~ dataset2006[,b], data = dataset2006)
+    get_regression_table(gender_work)
+
+
+  }) 
   
   
   

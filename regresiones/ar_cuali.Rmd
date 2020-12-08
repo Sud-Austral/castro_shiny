@@ -1,0 +1,163 @@
+---
+title: "Análisis de regresión sobre variables cualitativas en la CASEN: Estudio de la distribución del ingreso"
+author: "DI"
+date: "05-12-2020"
+output: html_document
+# http://getwyze.com/basic-regression-in-r-categorical-variables/
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(expss)
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+library(shinycssloaders)
+library(writexl)
+library(vroom)
+library(shinyWidgets)
+library(stringr)
+library(dplyr)
+
+library(gapminder)
+library(tidyverse)
+library(moderndive)
+library(skimr)
+
+oldw <- getOption("warn")
+options(warn = -1)
+
+
+```
+
+
+```{r, echo=0, message=FALSE, warning=FALSE , include=FALSE}
+# gapminder2007 = gapminder %>% filter(year == 2007) %>%
+# select(country, lifeExp, continent, gdpPercap)
+```
+
+## Introducción.
+
+Resulta relevante poder explicar el ingreso de las personas por medio de variables categóricas tales como el género, nivel educacional o región geográfica.
+
+Podemos responder así a preguntas tales como:
+
+1 ¿Existen diferencias significativas entre los ingresos medios recibidos entre comunas?
+
+2 ¿Son mayores los sueldos que reciben los hombres del que perciben las mujeres? 
+
+3 ¿Perciben mayores ingresos los egresados de la universidad comparados a los egresados de institutos de formación técnica?, ¿cuáles son las profesiones que retribuyen el mayor ingreso económico?
+
+4 ¿Existen diferencias significativas en ingresos por sexo y etnia?
+
+
+### Análisis para el año 2006
+
+```{r}
+# carguemos nuestro dataframe:
+dataset2006  <- readRDS("dataset2006.rds")
+```
+
+
+```{r}
+# Excluímos a las personas menores de 25 años]
+dataset2006 <- dataset2006[which(dataset2006$edad > 25),]
+```
+
+
+```{r, echo=0, message=FALSE, warning=FALSE , include=FALSE}
+skim(dataset2006)
+```
+
+## Regresión lineal para el análisis de los Ingresos del trabajo y género.
+
+Es fundamental considerar que al interpretar un modelo de regresión con variables explicativas categóricas (en éste caso, género), un nivel será la línea de base para la comparación (hombre) y todos los demás niveles lo serán relativos a ésta línea de base (proceso también conocido como "compensación").
+
+Ajustaremos el modelo de regresión lineal y luego generaremos una tabla de regresión.
+
+```{r}
+# Ajustamos el modelo de regresión:
+# YTRABAJ: Ingreso del Trabajo (ajustado) (pesos por mes)
+# SEXO 
+gender_work <- lm(ytrabaj ~ sexo, data = dataset2006)
+```
+```{r}
+# Obtenemos la tabla de regresión:
+get_regression_table(gender_work)
+```
+
+
+### Interpretación de la tabla de regresión
+
+
+Podemos interpretar los resultados de la regresión como sigue: 
+
+Considerando a todos los habitantes de Chile mayores a 25 años, el sueldo promedio  para los hombres de $321.123,3 .El sueldo promedio para las mujeres es de 321.123,3 + (-106.111.1) = $215.012,2 pesos.
+
+
+
+
+## Regresión lineal para el análisis de los Ingresos del trabajo y etnia.
+
+
+```{r}
+
+dataset2006  <- readRDS("dataset2006.rds")
+dataset2006 <- dataset2006[which(dataset2006$edad > 25),]
+
+# cambiamos la línea de base a: 'no pertenece a ninguna etnia' manualmente
+dataset2006 <- within(dataset2006, t4 <- relevel(t4, ref = 10))
+```
+
+```{r}
+
+ethnicity_work <- lm(ytrabaj ~ t4, data = dataset2006  )
+
+
+
+```
+```{r}
+get_regression_table(ethnicity_work)
+```
+
+
+### Interpretación de la tabla de regresión
+
+El ingreso recibido por el trabajo para los chilenos que se declaran **no pertenecer a ninguna etnia** es de 293.272,88 pesos, lo que tiene sentido pues en un valor que se encuentra dentro de los rangos antes obtenidos para los ingresos de hombres ($321.123,3) y mujeres ($215.012,2).
+
+La etnia que mejor se encuentra respecto a éste promedio son los Rapa Nui quienes obtienen 293.272,88 + 110.422,62 = $403.695,5 pesos.
+
+Los que peor se encuentran son los Mapuches, quienes obtienen:
+293.272,88 + (-106.245,57) = 187.027,31 pesos.
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
