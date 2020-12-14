@@ -1,0 +1,240 @@
+---
+title: "Estadísticos Casen"
+author: "DI"
+date: "12-12-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# https://plotly-r.com/bars-histograms.html
+
+
+```
+
+## Estadísticas sobre la pobreza
+
+```{r cars}
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(expss)
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+library(shinycssloaders)
+library(writexl)
+library(vroom)
+library(shinyWidgets)
+library(stringr)
+library(dplyr)
+library(gapminder)
+library(tidyverse)
+```
+
+
+```{r}
+library(moderndive)
+library(skimr)
+
+oldw <- getOption("warn")
+options(warn = -1)
+
+
+```
+
+
+```{r pressure, echo=FALSE}
+dataset2006  <- readRDS("dataset2006.rds")
+dataset2009  <- readRDS("dataset2009.rds")
+dataset2011  <- readRDS("dataset2011.rds")
+dataset2013  <- readRDS("dataset2013.rds")
+dataset2015  <- readRDS("dataset2015.rds")
+dataset2017  <- readRDS("dataset2017.rds")
+
+```
+
+Expandimos, de frecuencias de dau y nivel educ
+
+```{r}
+# new.data <- dataset2017[ which( dataset2017$comuna == "Iquique")  , ]
+new.data <- dataset2017
+cross_tab =  xtabs(new.data$expc ~ unlist(new.data$dau) + unlist(new.data$e6a),aggregate(new.data$expc ~ unlist(new.data$dau) + unlist(new.data$e6a),new.data,mean))
+tabla <- as.data.frame(cross_tab)
+tabla
+```
+
+
+
+```{r}
+chisq.test(new.data$dau,new.data$e6a )
+```
+
+```{r}
+chisq.test(cross_tab)
+```
+
+```{r}
+chisq.test(dataset2017$sexo,dataset2017$pobreza)
+```
+
+
+
+```{r}
+ggplot(dataset2017) + geom_bar(aes(x = sexo),fill='#E69F00',color='darkblue')+ facet_wrap(~pobreza)+ theme_economist() + 
+  scale_color_economist()+
+  ggtitle("Iris data sets") 
+```
+
+
+
+```{r}
+chisq.test(dataset2017$sexo,dataset2017$pobreza)
+```
+
+
+
+
+
+
+```{r}
+library(dplyr)
+p1 <- plot_ly(dataset2017 , x = ~dau, color = ~e6a) %>% add_histogram()%>%
+    layout(showlegend = TRUE, legend = list(font = list(size = 8)))
+p1
+```
+
+
+graficar una tabla de contingencia
+
+
+
+```{r}
+library(ggthemes)
+plot(dataset2017$sexo, dataset2017$pobreza, xlab = "Sexo", ylab = "Pobreza")
+plot(new.data$sexo, new.data$pobreza, xlab = "Sexo", ylab = "Pobreza") + theme_bw()
+
+
+```
+
+```{r}
+chisq.test(dataset2017$sexo, dataset2017$pobreza)
+```
+```{r}
+library(sjPlot)
+myvars <- c("y0101", "pobreza")
+newdata <- dataset2017[myvars]
+newdata
+
+#sjp.corr(newdata)
+```
+
+
+```{r}
+model <- glm(pobreza ~ (y0101)^2, 
+             data=newdata, na.action="na.exclude",  family="binomial") 
+             
+summary(model)
+```
+
+
+
+
+
+```{r}
+library("vcd")
+#DEFAULT and BUSTYPE
+x <- xtabs(dataset2017$expc ~ dataset2017$sexo+dataset2017$pobreza+dataset2017$comuna, data=dataset2017)
+
+x
+
+# plot(x, main="Type of small business", sub="train", col="darkgreen")
+# 
+# 
+# tbl <- table(dataset2017$sexo, dataset2017$pobreza)
+# chisq.test(tbl)
+
+```
+In our statistical results, both p-values are less than 0.05. We can reject the null hypothesis and conclude there is a relationship between shirt color and deaths. The next step is to define that relationship.
+
+
+```{r}
+ggplot(data=dataset2017, aes(x=pobreza, ..count..)) + geom_bar(aes(fill = sexo), position = "dodge")
+```
+
+
+
+```{r}
+ggplot(tabla, aes(x = unlist(tabla$unlist.new.data.dau.), y = Freq)) + 
+  geom_bar(stat = "identity", color = "black", fill = "red") +
+  labs(title = "Frequency by country\n", x = "\nCountry", y = "Frequency\n") +
+  theme_classic()
+```
+
+
+
+```{r}
+library(dplyr)
+p2 <- plot_ly(dataset2017 , x = ~pobreza, color = ~dau) %>% add_histogram()%>%
+    layout(showlegend = TRUE, legend = list(font = list(size = 8)))
+p2
+
+```
+
+
+```{r}
+library(dplyr)
+p2 <- plot_ly(dataset2017 , x = ~dau, color = ~oficio1) %>% add_histogram()%>%
+    layout(showlegend = TRUE, legend = list(font = list(size = 8)))
+p2
+
+```
+
+
+
+
+
+```{r}
+library(dplyr)
+
+
+
+
+promedios <- aggregate( dataset2017$y0101 , by = list(dataset2017$comuna), FUN=mean, na.rm =TRUE)
+
+names(promedios)[2] <- "ingreso"
+
+promedios    
+
+
+```
+
+
+
+
+
+
+
+
