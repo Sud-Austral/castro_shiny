@@ -52,10 +52,10 @@ library(readstata13)
 ```{r}
 
 dataset2006  <- readRDS("dataset2006.rds")
-    d <- input$comuna
-    e <- input$t4
-    f <- input$e1
-    g <- input$sexo
+    d <- dataset2006$comuna
+    e <- dataset2006$t4
+    f <- dataset2006$e1
+    g <- dataset2006$sexo
     
     ab <- dataset2006
 
@@ -128,10 +128,10 @@ dataset2006  <- readRDS("dataset2006.rds")
     
     
     
-    a <- ab[,d]
-    b <- ab[,e] 
-    c <- ab[,f] 
-    d <- ab[,g] 
+    a <- d
+    b <- e
+    c <- f
+    d <- g 
     
     
     
@@ -147,6 +147,19 @@ dataset2006  <- readRDS("dataset2006.rds")
     df = merge( x = d, y = data_code, by = "unlist.a.", all.x = TRUE)  
     df
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
