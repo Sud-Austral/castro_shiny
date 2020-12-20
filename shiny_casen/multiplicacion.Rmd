@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+author: "Christian Castro"
+date: "18-12-2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(markdown)
+library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(plotly)
+library(xts)
+library(dygraphs)
+library(kableExtra)
+library(knitr)
+library("readxl")
+library(rsconnect)
+library(dplyr)
+library(summarytools)
+library(epiDisplay)
+#library(leaflet)
+library(haven)
+library(epiDisplay)
+library("readxl")
+library(expss)
+library(hrbrthemes)
+library(viridis)
+library(viridisLite)
+library(DescTools)
+library(roperators)
+library(shinycssloaders)
+library(writexl)
+library(vroom)
+library(shinyWidgets)
+library(stringr)
+library(dplyr)
+library(gapminder)
+library(tidyverse)
+library(moderndive)
+library(skimr)
+
+library(maps)
+library(mapproj)
+```
+
+```{r}
+library(casen)
+casen_2017_los_rios
+```
+

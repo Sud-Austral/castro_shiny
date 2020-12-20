@@ -128,7 +128,8 @@ Tomemos como ejemplo el caso de ALgarrobo.
 Generemos una tabla sólo para verificar los NA en los fdee.
 
 ```{r}
-huara_2015 <- dataset2015[dataset2015$comuna == "algarrobo", ] 
+# huara_2015 <- dataset2015[dataset2015$comuna == "algarrobo", ] 
+huara_2015 <- dataset2015
 huara_2015_sub <- str_sub(huara_2015$folio, 5,8)
 huara_2015_fdee <- huara_2015$expc
 huara_2015_unido <- cbind(huara_2015_sub, huara_2015_fdee)
@@ -146,13 +147,21 @@ La siguiente tabla asocia el código extraído del folio con el fdeec:
 
 ```{r}
 options(scipen=999)
-huara_2017 <- dataset2017[dataset2017$comuna == "Algarrobo", ] 
-huara_2017_sub <- str_sub(huara_2017$folio, 5,8)
+huara_2017 <- dataset2017[dataset2017$comuna == "Concepción", ] 
+
+huara_2017_sub <- str_sub(huara_2017$folio, 5,9)
 huara_2017_fdee <- huara_2017$expc
-huara_2017_unido <- cbind(huara_2017_sub, huara_2017_fdee)
+huara_2017_folio<- huara_2017$folio
+
+
+huara_2017_unido <- cbind(huara_2017_sub, huara_2017_fdee,huara_2017_folio)
+
 colnames(huara_2017_unido)[1] <- "Codigo"
 colnames(huara_2017_unido)[2] <- "fdeec_2017"
-sss <- unique(huara_2017_unido)
+
+sss <-  huara_2017_unido[!duplicated(huara_2017_unido[,c('Codigo')]),]
+
+# sss <- unique(huara_2017_unido$Codigo)
 sss <- data.frame(sss)
 sss$fdeec_2017 <- strtoi(sss$fdeec_2017) 
 sss
@@ -171,9 +180,29 @@ ggg
 Multipliquemos frecuencia por n y sumémoslas:
 
 ```{r}
-mmm <- sss$fdeec_2017 * ggg$Freq
-sum(mmm)
+multiplicacion <- sss$fdeec_2017 * ggg$Freq
+
+a <- cbind(sss, ggg)
+
+b <- cbind(a,multiplicacion)
+
+
+names(b)[3] <- "folio"
+
+b <- b[,-4]
+b
+write_xlsx(b,'Concepcion_2017.xlsx')
+
+#sum(mmm)
 ```
+
+
+
+
+
+
+
+
 
 Comparemos con la poblacion proyectada del INE para Algarrobo el 2017 que veremos es 14221.	
 
@@ -237,7 +266,8 @@ Multipliquemos frecuencia por n y sumémoslas:
 
 ```{r}
 mmm <- sss$fdeec_2017 * ggg$Freq
-sum(mmm)
+mmm
+# sum(mmm)
 ```
 
 Comparemos con la poblacion proyectada del INE para Algarrobo el 2013 que veremos es 12992.	
