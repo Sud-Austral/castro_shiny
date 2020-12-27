@@ -1,7 +1,7 @@
 ---
-title: "Random forest para determinar las variables relevantes obtenidas con un análisis de regresión entrenado asimismo con random forest"
-author: "DI"
-date: "01-12-2020"
+title: "Random Forest para determinar variables relevantes"
+author: "DI. Víctor Enamorado - Christian Castro"
+date: "22-12-2020"
 output: html_document
 ---
 
@@ -9,52 +9,95 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Random forest para extraer las variables mas importantes dentro de un conjunto de datos.
+## Utilizaremos el algoritmo Random Forest para determinar variables relevantes obtenidas de un análisis de regresión entrenado asimismo con RF.
 
+### 1 Cargamos nuestras librerías:
 
-
-```{r cars}
+```{r, echo = T,  include=T, warning=F }
 
 library("readxl")
 library(randomForest)
 library(reshape)
 
+```
+
+### 2 Leemos la data y desplegamos las 3 primeras filas:
+
+```{r}
 my_data <- read_excel("data_e.xlsx", sheet = 2, col_names = TRUE, col_types = NULL, na = "", skip = 0)
-head(my_data, 10)
+head(my_data, 3)
 ```
-```{r}
-my_data <- my_data[,c(1:24)]
-head(my_data, 10)
-```
+
+### 3 Excluímos del análisis la columna SOC_Modelado y asignamos NA a los valores 0:
 
 ```{r}
 
+my_data <- my_data[,-(2)] 
+my_data[my_data == 0] <- NA
+my_data <- my_data[,-(11:14)] 
+head(my_data, 10)
+```
 
-modelo1 <- randomForest(SOC_Modelado~.,data=my_data,
-              na.action=na.exclude, ntree=500,importance=TRUE,maxnodes=10,mtry=15)
+### 4 El modelo
 
-#Creamos un objeto con las "importancias" de las variables
-importancia=data.frame(importance(modelo1))
+Creamos el objeto `modelo` con la función randomForest, siendo nuestra variable dependiente SOC_TCH y el resto las independientes. 
 
-importancia
-#importancia<-sort_df(importancia,vars='MeanDecreaseGini')
+Parámetros:
+
+`ntree` nos permite especificar el número de árboles a realizar.
+
+`importance` incluye en el objeto las “medidas de importancia”.
+
+`maxnodes` indica el número máximo de nodos en nuestros árboles.
+
+`mtry` indica el número máximo de variables en los modelos creados. 
+
+Para medir la importancia de las variables empleamos la función `importance` sobre el modelo creado. Esta función despliega dos columnas: 
+
+1. el error cuadrático medio (%IncMSE) y 
+
+2. la pureza del nodo (IncNodePurity)
+
+```{r}
+
+modelo <- randomForest(SOC_TCH~., data = my_data,
+              na.action = na.exclude, ntree = 500, importance = TRUE, maxnodes = 10, mtry = 20)
+
+importancia = data.frame(importance(modelo))
+
 importancia <- importancia[order(-importancia$X.IncMSE),] 
 importancia
+varImpPlot(modelo)
+
 ```
 
+### 5 Gráfica del error cuadrático medio.
 
 ```{r}
-varImpPlot(modelo1)
+dotchart((importancia$X.IncMSE), xlim=c(-2,11), xlab="Error cuadratico medio", 
+         labels = row.names(importancia),
+         cex = 0.7)
 ```
 
 
-```{r}
-dotchart(sort(importancia[,1]), xlim=c(0,90), xlab="%IncMSE")
-```
+### 6 Análisis del modelo.
+
+El error cuadrático medio es la medida más sólida e informativa. Cuanto mayor es, más también lo es la variable a la que hace referencia.
+
+IncNodePurity se relaciona con la función de pérdida elegida según las mejores divisiones. Las variables más útiles logran mayores aumentos en la pureza de los nodos, es decir, encuentran una división que tiene una alta "varianza" entre nodos y una pequeña "varianza" entre nodos. IncNodePurity está sesgado y sólo debe usarse si el tiempo de cálculo adicional para calcular el % IncMSE es inaceptable.
 
 
+### 7 Conclusión.
 
+Las variables más relevantes en el análisis son:
 
+Temp_Cmean			, Suelo_Map	y ocsmean.
+
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
