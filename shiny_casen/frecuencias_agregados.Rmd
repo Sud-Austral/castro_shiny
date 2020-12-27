@@ -1,5 +1,7 @@
 ---
-title: "Tablas de contingencia generalizadas para la Casen 2017 en un subset de 1000 registros."
+title: "FRECUENCIAS AGREGADOS
+
+Tablas de contingencia generalizadas para la Casen 2017 en un subset de 1000 registros."
 author: "DI"
 date: "09-11-2020"
 output: html_document
@@ -44,13 +46,79 @@ library(DescTools)
 oldw <- getOption("warn")
 options(warn = -1)
 ```
+En Proyección base 2017 en:
+
+https://www.ine.cl/estadisticas/sociales/demografia-y-vitales/proyecciones-de-poblacion
+
+La poblacion INE
+
+
+
+
 
 
 # Los datos
 
 ```{r echo = FALSE, error=FALSE, warning=FALSE, message=FALSE}
-datos_df_1000  <- read_xlsx("casen_2017_mil.xlsx")
+poblacion_chilena_02_35  <- read_xlsx("estimaciones-y-proyecciones-2002-2035-comunas.xlsx")
 ```
+
+
+```{r}
+poblacion_chilena_02_35
+```
+
+```{r}
+dataset2006  <- readRDS("dataset2009.rds")
+```
+```{r}
+dataset2006
+```
+
+
+
+
+```{r}
+iquique_2006 <- dataset2006[dataset2006$comuna == "iquique",]
+iquique_2006 <- iquique_2006[iquique_2006$sexo == "hombre",]
+iquique_2006 <- iquique_2006[iquique_2006$t5 == "aymara",]
+iquique_2006 <- iquique_2006[iquique_2006$e1 == "sí",]
+iquique_2006
+#nrow(iquique_2006)
+```
+
+
+
+```{r}
+data6 <- filter(iquique_2006, rowSums(is.na(iquique_2006)) != ncol(iquique_2006))  
+nrow(data6)
+```
+
+
+```{r}
+dataset2006  <- readRDS("dataset2009.rds")
+m <- table(dataset2006$comuna, dataset2006$e1, dataset2006$sexo,dataset2006$t4)
+tabla <- as.data.frame(m)
+head(tabla,10)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Cantidades totales y porcentajes de pobres y no pobres:
 

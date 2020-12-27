@@ -228,7 +228,7 @@ iquique_2006 <- dataset2006[dataset2006$comuna == "iquique ",]
 iquique_2006 <- iquique_2006[iquique_2006$sexo == "hombre",]
 iquique_2006 <- iquique_2006[iquique_2006$t5 == "aymara",]
 iquique_2006 <- iquique_2006[iquique_2006$e1 == "sí",]
-
+iquique_2006
 nrow(iquique_2006)
 ```
 
