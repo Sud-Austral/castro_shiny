@@ -132,7 +132,7 @@ frecuencias_fexp <- table(newdata$comuna)
 newdata <- distinct(newdata, comuna, .keep_all = TRUE)
 nrow(newdata)
 unidos <- cbind(newdata, frecuencias_fexp)
-head(unidos, 5)
+head(unidos, 20)
 ```
 
 
@@ -229,6 +229,9 @@ QED.
 
 
 
+```{r}
+saveRDS(CASEN_2015_ds_final, file = "CASEN_2015_ds_final.rds")
+```
 
 
 
