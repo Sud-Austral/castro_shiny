@@ -192,7 +192,7 @@ dataset <- comuna_6310
 ```
 
 
-La tabla de contingencia omite automaticamente los NA, que en nuyestro dataset originale es 1.
+La tabla de contingencia omite automaticamente los NA, que en nuestro dataset original es 1.
 
 ```{r}
 cross_tab = xtabs(dataset$expc_full ~ unlist(dataset$comuna) + unlist(dataset$corte),aggregate(dataset$expc_full ~ unlist(dataset$comuna) + unlist(dataset$corte),dataset,sum))
